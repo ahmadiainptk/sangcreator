@@ -788,6 +788,31 @@
       background: var(--accent-soft);
       border: 1px dashed var(--accent);
     }
+    .ai-btn {
+      background: linear-gradient(135deg, var(--accent-2), #e0851b);
+      color: #fff; border: 0; border-radius: 8px;
+      padding: 6px 14px; font-size: 11.5px; font-weight: 700;
+      cursor: pointer; font-family: inherit; flex: 0 0 auto;
+      transition: transform .09s, opacity .15s;
+    }
+    .ai-btn:active { transform: scale(.97); }
+    .ai-btn:disabled { opacity: .6; cursor: wait; }
+    .ai-out {
+      margin-top: 10px;
+      background: rgba(23,166,115,.07);
+      border: 1px solid rgba(23,166,115,.3);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .ai-out .ai-head {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+    }
+    .ai-out .ai-head b { font-size: 11px; color: var(--ok); letter-spacing: .5px; text-transform: uppercase; flex: 1; }
+    .ai-out pre {
+      margin: 0; white-space: pre-wrap; word-break: break-word;
+      font-size: 13px; line-height: 1.62; color: var(--ink);
+      font-family: var(--font);
+    }
   </style>
 </head>
 <body>
@@ -978,6 +1003,75 @@ function blok(title, text) {
   p.textContent = text;
   w.appendChild(bar);
   w.appendChild(p);
+  return w;
+}
+
+// Blok hasil dengan tombol "Generate AI" — hasil Gemini tampil di bawah prompt
+function blokAI(title, text) {
+  const w = document.createElement('div');
+  w.className = 'block';
+  const bar = document.createElement('div');
+  bar.className = 'block-bar';
+  const t = document.createElement('div');
+  t.className = 'block-title';
+  t.textContent = title;
+  const copyBtn = document.createElement('button');
+  copyBtn.className = 'copy';
+  copyBtn.textContent = 'Salin';
+  copyBtn.onclick = () => salin(text, copyBtn);
+  const aiBtn = document.createElement('button');
+  aiBtn.className = 'ai-btn';
+  aiBtn.textContent = '✨ Generate AI';
+  bar.appendChild(t);
+  bar.appendChild(copyBtn);
+  bar.appendChild(aiBtn);
+  const p = document.createElement('pre');
+  p.textContent = text;
+  w.appendChild(bar);
+  w.appendChild(p);
+
+  // Area hasil AI (kosong sampai diklik)
+  const aiOut = document.createElement('div');
+  aiOut.className = 'ai-out';
+  aiOut.style.display = 'none';
+  w.appendChild(aiOut);
+
+  aiBtn.onclick = async function() {
+    if (!GEMINI_API_KEY) {
+      toast('⚠️ Isi API Key Gemini dulu di panel kiri.', 'err', 4000);
+      return;
+    }
+    aiBtn.disabled = true;
+    aiBtn.textContent = '⏳ Menghasilkan...';
+    aiOut.style.display = 'block';
+    aiOut.innerHTML = '<div class="ai-head"><b>Hasil AI</b></div><pre style="color:var(--muted);">Meminta hasil ke Gemini…</pre>';
+    try {
+      const hasil = await generateWithGemini(text);
+      const clean = (hasil || '').trim();
+      const head = document.createElement('div');
+      head.className = 'ai-head';
+      const lb = document.createElement('b');
+      lb.textContent = '✅ Hasil AI';
+      const cb = document.createElement('button');
+      cb.className = 'copy';
+      cb.textContent = 'Salin';
+      cb.onclick = () => salin(clean, cb);
+      head.appendChild(lb);
+      head.appendChild(cb);
+      const pre = document.createElement('pre');
+      pre.textContent = clean || '(tidak ada hasil)';
+      aiOut.innerHTML = '';
+      aiOut.appendChild(head);
+      aiOut.appendChild(pre);
+    } catch (err) {
+      aiOut.innerHTML = '<div class="ai-head"><b style="color:var(--danger);">❌ Gagal</b></div>' +
+        '<pre style="color:var(--danger);">' + (err.message || 'Terjadi kesalahan') + '</pre>';
+    } finally {
+      aiBtn.disabled = false;
+      aiBtn.textContent = '✨ Generate AI';
+    }
+  };
+
   return w;
 }
 
@@ -3120,7 +3214,7 @@ function renderWizard() {
       head.innerHTML = '<div class="rtit">' + T.icon + ' ' + T.nama +
         ' <span class="badge">' + r.length + ' prompt</span></div>';
       resultsBox.appendChild(head);
-      r.forEach(function(b) { resultsBox.appendChild(blok(b.title, b.text)); });
+      r.forEach(function(b) { resultsBox.appendChild(blokAI(b.title, b.text)); });
     });
 
     badge.textContent = total + ' prompt';
