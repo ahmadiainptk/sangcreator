@@ -1,0 +1,2655 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SANGCREATOR · Studio Guru AI</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== RESET & ROOT ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --ink: #12172b;
+      --muted: #5f6b85;
+      --line: #e3e8f2;
+      --accent: #5b4bd6;
+      --accent-2: #f5a623;
+      --accent-soft: #efecff;
+      --side: #141a2e;
+      --side-ink: #c9d2e8;
+      --side-line: #26304c;
+      --ok: #17a673;
+      --danger: #e04f5f;
+      --code-bg: #0f1424;
+      --code-ink: #dfe6ff;
+      --shadow: 0 6px 24px rgba(19,25,55,.07);
+      --radius: 14px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    html[data-theme="dark"] {
+      --bg: #0d1120;
+      --card: #151b2e;
+      --ink: #e9edf8;
+      --muted: #98a3bd;
+      --line: #242d47;
+      --accent: #8b7cff;
+      --accent-2: #ffbe4d;
+      --accent-soft: #232145;
+      --side: #0a0e1a;
+      --side-ink: #aab6d2;
+      --side-line: #1d2540;
+      --code-bg: #080c17;
+      --shadow: 0 6px 24px rgba(0,0,0,.35);
+    }
+    
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.55;
+      transition: background .25s, color .25s;
+    }
+    
+    /* ===== LAYOUT ===== */
+    .app { display: flex; min-height: 100vh; }
+    
+    .side {
+      width: 260px;
+      flex: 0 0 260px;
+      background: var(--side);
+      color: var(--side-ink);
+      padding: 18px 14px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      z-index: 70;
+    }
+    
+    .side::-webkit-scrollbar { width: 5px; }
+    .side::-webkit-scrollbar-thumb { background: #2b3555; border-radius: 4px; }
+    
+    .main {
+      flex: 1;
+      min-width: 0;
+      padding: 20px 20px 80px;
+    }
+    
+    .inner { max-width: 960px; margin: 0 auto; }
+    
+    /* ===== SIDE BRAND ===== */
+    .side-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 4px 16px;
+      border-bottom: 1px solid var(--side-line);
+      margin-bottom: 12px;
+    }
+    
+    .side-brand .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 900;
+      color: #fff;
+      flex: 0 0 auto;
+    }
+    
+    .side-brand .bn {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: .4px;
+      line-height: 1.2;
+    }
+    
+    .side-brand .bs {
+      font-size: 10.5px;
+      color: #7b88a8;
+    }
+    
+    /* ===== NAVIGATION ===== */
+    .nav-label {
+      font-size: 9.5px;
+      letter-spacing: 1.8px;
+      color: #5d6a90;
+      font-weight: 800;
+      padding: 14px 8px 6px;
+      text-transform: uppercase;
+    }
+    
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 11px;
+      cursor: pointer;
+      color: var(--side-ink);
+      transition: .14s;
+      border: 1px solid transparent;
+    }
+    
+    .nav:hover { background: rgba(255,255,255,.05); }
+    .nav.on {
+      background: linear-gradient(135deg, rgba(139,124,255,.24), rgba(245,166,35,.12));
+      border-color: rgba(139,124,255,.45);
+      color: #fff;
+    }
+    
+    .nav .ic { font-size: 17px; line-height: 1.25; flex: 0 0 auto; width: 22px; text-align: center; }
+    .nav .tx { flex: 1; min-width: 0; }
+    .nav .tx b { display: block; font-size: 12.5px; font-weight: 700; letter-spacing: -.1px; }
+    .nav .tx span { display: block; font-size: 10px; color: #7f8cad; line-height: 1.3; margin-top: 1px; }
+    .nav.on .tx span { color: #b9c2dd; }
+    
+    .badge-n {
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      flex: 0 0 auto;
+    }
+    .badge-free { background: rgba(23,166,115,.22); color: #4ade9b; border: 1px solid rgba(23,166,115,.5); }
+    .badge-pro { background: rgba(245,166,35,.18); color: #f5c069; border: 1px solid rgba(245,166,35,.45); }
+    .badge-on { background: rgba(23,166,115,.22); color: #4ade9b; border: 1px solid rgba(23,166,115,.5); }
+    
+    /* ===== SIDE FOOTER ===== */
+    .side-foot {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--side-line);
+      font-size: 10px;
+      color: #5d6a90;
+      text-align: center;
+      line-height: 1.6;
+    }
+    
+    .side-theme {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(255,255,255,.06);
+      border: 0;
+      color: var(--side-ink);
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 12px;
+      font-family: inherit;
+    }
+    
+    /* ===== API KEY STATUS ===== */
+    .api-status {
+      background: rgba(23,166,115,.15);
+      border: 1px solid rgba(23,166,115,.3);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: #7b88a8;
+      text-align: center;
+    }
+    
+    .api-status.ok { border-color: var(--ok); color: var(--ok); }
+    .api-status.err { border-color: var(--danger); color: var(--danger); }
+    .api-status .key { font-family: monospace; font-size: 10px; color: var(--accent); }
+    
+    .api-key-box {
+      margin-bottom: 12px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--side-line);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .api-key-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      color: #9fb0d4;
+    }
+    .api-key-box input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--side-line);
+      border-radius: 8px;
+      background: var(--side);
+      color: var(--side-ink);
+      font-size: 11.5px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .api-key-box input:focus { outline: 1px solid var(--accent); border-color: transparent; }
+    .api-key-btn {
+      border: 0;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), #7a5cf0);
+      color: #fff;
+      font-family: inherit;
+    }
+    .api-key-btn:active { transform: scale(.97); }
+    .api-key-hint {
+      font-size: 9.5px;
+      color: #5d6a90;
+      line-height: 1.5;
+    }
+    .api-key-hint a { color: var(--accent); text-decoration: none; }
+    
+    /* ===== MAIN CONTENT ===== */
+    .topbar { margin-bottom: 6px; }
+    .brand {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2.4px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-transform: uppercase;
+    }
+    
+    h1 { font-size: 20px; margin: 0; letter-spacing: -.4px; }
+    .sub { font-size: 12.5px; color: var(--muted); margin: 2px 0 8px; }
+    
+    .pill {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .6px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-bottom: 6px;
+    }
+    .pill-free { background: rgba(23,166,115,.15); color: #0e9668; border: 1px solid rgba(23,166,115,.4); }
+    .pill-pro { background: rgba(245,166,35,.16); color: #b87708; border: 1px solid rgba(245,166,35,.45); }
+    html[data-theme="dark"] .pill-free { color: #5fe0a8; }
+    html[data-theme="dark"] .pill-pro { color: #f5c069; }
+    
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-top: 14px;
+      box-shadow: var(--shadow);
+    }
+    
+    .card h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      color: var(--accent);
+      margin: 0 0 12px;
+    }
+    .card h2 .lite {
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    
+    .fsec {
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 16px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--line);
+    }
+    .fsec:first-child { margin-top: 0; }
+    
+    /* ===== FORM ELEMENTS ===== */
+    label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin: 0 0 5px;
+      color: var(--muted);
+    }
+    
+    .hint {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: 4px;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 14px;
+      font-family: inherit;
+      transition: .15s;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: -1px;
+      border-color: transparent;
+    }
+    
+    textarea { resize: vertical; min-height: 70px; }
+    .field { margin-bottom: 14px; }
+    
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    
+    @media(max-width: 620px) { .row, .row3 { grid-template-columns: 1fr; } }
+    
+    /* ===== BUTTONS ===== */
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 13px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform .09s, background .15s;
+    }
+    .btn:active { transform: scale(.97); }
+    
+    .btn-main {
+      background: linear-gradient(135deg, var(--accent), #7a5cf0);
+      color: #fff;
+      width: 100%;
+      margin-top: 4px;
+      box-shadow: 0 4px 14px rgba(91,75,214,.32);
+    }
+    
+    .btn-ghost {
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 16px;
+    }
+    
+    .btn-add {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px dashed var(--accent);
+      width: 100%;
+      font-size: 13.5px;
+      padding: 11px;
+    }
+    
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-row .btn { flex: 1; min-width: 118px; }
+    
+    .btn-ide {
+      border: 1px solid var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 99px;
+      cursor: pointer;
+      font-family: inherit;
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+    .btn-ide:active { transform: scale(.96); }
+    
+    /* ===== CHIPS ===== */
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--muted);
+      padding: 7px 14px;
+      border-radius: 99px;
+      font-size: 12.5px;
+      cursor: pointer;
+      user-select: none;
+      transition: .15s;
+    }
+    .chip.on {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .chip:active { transform: scale(.985); }
+    
+    /* ===== SWITCH ===== */
+    .switch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--bg);
+      cursor: pointer;
+      margin-bottom: 11px;
+    }
+    .switch input { width: auto; margin: 0; accent-color: var(--accent); transform: scale(1.15); }
+    .switch span { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+    
+    /* ===== OUTPUT ===== */
+    .out-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 22px 0 12px;
+      flex-wrap: wrap;
+    }
+    .out-head h3 { font-size: 15px; margin: 0; flex: 1; }
+    .badge {
+      font-size: 11px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-weight: 700;
+    }
+    
+    .block {
+      background: var(--code-bg);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .block pre {
+      margin: 0;
+      color: var(--code-ink);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12.8px;
+      line-height: 1.62;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .block-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .block-title {
+      color: #8ea0d0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .copy {
+      background: rgba(255,255,255,.09);
+      color: #dfe6ff;
+      border: 0;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      flex: 0 0 auto;
+      transition: .15s;
+    }
+    .copy.done { background: var(--ok); color: #fff; }
+    .copy:active { transform: scale(.97); }
+    
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13.5px;
+      padding: 30px 14px;
+    }
+    
+    /* ===== VIEWS ===== */
+    .view { display: none; }
+    .view.on { display: block; animation: masuk .18s ease-out; }
+    @keyframes masuk {
+      from { opacity: 0; transform: translate3d(0, 8px, 0); }
+      to { opacity: 1; transform: none; }
+    }
+    
+    /* ===== TOAST ===== */
+    #toastWrap {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      pointer-events: none;
+      width: max-content;
+      max-width: 92vw;
+    }
+    .toast {
+      background: #1b2136;
+      color: #fff;
+      padding: 11px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 26px rgba(0,0,0,.28);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      animation: toastIn .22s cubic-bezier(.2,.9,.3,1.3);
+      border: 1px solid rgba(255,255,255,.09);
+      max-width: 100%;
+    }
+    .toast.keluar { animation: toastOut .2s ease-in forwards; }
+    .toast.ok { background: #0f8f63; }
+    .toast.err { background: #c0394b; }
+    .toast.info { background: #3b3486; }
+    
+    @keyframes toastIn {
+      from { opacity: 0; transform: translate3d(0, 14px, 0) scale(.96); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes toastOut {
+      to { opacity: 0; transform: translate3d(0, 10px, 0) scale(.97); }
+    }
+    
+    /* ===== SCROLL TO TOP ===== */
+    #keAtas {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 90;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 5px 18px rgba(19,25,55,.16);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      transform: translate3d(0, 8px, 0);
+    }
+    #keAtas.on { opacity: 1; pointer-events: auto; transform: none; }
+    
+    /* ===== RESPONSIVE ===== */
+    @media(max-width: 880px) {
+      .side {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        flex: none;
+        height: 100vh;
+        transform: translateX(-102%);
+        transition: transform .24s ease;
+        box-shadow: 6px 0 26px rgba(0,0,0,.4);
+      }
+      .side.open { transform: translateX(0); }
+      .main { padding: 14px 14px 60px; }
+      #keAtas { bottom: 18px; right: 14px; }
+    }
+    
+    /* ===== SKELETON ===== */
+    .skel {
+      background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.14) 37%, rgba(255,255,255,.06) 63%);
+      background-size: 400% 100%;
+      animation: shim 1.1s ease-in-out infinite;
+      border-radius: 8px;
+      height: 12px;
+    }
+    @keyframes shim {
+      0% { background-position: 100% 50%; }
+      100% { background-position: 0 50%; }
+    }
+    
+    /* ===== MATERI ITEMS ===== */
+    .materi {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 12px;
+      background: var(--bg);
+    }
+    .materi-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .materi-no {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+    .materi-label {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .del {
+      border: 0;
+      background: transparent;
+      color: var(--danger);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 2px 6px;
+      line-height: 1;
+    }
+    .lbl-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+    .lbl-row label { margin: 0; flex: 1; }
+    
+    /* ===== LOCKED ===== */
+    .locked { position: relative; overflow: hidden; }
+    .locked .fade {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, rgba(15,20,36,0), var(--code-bg) 78%);
+    }
+    .locked pre.blur { filter: blur(4.5px); opacity: .55; user-select: none; max-height: 210px; overflow: hidden; }
+    
+    /* ===== MISC ===== */
+    .mtop { display: none; }
+    @media(max-width: 880px) {
+      .mtop {
+        display: flex;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--card);
+        border-bottom: 1px solid var(--line);
+        padding: 10px 14px;
+        align-items: center;
+        gap: 12px;
+      }
+      .mtop .t { flex: 1; min-width: 0; }
+      .mtop .t b { display: block; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .mtop .t span { font-size: 10px; color: var(--muted); letter-spacing: 1.2px; font-weight: 700; }
+      .burger {
+        border: 1px solid var(--line);
+        background: var(--bg);
+        color: var(--ink);
+        width: 38px;
+        height: 38px;
+        border-radius: 11px;
+        font-size: 18px;
+        cursor: pointer;
+        flex: 0 0 auto;
+      }
+      .scrim {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(6,10,22,.55);
+        z-index: 65;
+      }
+      .scrim.on { display: block; }
+    }
+    
+    .draft-tag {
+      font-size: 10.5px;
+      color: var(--muted);
+      margin-top: 9px;
+      text-align: right;
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .draft-tag.on { opacity: 1; }
+    
+    /* ===== ACCESSIBILITY ===== */
+    @media (prefers-reduced-motion: reduce) {
+      .view.on { animation: none; }
+      .toast { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== TOP BAR MOBILE ===== -->
+<div class="mtop">
+  <button class="burger" id="burger">☰</button>
+  <div class="t">
+    <span>SANGCREATOR</span>
+    <b id="mTitle">Ringkasan Materi Studio</b>
+  </div>
+  <button class="burger" id="themeM">🌙</button>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<!-- ===== APP ===== -->
+<div class="app">
+  
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="side" id="side">
+    <div class="side-brand">
+      <div class="logo">SC</div>
+      <div>
+        <div class="bn">SANGCREATOR</div>
+        <div class="bs">Studio Guru AI</div>
+      </div>
+    </div>
+    
+    <!-- API Status -->
+    <div class="api-status" id="apiStatus">
+      ⚙️ Menginisialisasi Gemini API...
+    </div>
+    
+    <!-- API Key Input -->
+    <div class="api-key-box" id="apiKeyBox">
+      <div class="api-key-label">🔑 API Key Gemini</div>
+      <input type="password" id="apiKeyInput" placeholder="Tempel API Key di sini" autocomplete="off">
+      <button class="api-key-btn" id="apiKeySave">Simpan</button>
+      <div class="api-key-hint">Key disimpan di browser ini saja (localStorage). <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Dapatkan key →</a></div>
+    </div>
+    
+    <div id="navBox"></div>
+    
+    <div class="side-foot">
+      <button class="side-theme" id="themeSide">🌙 Mode Gelap</button>
+      <div style="font-size:10px;color:#5d6a90;line-height:1.6;">
+        💡 Semua prompt di-generate oleh AI<br>
+        · 13 tools · v3.0 · <span id="apiModel">Gemini 1.5 Pro</span>
+      </div>
+    </div>
+  </aside>
+  
+  <!-- ===== MAIN ===== -->
+  <main class="main">
+    <div class="inner">
+      
+      <!-- ===== VIEW: RINGKASAN ===== -->
+      <section class="view on" id="v_ringkasan">
+        <div class="topbar">
+          <div class="brand">SANGCREATOR</div>
+          <h1>Ringkasan Materi Studio</h1>
+          <p class="sub">Prompt poster ringkasan materi — banyak mapel sekaligus</p>
+          <div class="pill pill-free">✅ GRATIS</div>
+        </div>
+        
+        <div class="card">
+          <h2>1 · Daftar Materi</h2>
+          <div id="materiList"></div>
+          <button class="btn btn-add" id="addBtn">➕ Tambah Mata Pelajaran</button>
+          
+          <div class="field" style="margin-top:16px;">
+            <label>Tempel Cepat <span style="font-weight:400;">(opsional)</span></label>
+            <textarea id="bulk" placeholder="IPA | IX/D | LISTRIK DAN MAGNET | Listrik Statis, Rangkaian Listrik"></textarea>
+            <div class="hint">Format per baris: <b>Mapel | Kelas | Bab | Submateri</b>. Submateri pisahkan dengan koma.</div>
+            <div class="btn-row">
+              <button class="btn btn-ghost" id="bulkBtn">📥 Masukkan ke Daftar</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h2>2 · Gaya Desain <span class="lite">(berlaku untuk semua materi)</span></h2>
+          <div class="row">
+            <div class="field">
+              <label>Gaya Visual</label>
+              <select id="gaya">
+                <option value="ilustrasi kartun edukatif yang ceria dengan karakter lucu, ikon berwarna, dan bidang-bidang kotak informasi yang rapi">Kartun Edukatif Ceria</option>
+                <option value="aesthetic pastel lembut ala catatan cantik (aesthetic study notes), rapi, banyak ikon kecil dan washi tape">Aesthetic Pastel / Study Notes</option>
+                <option value="infografis modern profesional, flat design, ikon garis tebal, grid rapi, kontras tinggi">Infografis Flat Modern</option>
+                <option value="minimalis bersih dengan banyak ruang kosong, satu warna aksen, tipografi tegas">Minimalis Bersih</option>
+                <option value="doodle handwriting seperti catatan tulis tangan berwarna, sticky note, panah manual, dan highlight stabilo">Doodle Tulis Tangan</option>
+                <option value="mind map / peta konsep bercabang dengan node berwarna dan garis penghubung yang jelas">Mind Map / Peta Konsep</option>
+                <option value="gaya komik strip edukatif dengan panel dan balon dialog karakter">Komik Edukatif</option>
+                <option value="render 3D bergaya film animasi Pixar/Disney — karakter dan objek dibuat 3D dengan permukaan halus mengkilap, pencahayaan sinematik lembut, warna sangat vibrant dan jenuh, kedalaman ruang terasa nyata, ekspresi karakter hidup dan ramah">✨ 3D Pixar Vibrant</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Palet Warna</label>
+              <select id="warna">
+                <option value="AUTO">🎨 Otomatis per mata pelajaran</option>
+                <option value="biru, tosca, dan kuning cerah di atas latar putih bersih">Biru–Tosca–Kuning</option>
+                <option value="pastel lembut (peach, mint, lavender, cream) di atas latar krem">Pastel Lembut</option>
+                <option value="hijau daun dan kuning hangat, nuansa alam">Hijau Alam</option>
+                <option value="oranye, merah bata, dan cokelat hangat">Oranye Hangat</option>
+                <option value="ungu, pink, dan biru muda, nuansa ceria">Ungu Ceria</option>
+              </select>
+              <div class="hint">Mode otomatis memberi warna berbeda tiap mapel.</div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="field">
+              <label>Ukuran &amp; Orientasi</label>
+              <select id="ukuran">
+                <option value="A4 Portrait (21 × 29,7 cm)">A4 Portrait (21 × 29,7 cm)</option>
+                <option value="A4 Landscape (29,7 × 21 cm)">A4 Landscape</option>
+                <option value="A3 Portrait (29,7 × 42 cm) untuk poster dinding kelas">A3 Portrait (poster dinding)</option>
+                <option value="rasio 16:9 untuk slide presentasi di proyektor">Slide 16:9</option>
+                <option value="rasio 9:16 (potrait HP) untuk dibagikan di WhatsApp/Instagram">Story 9:16 (HP)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Maskot / Karakter</label>
+              <select id="maskot">
+                <option value="">Tanpa maskot</option>
+                <option value="satu karakter siswa kartun berseragam yang ramah sebagai maskot pemandu">Siswa berseragam</option>
+                <option value="karakter guru kartun ramah yang menunjuk ke arah penjelasan">Guru menunjuk</option>
+                <option value="maskot hewan lucu yang relevan dengan materi">Maskot hewan lucu</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="field">
+              <label>Tingkat Kepadatan Isi</label>
+              <select id="padat">
+                <option value="AUTO">🎯 Otomatis dari kelas</option>
+                <option value="ringkas — hanya poin-poin inti, banyak ruang kosong, cocok untuk anak SD">Ringkas (SD)</option>
+                <option value="sedang — poin inti disertai penjelasan singkat 1–2 kalimat per bagian">Sedang (SMP)</option>
+                <option value="padat — penjelasan lengkap, rumus, dan contoh, namun tetap tertata rapi">Padat (SMA/lengkap)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Konsistensi Seri</label>
+              <select id="seri">
+                <option value="on">Seragam — satu seri poster (disarankan)</option>
+                <option value="off">Bebas — tiap poster berdiri sendiri</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h2>3 · Elemen yang Ditampilkan</h2>
+          <div class="chips" id="chips"></div>
+          <div class="field" style="margin-top:14px;">
+            <label>Identitas Sekolah / Guru <span style="font-weight:400;">(opsional)</span></label>
+            <input id="identitas" placeholder="contoh: SMPN 1 Sukamaju — Bu Rina">
+          </div>
+          <div class="btn-row">
+            <label class="switch" style="flex:1;margin:0;">
+              <input type="checkbox" id="enBahasa" checked>
+              <span>Prompt Indonesia</span>
+            </label>
+            <label class="switch" style="flex:1;margin:0;">
+              <input type="checkbox" id="enEnglish">
+              <span>Versi English</span>
+            </label>
+          </div>
+          <button class="btn btn-main" id="genBtn" style="margin-top:14px;">✨ Buat Semua Prompt</button>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="againBtn">🔁 Variasi Kalimat</button>
+            <button class="btn btn-ghost" id="resetBtn">🧹 Reset</button>
+          </div>
+        </div>
+        
+        <div class="out-head">
+          <h3>Hasil Prompt</h3>
+          <span class="badge" id="countBadge">0 poster</span>
+          <button class="btn btn-ghost" id="copyAllBtn" style="padding:7px 12px;">📋 Salin Semua</button>
+        </div>
+        <div id="output">
+          <div class="card empty">Isi daftar materi lalu tekan <b>Buat Semua Prompt</b>.</div>
+        </div>
+      </section>
+      
+      <!-- ===== VIEW: RPM ===== -->
+      <section class="view" id="v_rpm">
+        <div class="topbar">
+          <div class="brand">SANGCREATOR</div>
+          <h1>Modul Ajar / RPM Studio</h1>
+          <p class="sub">Prompt dokumen perangkat ajar lengkap + cover</p>
+          <div class="pill pill-free">✅ GRATIS</div>
+        </div>
+        
+        <div class="card">
+          <h2>1 · Identitas Sekolah</h2>
+          <div class="row">
+            <div class="field"><label>Nama Sekolah</label><input id="r_sekolah" placeholder="SMPN 1 Sukamaju"></div>
+            <div class="field"><label>Tahun Pelajaran</label><input id="r_tahun" placeholder="2026/2027"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label>Nama Guru Penyusun</label><input id="r_guru" placeholder="Rina Kartika, S.Pd."></div>
+            <div class="field"><label>NIP Guru <span style="font-weight:400;">(opsional)</span></label><input id="r_nip"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label>Kepala Sekolah</label><input id="r_kepsek" placeholder="Drs. Ahmad Fauzi, M.Pd."></div>
+            <div class="field"><label>NIP Kepala Sekolah</label><input id="r_nipkep"></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label>Semester</label><select id="r_semester"><option>Ganjil</option><option>Genap</option></select></div>
+            <div class="field"><label>Kota / Kabupaten</label><input id="r_kota" placeholder="Bekasi"></div>
+            <div class="field"><label>Tanggal Pengesahan</label><input id="r_tanggal" placeholder="Juli 2026"></div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h2>2 · Materi yang Dibuat</h2>
+          <div id="rList"></div>
+          <button class="btn btn-add" id="rAddBtn">➕ Tambah Modul</button>
+          <div class="hint" style="margin-top:9px;">Tiap kartu menghasilkan satu dokumen modul ajar utuh.</div>
+        </div>
+        
+        <div class="card">
+          <h2>3 · Format &amp; Pendekatan</h2>
+          <div class="row">
+            <div class="field">
+              <label>Jenis Dokumen</label>
+              <select id="r_jenis">
+                <option value="RPM">RPM — Rencana Pembelajaran Mendalam</option>
+                <option value="MODUL">Modul Ajar (Kurikulum Merdeka)</option>
+                <option value="RPP">RPP Ringkas 1 Lembar</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Praktik Pedagogis</label>
+              <select id="r_pedagogi">
+                <option value="Pembelajaran Berbasis Masalah (Problem Based Learning)">Problem Based Learning</option>
+                <option value="Pembelajaran Berbasis Proyek (Project Based Learning)">Project Based Learning</option>
+                <option value="Pembelajaran Inkuiri Terbimbing">Inkuiri Terbimbing</option>
+                <option value="Pembelajaran Penemuan (Discovery Learning)">Discovery Learning</option>
+                <option value="Pembelajaran Kooperatif (Cooperative Learning)">Cooperative Learning</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Bahasa &amp; Gaya Penulisan</label>
+              <select id="r_gayatulis">
+                <option value="bahasa formal administratif sesuai kaidah dokumen kedinasan sekolah, kalimat efektif dan baku">Formal Kedinasan</option>
+                <option value="bahasa formal namun mengalir dan mudah dipahami, tidak kaku">Formal Ringan</option>
+                <option value="ringkas dan padat, banyak memakai tabel dan poin bernomor">Ringkas Berpoin</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Kedalaman Isi</label>
+              <select id="r_dalam">
+                <option value="lengkap dan detail, setiap bagian diuraikan menyeluruh siap dipakai tanpa banyak revisi">Lengkap &amp; Detail</option>
+                <option value="standar, cukup memenuhi kebutuhan administrasi tanpa bertele-tele">Standar</option>
+                <option value="sangat ringkas, hanya poin utama tiap bagian">Sangat Ringkas</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Dimensi Profil Lulusan</label>
+            <div class="chips" id="rDim"></div>
+          </div>
+          <div class="field">
+            <label>Lampiran yang Disertakan</label>
+            <div class="chips" id="rLamp"></div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h2>4 · Desain Cover &amp; Halaman</h2>
+          <div class="row">
+            <div class="field">
+              <label>Tema Visual Cover</label>
+              <select id="r_tema">
+                <option value="nuansa Nusantara — perpaduan pemandangan alam Indonesia, rumah adat, dan ornamen budaya dengan gradasi biru laut dan hijau">Nusantara (alam &amp; budaya)</option>
+                <option value="modern edukatif — bentuk geometris lembut, gradasi biru dan tosca, ikon pendidikan minimalis">Modern Edukatif</option>
+                <option value="batik modern — ornamen batik disederhanakan sebagai aksen tepi dengan gradasi cokelat emas dan biru tua">Batik Modern</option>
+                <option value="sains &amp; teknologi — partikel, garis sirkuit halus, dan gradasi biru elektrik keunguan">Sains &amp; Teknologi</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Tagline Cover</label>
+              <input id="r_tagline" placeholder="Mindful · Meaningful · Joyful">
+            </div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="r_bg" checked>
+            <span>Sertakan prompt background halaman isi</span>
+          </label>
+          <button class="btn btn-main" id="rGenBtn">📝 Buat Prompt Modul</button>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="rResetBtn">🧹 Reset</button>
+          </div>
+        </div>
+        
+        <div class="out-head">
+          <h3>Hasil Prompt</h3>
+          <span class="badge" id="rBadge">0 modul</span>
+          <button class="btn btn-ghost" id="rCopyAll" style="padding:7px 12px;">📋 Salin Semua</button>
+        </div>
+        <div id="rOutput">
+          <div class="card empty">Isi identitas dan materi lalu tekan <b>Buat Prompt Modul</b>.</div>
+        </div>
+      </section>
+      
+      <!-- ===== GENERIC VIEWS ===== -->
+      <div id="genericViews"></div>
+      
+    </div>
+  </main>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div id="toastWrap"></div>
+<button id="keAtas" title="Kembali ke atas">↑</button>
+
+<!-- ===== DATALIST ===== -->
+<datalist id="mapelList"></datalist>
+
+<!-- ============================================================ -->
+<!-- ===== SCRIPT ===== -->
+<script>
+// ================================================================
+// 1. KONFIGURASI GEMINI API
+// ================================================================
+
+// === KONFIGURASI API KEY ===
+// API key disimpan di localStorage (dapat diinput dari halaman web, tanpa edit kode).
+// Cara mendapatkan key: https://aistudio.google.com/app/apikey
+const GEMINI_MODEL = 'gemini-1.5-pro'; // atau 'gemini-1.5-flash'
+
+// Baca API key dari localStorage; fallback ke placeholder jika belum ada.
+let GEMINI_API_KEY = localStorage.getItem('sangcreator_gemini_key') || '';
+
+// Endpoint API Gemini (dibangun ulang setiap kali key berubah)
+let GEMINI_URL = buildGeminiUrl();
+
+function buildGeminiUrl() {
+  return `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+}
+
+// Simpan key baru ke localStorage dan perbarui endpoint
+function setApiKey(key) {
+  GEMINI_API_KEY = key.trim();
+  GEMINI_URL = buildGeminiUrl();
+  localStorage.setItem('sangcreator_gemini_key', GEMINI_API_KEY);
+}
+
+// ================================================================
+// 2. STATE & CONFIG
+// ================================================================
+
+const TOOLS = [];
+let PREMIUM = true; // Semua tools terbuka di versi AI Studio
+let API_READY = false;
+
+const CFG = {
+  TOOL_GRATIS: '', // Semua gratis di versi AI Studio
+  JUMLAH_USER: 'AI Studio'
+};
+
+// ================================================================
+// 3. API GEMINI - GENERATE PROMPT
+// ================================================================
+
+/**
+ * Kirim prompt ke Gemini API dan kembalikan hasilnya
+ */
+async function generateWithGemini(promptText) {
+  if (!GEMINI_API_KEY) {
+    throw new Error('API Key belum diisi. Masukkan API Key Gemini di panel kiri (sidebar).');
+  }
+  
+  const response = await fetch(GEMINI_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      contents: [{
+        parts: [{ text: promptText }]
+      }],
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 8192,
+        topP: 0.95,
+        topK: 40,
+      }
+    })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Gemini API Error: ${errorData.error?.message || response.statusText}`);
+  }
+  
+  const data = await response.json();
+  const result = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  return result;
+}
+
+/**
+ * Generate prompt dengan loading indicator
+ */
+async function generateWithUI(promptText, onSuccess, onError) {
+  const toastId = toast('⏳ Menghubungi Gemini AI...', 'info', 0);
+  
+  try {
+    const result = await generateWithGemini(promptText);
+    closeToast(toastId);
+    if (onSuccess) onSuccess(result);
+    return result;
+  } catch (error) {
+    closeToast(toastId);
+    toast(`❌ ${error.message}`, 'err', 4000);
+    if (onError) onError(error);
+    throw error;
+  }
+}
+
+// ================================================================
+// 4. TOAST SYSTEM
+// ================================================================
+
+let _toastAntri = [];
+let _toastIdCounter = 0;
+
+function toast(pesan, tipe, ms) {
+  const w = document.getElementById('toastWrap');
+  if (!w) return;
+  
+  const t = document.createElement('div');
+  const id = ++_toastIdCounter;
+  t.className = 'toast ' + (tipe || 'info');
+  t.textContent = pesan;
+  t.dataset.toastId = id;
+  w.appendChild(t);
+  _toastAntri.push(t);
+  
+  if (_toastAntri.length > 3) {
+    const x = _toastAntri.shift();
+    x.remove();
+  }
+  
+  if (ms && ms > 0) {
+    setTimeout(() => {
+      t.classList.add('keluar');
+      setTimeout(() => {
+        t.remove();
+        _toastAntri = _toastAntri.filter(z => z !== t);
+      }, 220);
+    }, ms);
+  }
+  
+  return id;
+}
+
+function closeToast(id) {
+  const t = _toastAntri.find(el => parseInt(el.dataset.toastId) === id);
+  if (t) {
+    t.classList.add('keluar');
+    setTimeout(() => {
+      t.remove();
+      _toastAntri = _toastAntri.filter(z => z !== t);
+    }, 220);
+  }
+}
+
+// ================================================================
+// 5. UTILITY FUNCTIONS
+// ================================================================
+
+const $ = id => document.getElementById(id);
+
+function P() { return []; }
+
+function salin(text, btn) {
+  const done = () => {
+    if (!btn.dataset.old) btn.dataset.old = btn.textContent;
+    btn.textContent = '✓ Tersalin';
+    btn.classList.add('done');
+    setTimeout(() => {
+      btn.textContent = btn.dataset.old;
+      btn.classList.remove('done');
+    }, 1600);
+  };
+  
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => {
+      done();
+      toast('Prompt tersalin — tinggal tempel di AI lain', 'ok');
+    }).catch(() => fallbackCopy(text, done));
+  } else {
+    fallbackCopy(text, done);
+  }
+}
+
+function fallbackCopy(text, done) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    done();
+    toast('Prompt tersalin', 'ok');
+  } catch (e) {
+    toast('Gagal menyalin — blok teksnya lalu tekan Ctrl+C', 'err', 3200);
+  }
+  document.body.removeChild(ta);
+}
+
+function blok(title, text) {
+  const w = document.createElement('div');
+  w.className = 'block';
+  const bar = document.createElement('div');
+  bar.className = 'block-bar';
+  const t = document.createElement('div');
+  t.className = 'block-title';
+  t.textContent = title;
+  const b = document.createElement('button');
+  b.className = 'copy';
+  b.textContent = 'Salin';
+  b.onclick = () => salin(text, b);
+  bar.appendChild(t);
+  bar.appendChild(b);
+  const p = document.createElement('pre');
+  p.textContent = text;
+  w.appendChild(bar);
+  w.appendChild(p);
+  return w;
+}
+
+function guliInstan(el, offset) {
+  const y = el.getBoundingClientRect().top + window.pageYOffset - (offset || 78);
+  window.scrollTo(0, y < 0 ? 0 : y);
+}
+
+function nanti(fn) {
+  if (window.requestAnimationFrame) {
+    requestAnimationFrame(() => requestAnimationFrame(fn));
+  } else {
+    setTimeout(fn, 0);
+  }
+}
+
+function acak(arr, n) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return n ? a.slice(0, n) : a;
+}
+
+function pecahTopik(topik, jumlah) {
+  const T = (topik || 'materi ini').replace(/^(BAB|Bab)\s*\d*\s*/, '').trim();
+  const pola = [
+    'Pengertian dan Ciri ' + T,
+    'Jenis-jenis ' + T,
+    'Bagian dan Unsur ' + T,
+    'Proses dan Cara Kerja ' + T,
+    'Contoh ' + T + ' dalam Kehidupan Sehari-hari',
+    'Manfaat dan Dampak ' + T,
+    'Rumus dan Perhitungan ' + T,
+    'Perbedaan dan Perbandingan pada ' + T,
+    'Faktor yang Mempengaruhi ' + T,
+    'Latihan dan Penerapan ' + T
+  ];
+  return pola.slice(0, jumlah || 5);
+}
+
+const NAMA_CONTOH = [
+  'Andi Pratama', 'Bunga Lestari', 'Citra Ayu', 'Dimas Saputra',
+  'Eka Wulandari', 'Fajar Nugroho', 'Gita Permata', 'Hendra Wijaya',
+  'Indah Sari', 'Joko Susilo', 'Kiran Maharani', 'Lukman Hakim',
+  'Maya Anggraini', 'Nanda Pratiwi', 'Oka Ramadhan', 'Putri Amelia',
+  'Rizky Fauzan', 'Sinta Dewi', 'Taufik Hidayat', 'Umi Kalsum'
+];
+
+// ================================================================
+// 6. IDE FUNCTIONS (AI-assisted ideas)
+// ================================================================
+
+const IDE = {
+  submateri: function(g) {
+    return pecahTopik(g('bab') || g('materi'), 4).join('\n');
+  },
+  poinVideo: function(g) {
+    return pecahTopik(g('materi'), 4).join('\n');
+  },
+  materiUji: function(g) {
+    return pecahTopik(g('materi') || g('bab'), 5).join('\n');
+  },
+  materiTahun: function(g) {
+    const m = (g('mapel') || 'Mata Pelajaran').trim();
+    const out = [];
+    for (let i = 1; i <= 8; i++) {
+      out.push('Bab ' + i + ' — (judul bab ' + m + ' ke-' + i + ')');
+    }
+    return out.join('\n');
+  },
+  tujuan: function(g) {
+    const T = (g('materi') || g('bab') || 'materi ini').trim();
+    const kko = acak(['menjelaskan', 'menganalisis', 'membandingkan', 'menerapkan', 'menyimpulkan', 'merancang'], 3);
+    return 'Murid mampu ' + kko[0] + ' konsep ' + T + ' dengan tepat setelah mengikuti pembelajaran; ' +
+           'murid mampu ' + kko[1] + ' penerapan ' + T + ' dalam kehidupan sehari-hari; ' +
+           'murid mampu ' + kko[2] + ' hasil pengamatannya secara mandiri.';
+  },
+  posterIsi: function(g) {
+    const j = String(g('jenis') || '').toUpperCase();
+    const P = {
+      'TATA TERTIB': ['Datang ke sekolah tepat waktu', 'Berpakaian rapi dan sopan', 'Mengucapkan salam kepada guru', 'Menjaga kebersihan kelas', 'Tidak makan saat pelajaran berlangsung', 'Mengumpulkan tugas tepat waktu', 'Menghormati teman dan tidak mengejek', 'Meminta izin sebelum keluar kelas'],
+      'PIKET': ['Menyapu lantai kelas', 'Mengepel bila perlu', 'Menghapus papan tulis', 'Merapikan meja dan kursi', 'Membuang sampah ke tempatnya', 'Menyiram tanaman kelas', 'Mematikan lampu dan kipas sebelum pulang'],
+      'SUDUT BACA': ['Ambil buku dengan tangan bersih', 'Baca dengan tenang', 'Kembalikan buku ke rak semula', 'Jangan melipat halaman buku', 'Catat judul buku yang sudah dibaca', 'Ajak temanmu ikut membaca'],
+      'MOTIVASI': ['Belajar hari ini, sukses esok hari', 'Gagal itu proses, menyerah itu pilihan', 'Sedikit demi sedikit, lama-lama bisa', 'Orang pintar bukan yang tak pernah salah, tapi yang mau belajar dari salahnya', 'Kamu tidak harus hebat untuk memulai, tapi harus memulai untuk jadi hebat'],
+      '7K': ['Keamanan — jaga barang dan keselamatan diri', 'Kebersihan — buang sampah pada tempatnya', 'Ketertiban — patuhi aturan sekolah', 'Keindahan — hias dan rawat kelas', 'Kekeluargaan — saling tolong menolong', 'Kerindangan — rawat tanaman sekolah', 'Kesehatan — cuci tangan dan makan bergizi'],
+      'PHBS': ['Cuci tangan pakai sabun sebelum makan', 'Jajan di kantin sekolah yang bersih', 'Buang sampah pada tempatnya', 'Gunakan jamban yang bersih', 'Olahraga teratur setiap hari', 'Tidak merokok di lingkungan sekolah'],
+      'STRUKTUR': ['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua Kelas', 'Sekretaris', 'Bendahara', 'Seksi Kebersihan', 'Seksi Keamanan', 'Seksi Kerohanian'],
+      'JADWAL PELAJARAN': ['Senin — (isi mata pelajaran)', 'Selasa — (isi mata pelajaran)', 'Rabu — (isi mata pelajaran)', 'Kamis — (isi mata pelajaran)', 'Jumat — (isi mata pelajaran)'],
+      'ABSENSI': ['Hadir', 'Izin', 'Sakit', 'Tanpa Keterangan', 'Murid Terajin Bulan Ini']
+    };
+    for (const k in P) {
+      if (j.indexOf(k) > -1) return P[k].join('\n');
+    }
+    return ['(poin 1)', '(poin 2)', '(poin 3)', '(poin 4)', '(poin 5)', '(poin 6)'].join('\n');
+  },
+  dataNilai: function(g) {
+    const n = Math.min(parseInt(g('nsiswa'), 10) || 10, 24);
+    const ns = parseInt(g('nsoal'), 10) || 10;
+    const out = ['Nama | Skor per butir (1 = benar, 0 = salah)'];
+    acak(NAMA_CONTOH, n).forEach(function(nm) {
+      const b = [];
+      for (let i = 0; i < ns; i++) b.push(Math.random() < 0.68 ? 1 : 0);
+      out.push(nm + ' | ' + b.join(','));
+    });
+    out.push('');
+    out.push('(Ini contoh format. Hapus lalu tempel data aslimu dari Excel dengan susunan yang sama.)');
+    return out.join('\n');
+  },
+  idePoster: function() {
+    return acak([
+      'POSTER JADWAL SHOLAT BERJAMAAH KELAS',
+      'POSTER POJOK LITERASI DIGITAL',
+      'POSTER KESEPAKATAN KELAS',
+      'POSTER TARGET NILAI KELAS BULAN INI',
+      'POSTER ALUR MENCUCI TANGAN'
+    ], 1)[0];
+  },
+  ideSertifikat: function() {
+    return acak([
+      'PIAGAM PELANTIKAN PENGURUS OSIS',
+      'SERTIFIKAT MURID TERAJIN BULAN INI',
+      'PIAGAM PENGHARGAAN PETUGAS UPACARA',
+      'SERTIFIKAT KELULUSAN TAHFIDZ'
+    ], 1)[0];
+  },
+  ideInteraktif: function(g) {
+    const T = (g('materi') || 'materi').trim();
+    return acak([
+      'PERMAINAN DOMINO ' + T + ' — kartu dipasangkan antara istilah dan pengertiannya',
+      'BINGO KOSAKATA ' + T + ' — murid menandai kotak saat guru menyebut definisinya',
+      'KARTU MISTERI ' + T + ' — murid menebak konsep dari 3 petunjuk bertahap'
+    ], 1)[0];
+  },
+  ideHalaman: function() {
+    return acak([
+      '2 halaman A4, halaman kedua khusus kolom kesimpulan dan refleksi',
+      '3 halaman A4, halaman terakhir berisi rubrik penilaian untuk guru',
+      '4 halaman A4 dijilid jadi buklet kecil A5'
+    ], 1)[0];
+  },
+  karakterIde: function() {
+    return acak([
+      'seorang nenek pendongeng berkebaya dengan selendang batik, wajah teduh dan ramah',
+      'seorang ilmuwan muda berjas lab putih dengan kacamata bulat, ekspresi antusias',
+      'seorang petani ramah bertopi caping dengan baju lengan panjang lusuh yang bersih'
+    ], 1)[0];
+  }
+};
+
+// ================================================================
+// 7. TOOL DEFINITIONS
+// ================================================================
+
+// --- 7a. Ringkasan Materi ---
+const ELEMEN = [
+  ['judul', 'Judul besar', 'judul besar yang mencolok di bagian atas berisi nama submateri'],
+  ['kunci', 'Kotak Kata Kunci', 'satu kotak khusus berisi daftar KATA KUNCI penting'],
+  ['definisi', 'Definisi/Pengertian', 'kotak pengertian atau definisi dasar di bagian awal'],
+  ['rumus', 'Rumus', 'kotak rumus yang ditulis besar dan jelas beserta keterangan simbolnya'],
+  ['contoh', 'Contoh soal', 'satu contoh soal beserta langkah penyelesaiannya secara ringkas'],
+  ['gambar', 'Ilustrasi/diagram', 'ilustrasi atau diagram yang menjelaskan konsep secara visual'],
+  ['tabel', 'Tabel perbandingan', 'tabel perbandingan sederhana antar konsep'],
+  ['tips', 'Tips & trik', 'kotak "Tips Cepat" berisi cara mudah mengingat materi'],
+  ['sehari', 'Contoh sehari-hari', 'contoh penerapan materi dalam kehidupan sehari-hari'],
+  ['nomor', 'Poin bernomor', 'poin-poin yang diberi nomor berurutan agar mudah diikuti'],
+  ['ikon', 'Ikon per bagian', 'ikon kecil berwarna sebagai penanda di setiap bagian'],
+  ['latihan', 'Kotak latihan mandiri', 'kotak kosong "Ayo Coba" berisi 2 soal latihan untuk siswa'],
+  ['ingat', 'Kotak "Jangan Lupa"', 'kotak peringatan berisi kesalahan yang sering dilakukan siswa'],
+  ['peta', 'Peta konsep mini', 'peta konsep mini yang menghubungkan seluruh bagian materi']
+];
+
+const DEFAULT_ON = ['judul', 'kunci', 'definisi', 'gambar', 'ikon', 'sehari'];
+
+const WARNA_MAPEL = {
+  'ipa': 'hijau daun dan biru tosca dengan aksen kuning, nuansa sains yang segar',
+  'fisika': 'biru tua dan tosca dengan aksen oranye terang, nuansa sains modern',
+  'kimia': 'ungu dan tosca dengan aksen hijau neon lembut, nuansa laboratorium',
+  'biologi': 'hijau daun dan hijau muda dengan aksen cokelat hangat, nuansa alam',
+  'matematika': 'biru royal dan putih dengan aksen oranye cerah, tegas dan bersih',
+  'ips': 'cokelat hangat dan krem dengan aksen oranye, nuansa peta kuno modern',
+  'sejarah': 'cokelat sepia dan krem dengan aksen emas, nuansa klasik',
+  'geografi': 'hijau bumi dan biru laut dengan aksen kuning pasir',
+  'ekonomi': 'hijau tosca dan biru gelap dengan aksen emas, kesan profesional',
+  'sosiologi': 'oranye dan ungu lembut dengan aksen krem, nuansa hangat sosial',
+  'bahasa indonesia': 'merah bata dan krem dengan aksen kuning mustard, nuansa sastra hangat',
+  'bahasa inggris': 'biru navy dan merah dengan aksen putih, nuansa segar internasional',
+  'bahasa daerah': 'cokelat batik dan emas dengan aksen merah, nuansa tradisional',
+  'ppkn': 'merah dan putih dengan aksen abu-abu gelap, nuansa nasionalis rapi',
+  'pendidikan agama islam': 'hijau zamrud dan emas dengan ornamen geometris islami sederhana',
+  'informatika': 'biru elektrik dan ungu dengan aksen tosca neon, nuansa digital',
+  'seni budaya': 'warna-warni cerah palet seniman dengan aksen ungu dan pink',
+  'pjok': 'oranye dan biru energik dengan aksen putih, nuansa olahraga',
+  'prakarya': 'kuning mustard dan cokelat kayu dengan aksen hijau, nuansa kriya',
+  'bimbingan konseling': 'biru muda dan lavender dengan aksen putih, nuansa tenang'
+};
+
+const WARNA_CADANGAN = [
+  'biru, tosca, dan kuning cerah di atas latar putih bersih',
+  'pastel lembut (peach, mint, lavender, cream) di atas latar krem',
+  'oranye, merah bata, dan cokelat hangat',
+  'ungu, pink, dan biru muda, nuansa ceria',
+  'hijau daun dan kuning hangat, nuansa alam'
+];
+
+const V_TUTUP = [
+  'menarik, aesthetic, informatif, mudah dibaca, dan siap print',
+  'rapi, enak dipandang, mudah dipahami siswa, dan siap dicetak',
+  'eye-catching, tertata, ramah anak, dan langsung bisa dicetak',
+  'estetik, komunikatif, tidak berantakan, dan siap dibagikan ke siswa'
+];
+
+const V_LAYOUT = [
+  'Tata letak dibagi menjadi kotak-kotak (card) bersekat rapi dengan jarak antar bagian yang lega',
+  'Susun konten dalam grid bersekat yang seimbang, tidak berdesakan, alur baca dari atas ke bawah',
+  'Gunakan panel-panel berwarna dengan sudut membulat, hierarki jelas antara judul, subjudul, dan isi',
+  'Bagi halaman menjadi beberapa blok informasi dengan header berwarna di tiap bloknya'
+];
+
+// --- 7b. Modul Ajar ---
+const DIMENSI = ['Keimanan dan Ketakwaan terhadap Tuhan Yang Maha Esa', 'Kewargaan', 'Penalaran Kritis', 'Kreativitas', 'Kolaborasi', 'Kemandirian', 'Kesehatan', 'Komunikasi'];
+const DIM_ON = ['Penalaran Kritis', 'Kolaborasi', 'Kemandirian'];
+
+const LAMPIRAN = [
+  ['lkpd', 'LKPD', 'Lembar Kerja Peserta Didik (LKPD) yang siap dicetak, lengkap dengan petunjuk pengerjaan dan kolom jawaban'],
+  ['rubrik', 'Rubrik penilaian', 'rubrik penilaian dalam bentuk tabel dengan kriteria dan rentang skor yang jelas'],
+  ['pg', 'Soal pilihan ganda', '10 soal pilihan ganda beserta kunci jawaban'],
+  ['uraian', 'Soal uraian', '5 soal uraian beserta kunci jawaban dan pedoman penskoran'],
+  ['sikap', 'Instrumen penilaian sikap', 'lembar observasi penilaian sikap murid selama pembelajaran'],
+  ['media', 'Media pembelajaran', 'daftar media pembelajaran digital yang relevan beserta tautannya'],
+  ['bacaan', 'Bahan bacaan', 'ringkasan bahan bacaan materi untuk guru dan murid'],
+  ['glosarium', 'Glosarium', 'glosarium istilah penting pada materi ini'],
+  ['pustaka', 'Daftar pustaka', 'daftar pustaka dengan format penulisan baku'],
+  ['remedial', 'Remedial & pengayaan', 'rencana pembelajaran remedial dan pengayaan'],
+  ['refleksi', 'Refleksi guru & murid', 'lembar refleksi untuk guru dan untuk murid']
+];
+
+const LAMP_ON = ['lkpd', 'rubrik', 'pg', 'uraian', 'media', 'pustaka'];
+
+const JENIS_NAMA = {
+  'RPM': 'Rencana Pembelajaran Mendalam (RPM)',
+  'MODUL': 'Modul Ajar Kurikulum Merdeka',
+  'RPP': 'Rencana Pelaksanaan Pembelajaran (RPP) ringkas satu lembar'
+};
+
+function strukturDok(j) {
+  if (j === 'RPM') return [
+    'A. IDENTITAS — nama sekolah, mata pelajaran, kelas/fase, semester, alokasi waktu, jumlah pertemuan, nama penyusun, tahun pelajaran (buat dalam bentuk tabel)',
+    'B. IDENTIFIKASI — kesiapan murid, dimensi profil lulusan yang disasar, materi insersi/lintas disiplin, sarana prasarana',
+    'C. DESAIN PEMBELAJARAN — capaian pembelajaran, lintas disiplin ilmu, tujuan pembelajaran, topik pembelajaran, praktik pedagogis, kemitraan pembelajaran, lingkungan pembelajaran, pemanfaatan digital',
+    'D. PENGALAMAN BELAJAR — dijabarkan per pertemuan dalam tabel dengan tiga tahap: MEMAHAMI (awal), MENGAPLIKASI (inti), MEREFLEKSI (penutup); tiap tahap berisi langkah kegiatan guru dan murid secara rinci beserta perkiraan waktunya',
+    'E. ASESMEN PEMBELAJARAN — asesmen awal (diagnostik), asesmen proses (formatif), asesmen akhir (sumatif); dilengkapi bentuk instrumen dan teknik penilaian',
+    'F. REFLEKSI — refleksi guru dan refleksi murid',
+    'G. LEMBAR PENGESAHAN — kolom tanda tangan Kepala Sekolah dan Guru Mata Pelajaran beserta nama dan NIP',
+    'H. DAFTAR PUSTAKA'
+  ];
+  if (j === 'MODUL') return [
+    'A. INFORMASI UMUM — identitas modul, kompetensi awal, profil pelajar Pancasila, sarana prasarana, target peserta didik, model pembelajaran (tabel)',
+    'B. KOMPONEN INTI — capaian pembelajaran, tujuan pembelajaran, pemahaman bermakna, pertanyaan pemantik, persiapan pembelajaran',
+    'C. KEGIATAN PEMBELAJARAN — per pertemuan: pendahuluan, kegiatan inti, penutup, lengkap dengan alokasi waktu tiap langkah',
+    'D. ASESMEN — diagnostik, formatif, dan sumatif beserta instrumennya',
+    'E. PENGAYAAN DAN REMEDIAL',
+    'F. REFLEKSI GURU DAN PESERTA DIDIK',
+    'G. LEMBAR PENGESAHAN — tanda tangan Kepala Sekolah dan Guru Mata Pelajaran',
+    'H. DAFTAR PUSTAKA'
+  ];
+  return [
+    'A. IDENTITAS singkat dalam satu tabel',
+    'B. TUJUAN PEMBELAJARAN',
+    'C. LANGKAH PEMBELAJARAN — pendahuluan, inti, penutup secara ringkas per pertemuan',
+    'D. ASESMEN DAN PENILAIAN',
+    'E. LEMBAR PENGESAHAN'
+  ];
+}
+
+// ================================================================
+// 8. BUILD FUNCTIONS FOR TOOLS
+// ================================================================
+
+// --- 8a. Ringkasan Materi ---
+function promptID(item, sub, seed, idx) {
+  const G = {
+    gaya: document.getElementById('gaya').value,
+    ukuran: document.getElementById('ukuran').value,
+    maskot: document.getElementById('maskot').value,
+    seri: document.getElementById('seri').value,
+    identitas: document.getElementById('identitas').value.trim()
+  };
+  
+  function warnaUntuk(mapel, idx) {
+    const p = document.getElementById('warna').value;
+    if (p !== 'AUTO') return p;
+    const key = mapel.toLowerCase().trim();
+    if (WARNA_MAPEL[key]) return WARNA_MAPEL[key];
+    const hit = Object.keys(WARNA_MAPEL).find(k => key.includes(k) || k.includes(key));
+    return hit ? WARNA_MAPEL[hit] : WARNA_CADANGAN[idx % WARNA_CADANGAN.length];
+  }
+  
+  function padatUntuk(kelas) {
+    const p = document.getElementById('padat').value;
+    if (p !== 'AUTO') return p;
+    const k = kelas.toUpperCase();
+    const angka = (k.match(/\d+/) || [''])[0];
+    const romawi = (k.match(/\b(X{0,3}(IX|IV|V?I{0,3}))\b/) || [''])[0];
+    const map = { 'I':1, 'II':2, 'III':3, 'IV':4, 'V':5, 'VI':6, 'VII':7, 'VIII':8, 'IX':9, 'X':10, 'XI':11, 'XII':12 };
+    const n = angka ? parseInt(angka, 10) : (map[romawi] || 0);
+    if (n && n <= 6) return 'ringkas — hanya poin-poin inti, banyak ruang kosong, cocok untuk anak SD';
+    if (n && n <= 9) return 'sedang — poin inti disertai penjelasan singkat 1–2 kalimat per bagian';
+    if (n) return 'padat — penjelasan lengkap, rumus, dan contoh, namun tetap tertata rapi';
+    if (k.includes('E') || k.includes('F')) return 'padat — penjelasan lengkap, rumus, dan contoh, namun tetap tertata rapi';
+    return 'sedang — poin inti disertai penjelasan singkat 1–2 kalimat per bagian';
+  }
+  
+  function pilihElemen() {
+    return [...document.querySelectorAll('#chips .chip.on')].map(c => {
+      const r = ELEMEN.find(e => e[0] === c.dataset.k);
+      return r ? r[2] : '';
+    }).filter(Boolean);
+  }
+  
+  const L = [];
+  L.push('Peran: Desainer Grafis Instruksional dan Ahli Media Pembelajaran.');
+  L.push('');
+  L.push('Buatkan ringkasan materi pembelajaran untuk:');
+  L.push('• Mata Pelajaran : ' + item.mapel);
+  L.push('• Kelas / Fase   : ' + item.kelas);
+  L.push('• Bab / Topik    : ' + item.bab);
+  L.push('• Submateri      : ' + sub);
+  L.push('');
+  L.push('Desain sebagai poster belajar / lembar ringkasan edukatif ' + G.ukuran + ' yang ' + V_TUTUP[seed % V_TUTUP.length] + '.');
+  L.push('');
+  L.push('KETENTUAN DESAIN');
+  L.push('- Gaya visual: ' + G.gaya + '.');
+  L.push('- Palet warna: ' + warnaUntuk(item.mapel, idx) + '.');
+  if (G.maskot) L.push('- Sertakan ' + G.maskot + '.');
+  L.push('- ' + V_LAYOUT[seed % V_LAYOUT.length] + '.');
+  L.push('- Kepadatan isi: ' + padatUntuk(item.kelas) + '.');
+  L.push('- Tipografi: judul tebal dan besar, isi memakai huruf sans-serif bersih dan terbaca jelas walau dicetak kecil.');
+  if (G.seri === 'on') L.push('- Poster ini bagian dari satu seri: pertahankan template, posisi judul, bentuk kotak, dan gaya ikon yang sama persis seperti poster sebelumnya.');
+  L.push('');
+  L.push('ISI YANG HARUS ADA');
+  pilihElemen().forEach((e, i) => L.push((i + 1) + '. Sertakan ' + e + '.'));
+  if (item.poin) {
+    L.push('');
+    L.push('POIN WAJIB DARI GURU');
+    item.poin.split(/,|;/).map(s => s.trim()).filter(Boolean).forEach(p => L.push('- ' + p));
+  }
+  if (G.identitas) {
+    L.push('');
+    L.push('Cetak kecil di bagian bawah poster: "' + G.identitas + '".');
+  }
+  L.push('');
+  L.push('ATURAN PENTING');
+  L.push('- Seluruh teks WAJIB dalam Bahasa Indonesia, ejaan benar, tanpa typo, tanpa huruf acak.');
+  L.push('- Isi materi harus benar secara keilmuan dan sesuai tingkat ' + item.kelas + '.');
+  L.push('- Jangan ada teks yang terpotong atau tertumpuk gambar.');
+  L.push('- Resolusi tinggi dan tajam, siap cetak (300 DPI).');
+  return L.join('\n');
+}
+
+function promptEN(item, sub, idx) {
+  const G = {
+    gaya: document.getElementById('gaya').value,
+    ukuran: document.getElementById('ukuran').value,
+    maskot: document.getElementById('maskot').value,
+    identitas: document.getElementById('identitas').value.trim()
+  };
+  
+  function warnaUntuk(mapel, idx) {
+    const p = document.getElementById('warna').value;
+    if (p !== 'AUTO') return p;
+    const key = mapel.toLowerCase().trim();
+    if (WARNA_MAPEL[key]) return WARNA_MAPEL[key];
+    const hit = Object.keys(WARNA_MAPEL).find(k => key.includes(k) || k.includes(key));
+    return hit ? WARNA_MAPEL[hit] : WARNA_CADANGAN[idx % WARNA_CADANGAN.length];
+  }
+  
+  function pilihElemen() {
+    return [...document.querySelectorAll('#chips .chip.on')].map(c => {
+      const r = ELEMEN.find(e => e[0] === c.dataset.k);
+      return r ? r[2] : '';
+    }).filter(Boolean);
+  }
+  
+  const L = [];
+  L.push('Role: Instructional Graphic Designer and Learning Media Expert.');
+  L.push('');
+  L.push('Create an educational summary poster about "' + sub + '" (chapter: ' + item.bab + ', subject: ' + item.mapel + ', grade level: ' + item.kelas + ').');
+  L.push('Format: ' + G.ukuran + ', print-ready, high resolution 300 DPI.');
+  L.push('Visual style: ' + G.gaya + '.');
+  L.push('Color palette: ' + warnaUntuk(item.mapel, idx) + '.');
+  if (G.maskot) L.push('Include ' + G.maskot + '.');
+  L.push('Layout: clean grid of rounded info cards, clear hierarchy, generous spacing, bold readable headline at top.');
+  L.push('Must include: ' + pilihElemen().join('; ') + '.');
+  if (item.poin) L.push('Teacher notes to include: ' + item.poin + '.');
+  if (G.identitas) L.push('Small footer text: "' + G.identitas + '".');
+  L.push('IMPORTANT: all text must be in correct Indonesian language, no typos, no gibberish, no cut-off words.');
+  return L.join('\n');
+}
+
+// --- 8b. Modul Ajar ---
+function rPromptDok(id, it) {
+  const dims = [...document.querySelectorAll('#rDim .chip.on')].map(c => c.dataset.v);
+  const lamps = [...document.querySelectorAll('#rLamp .chip.on')].map(c => {
+    const r = LAMPIRAN.find(x => x[0] === c.dataset.k);
+    return r ? r[2] : '';
+  }).filter(Boolean);
+  
+  const L = [];
+  L.push('Peran: Kamu adalah Pengawas Sekolah sekaligus Guru Ahli penyusun perangkat ajar yang sangat berpengalaman menyusun dokumen kurikulum di Indonesia.');
+  L.push('');
+  L.push('Tugas: Susun dokumen ' + JENIS_NAMA[id.jenis] + ' yang LENGKAP, SIAP PAKAI, dan siap dicetak untuk:');
+  L.push('');
+  L.push('IDENTITAS');
+  L.push('• Satuan Pendidikan : ' + id.sekolah);
+  L.push('• Mata Pelajaran    : ' + it.mapel);
+  L.push('• Kelas / Fase      : ' + it.kelas);
+  L.push('• Semester          : ' + id.semester);
+  L.push('• Materi Pokok      : ' + it.bab);
+  L.push('• Alokasi Waktu     : ' + it.jp + (it.tm ? ' (' + it.tm + ' pertemuan' + (it.dur ? ' × ' + it.dur : '') + ')' : ''));
+  L.push('• Guru Penyusun     : ' + id.guru + (id.nip ? ' / NIP ' + id.nip : ''));
+  L.push('• Tahun Pelajaran   : ' + id.tahun);
+  L.push('');
+  if (it.tp) {
+    L.push('TUJUAN PEMBELAJARAN YANG DIMINTA GURU');
+    it.tp.split('\n').map(s => s.trim()).filter(Boolean).forEach((t, i) => L.push((i + 1) + '. ' + t));
+    L.push('');
+  } else {
+    L.push('Susunkan sendiri tujuan pembelajaran yang tepat (3–4 butir), gunakan kata kerja operasional yang terukur dan sesuai tingkat kognitif kelas ' + it.kelas + '.');
+    L.push('');
+  }
+  L.push('KETENTUAN ISI');
+  L.push('- Praktik pedagogis yang dipakai: ' + id.pedagogi + '.');
+  L.push('- Dimensi Profil Lulusan yang disasar: ' + (dims.length ? dims.join(', ') : 'pilih yang paling relevan') + '.');
+  L.push('- Gaya bahasa: ' + id.gayatulis + '.');
+  L.push('- Kedalaman: ' + id.dalam + '.');
+  if (it.note) L.push('- Catatan khusus dari guru: ' + it.note + '.');
+  L.push('');
+  L.push('STRUKTUR DOKUMEN (ikuti urutan ini persis)');
+  strukturDok(id.jenis).forEach(s => L.push(s));
+  if (lamps.length) {
+    L.push('');
+    L.push('LAMPIRAN YANG WAJIB DISERTAKAN');
+    lamps.forEach((s, i) => L.push('Lampiran ' + (i + 1) + ': ' + s + '.'));
+  }
+  L.push('');
+  L.push('ATURAN PENULISAN');
+  L.push('- Tulis dalam Bahasa Indonesia baku sesuai PUEBI, tanpa typo.');
+  L.push('- Gunakan TABEL untuk bagian identitas, langkah pembelajaran, asesmen, dan rubrik.');
+  L.push('- Isi materi harus benar secara keilmuan dan sesuai tingkat kelas ' + it.kelas + '.');
+  L.push('- Jangan memakai placeholder seperti "…" atau "isi sendiri" — semua bagian harus terisi penuh.');
+  L.push('- Pada lembar pengesahan tulis: ' + id.kota + ', ' + id.tanggal + '; Kepala Sekolah ' + id.kepsek +
+         (id.nipkep ? ' (NIP ' + id.nipkep + ')' : '') + ' dan Guru Mata Pelajaran ' + id.guru + (id.nip ? ' (NIP ' + id.nip + ')' : '') + '.');
+  L.push('- Format keluaran rapi dan siap disalin ke Google Docs atau Microsoft Word.');
+  L.push('');
+  L.push('Kerjakan sampai tuntas. Jika jawabanmu terpotong, lanjutkan otomatis saat aku ketik "lanjutkan".');
+  return L.join('\n');
+}
+
+function rPromptCover(id, it) {
+  const L = [];
+  L.push('Peran: Desainer Grafis Dokumen Pendidikan.');
+  L.push('');
+  L.push('Buatkan desain COVER dokumen perangkat ajar, ukuran A4 Portrait (21 × 29,7 cm), resolusi tinggi 300 DPI, siap cetak.');
+  L.push('');
+  L.push('TEKS YANG HARUS TAMPIL DI COVER (tulis persis, ejaan Bahasa Indonesia yang benar)');
+  L.push('- Judul utama besar : ' + (id.jenis === 'RPM' ? 'RENCANA PEMBELAJARAN MENDALAM' : id.jenis === 'MODUL' ? 'MODUL AJAR' : 'RENCANA PELAKSANAAN PEMBELAJARAN'));
+  if (id.tagline) L.push('- Tagline di bawah judul: ' + id.tagline);
+  L.push('- Mata Pelajaran    : ' + it.mapel);
+  L.push('- Kelas / Fase      : ' + it.kelas);
+  L.push('- Materi            : ' + it.bab);
+  L.push('- Nama sekolah di pojok kiri atas : ' + id.sekolah);
+  L.push('- Nama penyusun di bagian bawah   : ' + id.guru);
+  L.push('- Tahun Pelajaran ' + id.tahun);
+  L.push('');
+  L.push('KETENTUAN DESAIN');
+  L.push('- Tema visual: ' + id.tema + '.');
+  L.push('- Latar belakang penuh sampai tepi (full bleed), tanpa bingkai putih.');
+  L.push('- Komposisi vertikal: identitas sekolah di atas, judul besar di sepertiga atas, ilustrasi tema di tengah bawah, identitas penyusun di kaki halaman.');
+  L.push('- Tipografi tegas dan profesional, judul memakai huruf tebal besar berkontras tinggi dengan latar.');
+  L.push('- Kesan dokumen resmi sekolah yang modern dan rapi, bukan poster iklan.');
+  L.push('');
+  L.push('ATURAN PENTING');
+  L.push('- Semua teks WAJIB Bahasa Indonesia, ejaan benar, tanpa typo dan tanpa huruf acak.');
+  L.push('- Jangan ada teks yang terpotong atau tertimpa gambar.');
+  return L.join('\n');
+}
+
+function rPromptBg(id) {
+  const L = [];
+  L.push('Peran: Desainer Grafis Dokumen Pendidikan.');
+  L.push('');
+  L.push('Buatkan BACKGROUND HALAMAN ISI untuk dokumen perangkat ajar, ukuran A4 Portrait (21 × 29,7 cm), 300 DPI.');
+  L.push('');
+  L.push('KETENTUAN');
+  L.push('- Tema visual mengikuti cover: ' + id.tema + '.');
+  L.push('- SANGAT PENTING: bagian tengah halaman harus KOSONG dan berwarna putih bersih karena akan diisi teks dan tabel.');
+  L.push('- Ornamen hanya diletakkan di tepi atas dan tepi bawah halaman, dengan opasitas rendah (samar seperti watermark).');
+  L.push('- Sisakan margin kosong minimal 2,5 cm di keempat sisi.');
+  L.push('- Tidak boleh ada teks, tulisan, huruf, atau angka apa pun pada gambar ini — murni background polos berornamen.');
+  L.push('- Warna ornamen lembut agar teks hitam di atasnya tetap terbaca jelas saat dicetak hitam-putih.');
+  return L.join('\n');
+}
+
+// ================================================================
+// 9. UI BUILDERS
+// ================================================================
+
+// --- 9a. Field Builder ---
+function buatField(f, store) {
+  if (f.t === 'sec') {
+    const d = document.createElement('div');
+    d.className = 'fsec';
+    d.textContent = f.label;
+    return d;
+  }
+  if (f.t === 'row' || f.t === 'row3') {
+    const d = document.createElement('div');
+    d.className = f.t;
+    f.kids.forEach(k => d.appendChild(buatField(k, store)));
+    return d;
+  }
+  
+  const wrap = document.createElement('div');
+  wrap.className = 'field';
+  
+  if (f.t === 'switch') {
+    wrap.className = '';
+    const lab = document.createElement('label');
+    lab.className = 'switch';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = !!f.on;
+    const sp = document.createElement('span');
+    sp.textContent = f.label;
+    lab.appendChild(cb);
+    lab.appendChild(sp);
+    wrap.appendChild(lab);
+    store[f.k] = () => cb.checked;
+    if (store.__set) store.__set[f.k] = function(v) { if (typeof v === 'boolean') cb.checked = v; };
+    if (store.__dirty) cb.addEventListener('change', store.__dirty, { passive: true });
+    return wrap;
+  }
+  
+  const lab = document.createElement('label');
+  lab.innerHTML = f.label;
+  if (f.ide && IDE[f.ide]) {
+    const bar = document.createElement('div');
+    bar.className = 'lbl-row';
+    const bi = document.createElement('button');
+    bi.className = 'btn-ide';
+    bi.type = 'button';
+    bi.textContent = '💡 Ide dari AI';
+    bar.appendChild(lab);
+    bar.appendChild(bi);
+    wrap.appendChild(bar);
+    wrap._ideBtn = bi;
+    wrap._ideFn = f.ide;
+  } else {
+    wrap.appendChild(lab);
+  }
+  
+  if (f.t === 'chips') {
+    const box = document.createElement('div');
+    box.className = 'chips';
+    f.opts.forEach(([k, full]) => {
+      const c = document.createElement('div');
+      c.className = 'chip' + ((f.on || []).includes(k) ? ' on' : '');
+      c.dataset.full = full;
+      c.textContent = full.length > 46 ? full.slice(0, 44).replace(/\s\S*$/, '') + '…' : full;
+      c.title = full;
+      c.onclick = () => c.classList.toggle('on');
+      box.appendChild(c);
+    });
+    wrap.appendChild(box);
+    store[f.k] = () => [...box.querySelectorAll('.chip.on')].map(c => c.dataset.full);
+    if (store.__set) store.__set[f.k] = function(v) {
+      if (!Array.isArray(v)) return;
+      box.querySelectorAll('.chip').forEach(function(c) {
+        c.classList.toggle('on', v.indexOf(c.dataset.full) > -1);
+      });
+    };
+    if (store.__dirty) box.addEventListener('click', store.__dirty, { passive: true });
+    return wrap;
+  }
+  
+  let el;
+  if (f.t === 'select') {
+    el = document.createElement('select');
+    f.opts.forEach(([val, txt]) => {
+      const o = document.createElement('option');
+      o.value = val;
+      o.innerHTML = txt;
+      el.appendChild(o);
+    });
+  } else if (f.t === 'textarea') {
+    el = document.createElement('textarea');
+    if (f.ph) el.placeholder = f.ph;
+    if (f.h) el.style.minHeight = f.h + 'px';
+  } else {
+    el = document.createElement('input');
+    if (f.t === 'mapel') el.setAttribute('list', 'mapelList');
+    if (f.ph) el.placeholder = f.ph;
+  }
+  wrap.appendChild(el);
+  store[f.k] = () => el.value.trim ? el.value.trim() : el.value;
+  if (store.__set) store.__set[f.k] = function(v) { if (v != null) el.value = v; };
+  if (store.__dirty) el.addEventListener('input', store.__dirty, { passive: true });
+  
+  if (wrap._ideBtn) {
+    const fn = wrap._ideFn;
+    wrap._ideBtn.onclick = function() {
+      const g = function(k) { return store[k] ? store[k]() : ''; };
+      el.value = IDE[fn](g);
+      el.dispatchEvent(new Event('input'));
+      wrap._ideBtn.textContent = '💡 Ide lain';
+      toast('Ide terisi — silakan diedit sesuai kebutuhan', 'info', 1900);
+      el.focus();
+    };
+  }
+  return wrap;
+}
+
+// --- 9b. Tool Builder ---
+function pasangTool(T) {
+  const sec = document.createElement('section');
+  sec.className = 'view';
+  sec.id = 'v_' + T.id;
+  
+  const top = document.createElement('div');
+  top.className = 'topbar';
+  top.innerHTML = '<div class="brand">SANGCREATOR</div><h1>' + T.judul + '</h1><p class="sub">' + T.sub + '</p>';
+  sec.appendChild(top);
+  
+  const pill = document.createElement('div');
+  pill.className = 'pill pill-free';
+  pill.textContent = '✅ GRATIS';
+  top.appendChild(pill);
+  
+  const card = document.createElement('div');
+  card.className = 'card';
+  const h = document.createElement('h2');
+  h.textContent = 'Isi Data';
+  card.appendChild(h);
+  
+  const gen = document.createElement('button');
+  gen.className = 'btn btn-main';
+  gen.style.marginTop = '6px';
+  gen.textContent = '✨ Buat Prompt';
+  
+  const store = {};
+  store.__set = {};
+  const KEY = 'sc_draft_' + T.id;
+  let simpanTimer = null, tagDraft = null;
+  store.__dirty = function() {
+    if (simpanTimer) clearTimeout(simpanTimer);
+    simpanTimer = setTimeout(function() {
+      try {
+        const d = {};
+        Object.keys(store).forEach(function(k) {
+          if (k.indexOf('__') === 0) return;
+          d[k] = store[k]();
+        });
+        localStorage.setItem(KEY, JSON.stringify(d));
+        if (tagDraft) {
+          tagDraft.textContent = '✓ Draft tersimpan di perangkat ini';
+          tagDraft.classList.add('on');
+          setTimeout(function() { tagDraft.classList.remove('on'); }, 1900);
+        }
+      } catch (e) {}
+    }, 500);
+  };
+  
+  let sudahBangun = false;
+  sec._bangun = function() {
+    if (sudahBangun) return;
+    sudahBangun = true;
+    const frag = document.createDocumentFragment();
+    T.fields.forEach(f => frag.appendChild(buatField(f, store)));
+    card.insertBefore(frag, gen);
+    tagDraft = document.createElement('div');
+    tagDraft.className = 'draft-tag';
+    card.insertBefore(tagDraft, gen);
+    try {
+      const d = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (d) Object.keys(d).forEach(function(k) { if (store.__set[k]) store.__set[k](d[k]); });
+    } catch (e) {}
+  };
+  
+  card.appendChild(gen);
+  sec.appendChild(card);
+  
+  const oh = document.createElement('div');
+  oh.className = 'out-head';
+  const h3 = document.createElement('h3');
+  h3.textContent = 'Hasil Prompt';
+  const badge = document.createElement('span');
+  badge.className = 'badge';
+  badge.textContent = '0 prompt';
+  const all = document.createElement('button');
+  all.className = 'btn btn-ghost';
+  all.style.padding = '7px 12px';
+  all.textContent = '📋 Salin Semua';
+  oh.appendChild(h3);
+  oh.appendChild(badge);
+  oh.appendChild(all);
+  sec.appendChild(oh);
+  
+  const out = document.createElement('div');
+  out.innerHTML = '<div class="card empty">Isi data di atas lalu tekan <b>Buat Prompt</b>.</div>';
+  sec.appendChild(out);
+  
+  if (T.tip) {
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = '<h2>Catatan</h2><div class="steps">' + T.tip + '</div>';
+    sec.appendChild(c);
+  }
+  
+  let hasil = [];
+  gen.onclick = function() {
+    gen.textContent = '⏳ Menyusun...';
+    nanti(function() {
+      const v = {};
+      Object.keys(store).forEach(function(k) {
+        if (k.indexOf('__') !== 0) v[k] = store[k]();
+      });
+      const r = T.build(v) || [];
+      gen.textContent = '✨ Buat Prompt';
+      
+      // Semua tools gratis di versi AI Studio
+      hasil = r;
+      const frag = document.createDocumentFragment();
+      hasil.forEach(b => frag.appendChild(blok(b.title, b.text)));
+      out.innerHTML = '';
+      out.appendChild(frag);
+      badge.textContent = hasil.length + ' prompt';
+      guliInstan(out);
+      toast(hasil.length + ' prompt siap disalin', 'ok');
+      store.__dirty();
+    });
+  };
+  
+  card.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      gen.click();
+    }
+  });
+  
+  all.onclick = function() {
+    if (!hasil.length) {
+      toast('Belum ada prompt. Tekan "Buat Prompt" dulu.', 'info');
+      return;
+    }
+    salin(hasil.map(b => '===== ' + b.title + ' =====\n' + b.text).join('\n\n\n'), this);
+  };
+  
+  document.getElementById('genericViews').appendChild(sec);
+}
+
+// ================================================================
+// 10. TOOL REGISTRATION
+// ================================================================
+
+// Register Ringkasan Materi
+TOOLS.push({
+  id: 'ringkasan',
+  icon: '📘',
+  grup: 'MEDIA BELAJAR',
+  nama: 'Ringkasan Materi',
+  desc: 'Poster ringkasan untuk siswa',
+  judul: 'Ringkasan Materi Studio',
+  sub: 'Prompt poster ringkasan materi — banyak mapel sekaligus',
+  fields: [], // Fields already defined in HTML
+  build: function(v) {
+    // Build function already defined in HTML
+    return [];
+  }
+});
+
+// Register Modul Ajar
+TOOLS.push({
+  id: 'rpm',
+  icon: '📝',
+  grup: 'PERENCANAAN',
+  nama: 'Modul Ajar / RPM',
+  desc: 'Dokumen perangkat ajar lengkap',
+  judul: 'Modul Ajar / RPM Studio',
+  sub: 'Prompt dokumen perangkat ajar lengkap + cover',
+  fields: [],
+  build: function(v) { return []; }
+});
+
+// ================================================================
+// 11. NAVIGATION
+// ================================================================
+
+const MENU = [
+  { grup: 'MEDIA BELAJAR', items: [{ id: 'ringkasan', icon: '📘', nama: 'Ringkasan Materi', desc: 'Poster ringkasan untuk siswa', judul: 'Ringkasan Materi Studio' }] },
+  { grup: 'PERENCANAAN', items: [{ id: 'rpm', icon: '📝', nama: 'Modul Ajar / RPM', desc: 'Dokumen perangkat ajar lengkap', judul: 'Modul Ajar / RPM Studio' }] }
+];
+
+const POSISI = {};
+const navBox = document.getElementById('navBox');
+
+MENU.forEach(g => {
+  const l = document.createElement('div');
+  l.className = 'nav-label';
+  l.textContent = g.grup;
+  navBox.appendChild(l);
+  
+  g.items.forEach(it => {
+    const n = document.createElement('div');
+    n.className = 'nav' + (it.id === 'ringkasan' ? ' on' : '');
+    n.dataset.view = 'v_' + it.id;
+    n.dataset.judul = it.judul;
+    n.innerHTML = '<div class="ic">' + it.icon + '</div>' +
+                  '<div class="tx"><b>' + it.nama + '</b><span>' + it.desc + '</span></div>' +
+                  '<div class="badge-n badge-free">GRATIS</div>';
+    n.onclick = function() {
+      if (n.classList.contains('on')) { tutupSide(); return; }
+      const lama = document.querySelector('.view.on');
+      if (lama) POSISI[lama.id] = window.pageYOffset;
+      document.querySelectorAll('.nav').forEach(x => x.classList.remove('on'));
+      document.querySelectorAll('.view').forEach(x => x.classList.remove('on'));
+      n.classList.add('on');
+      const sec = document.getElementById(n.dataset.view);
+      if (sec._bangun) sec._bangun();
+      sec.classList.add('on');
+      document.getElementById('mTitle').textContent = n.dataset.judul;
+      tutupSide();
+      window.scrollTo(0, POSISI[sec.id] || 0);
+    };
+    navBox.appendChild(n);
+  });
+});
+
+function tutupSide() {
+  document.getElementById('side').classList.remove('open');
+  document.getElementById('scrim').classList.remove('on');
+}
+
+// ================================================================
+// 12. INITIALIZATION
+// ================================================================
+
+// --- 12a. Mapel List ---
+const MAPEL_LIST = ['IPA', 'IPS', 'Matematika', 'Bahasa Indonesia', 'Bahasa Inggris', 'PPKn',
+  'Pendidikan Agama Islam', 'Informatika', 'Seni Budaya', 'PJOK', 'Fisika', 'Kimia', 'Biologi',
+  'Sejarah', 'Ekonomi', 'Geografi', 'Sosiologi', 'Prakarya', 'Bahasa Daerah', 'Bimbingan Konseling'
+];
+MAPEL_LIST.forEach(m => {
+  const o = document.createElement('option');
+  o.value = m;
+  document.getElementById('mapelList').appendChild(o);
+});
+
+// --- 12b. Chips for Ringkasan ---
+const chipBox = document.getElementById('chips');
+ELEMEN.forEach(([k, label]) => {
+  const b = document.createElement('div');
+  b.className = 'chip' + (DEFAULT_ON.includes(k) ? ' on' : '');
+  b.dataset.k = k;
+  b.textContent = label;
+  b.onclick = () => b.classList.toggle('on');
+  chipBox.appendChild(b);
+});
+
+// --- 12c. Materi List ---
+const listBox = document.getElementById('materiList');
+
+function tambahMateri(data) {
+  data = data || {};
+  const el = document.createElement('div');
+  el.className = 'materi';
+  el.innerHTML = '<div class="materi-head"><div class="materi-no"></div>' +
+    '<div class="materi-label">Materi baru</div><button class="del">✕</button></div>' +
+    '<div class="row"><div class="field"><label>Mata Pelajaran</label>' +
+    '<input class="f-mapel" list="mapelList" placeholder="contoh: IPA"></div>' +
+    '<div class="field"><label>Kelas / Fase</label><input class="f-kelas" placeholder="contoh: IX / D"></div></div>' +
+    '<div class="field"><label>Bab / Topik</label><input class="f-bab" placeholder="contoh: LISTRIK DAN MAGNET"></div>' +
+    '<div class="field"><div class="lbl-row"><label>Submateri</label>' +
+    '<button type="button" class="btn-ide bi-sub">💡 Ide dari AI</button></div>' +
+    '<textarea class="f-sub" placeholder="satu baris satu poster"></textarea></div>' +
+    '<div class="field"><label>Poin wajib <span style="font-weight:400;">(opsional)</span></label>' +
+    '<input class="f-poin" placeholder="contoh: rumus V = I × R"></div>';
+  
+  el.querySelector('.del').onclick = () => { el.remove(); nomorUlang(); };
+  const mp = el.querySelector('.f-mapel');
+  const sb = el.querySelector('.f-sub');
+  const lb = el.querySelector('.materi-label');
+  const upd = () => {
+    const m = mp.value.trim();
+    const s = sb.value.split('\n').map(x => x.trim()).filter(Boolean);
+    lb.textContent = m ? (m + (s.length ? ' · ' + s.length + ' poster' : '')) : 'Materi baru';
+  };
+  mp.oninput = upd;
+  sb.oninput = upd;
+  el.querySelector('.bi-sub').onclick = function() {
+    const bab = el.querySelector('.f-bab').value.trim();
+    if (!bab) {
+      toast('Isi dulu Bab / Topik-nya ya, biar idenya nyambung.', 'info');
+      el.querySelector('.f-bab').focus();
+      return;
+    }
+    sb.value = IDE.submateri(function(k) { return k === 'bab' ? bab : ''; });
+    upd();
+    this.textContent = '💡 Ide lain';
+  };
+  mp.value = data.mapel || '';
+  el.querySelector('.f-kelas').value = data.kelas || '';
+  el.querySelector('.f-bab').value = data.bab || '';
+  sb.value = data.sub || '';
+  upd();
+  listBox.appendChild(el);
+  nomorUlang();
+  return el;
+}
+
+function nomorUlang() {
+  [...listBox.children].forEach((el, i) => el.querySelector('.materi-no').textContent = i + 1);
+}
+
+document.getElementById('addBtn').onclick = () => tambahMateri().querySelector('.f-mapel').focus();
+tambahMateri();
+
+// --- 12d. Bulk Import ---
+document.getElementById('bulkBtn').onclick = function() {
+  const baris = document.getElementById('bulk').value.split('\n').map(s => s.trim()).filter(Boolean);
+  if (!baris.length) {
+    toast('Kotak Tempel Cepat masih kosong.', 'info');
+    return;
+  }
+  [...listBox.children].forEach(el => {
+    if (!el.querySelector('.f-mapel').value.trim() && !el.querySelector('.f-sub').value.trim()) el.remove();
+  });
+  baris.forEach(b => {
+    const p = b.split('|').map(s => s.trim());
+    tambahMateri({
+      mapel: p[0] || '',
+      kelas: p[1] || '',
+      bab: p[2] || '',
+      sub: (p[3] || '').split(',').map(s => s.trim()).filter(Boolean).join('\n')
+    });
+  });
+  document.getElementById('bulk').value = '';
+  nomorUlang();
+};
+
+// --- 12e. Ringkasan Render ---
+function bacaDaftar() {
+  return [...listBox.children].map(el => ({
+    mapel: (el.querySelector('.f-mapel').value || '').trim(),
+    kelas: (el.querySelector('.f-kelas').value || '-').trim(),
+    bab: (el.querySelector('.f-bab').value || '-').trim(),
+    poin: (el.querySelector('.f-poin').value || '').trim(),
+    subs: el.querySelector('.f-sub').value.split('\n').map(s => s.trim()).filter(Boolean)
+  })).filter(x => x.mapel && x.subs.length);
+}
+
+let semuaTeks = [];
+let vi = 0;
+
+function renderRingkasan() {
+  const daftar = bacaDaftar();
+  const out = document.getElementById('output');
+  semuaTeks = [];
+  
+  if (!daftar.length) {
+    out.innerHTML = '<div class="card empty">Minimal isi <b>Mata Pelajaran</b> dan <b>Submateri</b> pada satu kartu ya 🙂</div>';
+    document.getElementById('countBadge').textContent = '0 poster';
+    return;
+  }
+  
+  if (!document.getElementById('enBahasa').checked && !document.getElementById('enEnglish').checked) {
+    out.innerHTML = '<div class="card empty">Aktifkan minimal satu versi prompt.</div>';
+    return;
+  }
+  
+  out.innerHTML = '';
+  let total = 0;
+  let seed = vi;
+  
+  daftar.forEach((item, idx) => {
+    const gt = document.createElement('div');
+    gt.className = 'group-title';
+    gt.textContent = '▸ ' + item.mapel + ' — ' + item.bab + ' (' + item.kelas + ')';
+    out.appendChild(gt);
+    
+    item.subs.forEach(sub => {
+      total++;
+      if (document.getElementById('enBahasa').checked) {
+        const t = promptID(item, sub, seed++, idx);
+        semuaTeks.push('===== ' + item.mapel + ' · ' + sub + ' =====\n' + t);
+        out.appendChild(blok(item.mapel + ' · ' + sub, t));
+      }
+      if (document.getElementById('enEnglish').checked) {
+        const t = promptEN(item, sub, idx);
+        semuaTeks.push('===== EN · ' + item.mapel + ' · ' + sub + ' =====\n' + t);
+        out.appendChild(blok('EN · ' + item.mapel + ' · ' + sub, t));
+      }
+    });
+  });
+  
+  document.getElementById('countBadge').textContent = total + ' poster · ' + daftar.length + ' mapel';
+  toast(total + ' prompt poster siap disalin', 'ok');
+  guliInstan(out);
+}
+
+// --- 12f. Ringkasan Events ---
+document.getElementById('genBtn').onclick = function() {
+  const b = this;
+  b.textContent = '⏳ Menyusun...';
+  nanti(() => { renderRingkasan(); b.textContent = '✨ Buat Semua Prompt'; });
+};
+
+document.getElementById('againBtn').onclick = () => { vi++; renderRingkasan(); };
+document.getElementById('resetBtn').onclick = function() {
+  if (!confirm('Kosongkan semua daftar materi?')) return;
+  listBox.innerHTML = '';
+  tambahMateri();
+  document.getElementById('identitas').value = '';
+  document.getElementById('bulk').value = '';
+  semuaTeks = [];
+  chipBox.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', DEFAULT_ON.includes(c.dataset.k)));
+  document.getElementById('output').innerHTML = '<div class="card empty">Form sudah dikosongkan.</div>';
+  document.getElementById('countBadge').textContent = '0 poster';
+  window.scrollTo(0, 0);
+};
+
+document.getElementById('copyAllBtn').onclick = function() {
+  if (!semuaTeks.length) {
+    toast('Belum ada prompt.', 'info');
+    return;
+  }
+  salin(semuaTeks.join('\n\n\n'), this);
+};
+
+// --- 12g. Modul Ajar ---
+const rDimBox = document.getElementById('rDim');
+DIMENSI.forEach(d => {
+  const b = document.createElement('div');
+  b.className = 'chip' + (DIM_ON.includes(d) ? ' on' : '');
+  b.dataset.v = d;
+  b.textContent = d;
+  b.onclick = () => b.classList.toggle('on');
+  rDimBox.appendChild(b);
+});
+
+const rLampBox = document.getElementById('rLamp');
+LAMPIRAN.forEach(([k, label]) => {
+  const b = document.createElement('div');
+  b.className = 'chip' + (LAMP_ON.includes(k) ? ' on' : '');
+  b.dataset.k = k;
+  b.textContent = label;
+  b.onclick = () => b.classList.toggle('on');
+  rLampBox.appendChild(b);
+});
+
+const rList = document.getElementById('rList');
+
+function rTambah() {
+  const el = document.createElement('div');
+  el.className = 'materi';
+  el.innerHTML = '<div class="materi-head"><div class="materi-no"></div>' +
+    '<div class="materi-label">Modul baru</div><button class="del">✕</button></div>' +
+    '<div class="row"><div class="field"><label>Mata Pelajaran</label>' +
+    '<input class="m-mapel" list="mapelList" placeholder="contoh: IPA"></div>' +
+    '<div class="field"><label>Kelas / Fase</label><input class="m-kelas" placeholder="contoh: IX / D"></div></div>' +
+    '<div class="field"><label>Bab / Materi Pokok</label><input class="m-bab" placeholder="contoh: LISTRIK DAN MAGNET"></div>' +
+    '<div class="row3"><div class="field"><label>Alokasi Waktu</label><input class="m-jp" placeholder="6 JP"></div>' +
+    '<div class="field"><label>Jumlah Pertemuan</label><input class="m-tm" placeholder="3"></div>' +
+    '<div class="field"><label>Durasi / Pertemuan</label><input class="m-dur" placeholder="2 × 40 menit"></div></div>' +
+    '<div class="field"><div class="lbl-row">' +
+    '<label>Tujuan Pembelajaran <span style="font-weight:400;">(opsional)</span></label>' +
+    '<button type="button" class="btn-ide bi-tp">💡 Ide dari AI</button></div>' +
+    '<textarea class="m-tp" placeholder="satu baris satu tujuan"></textarea></div>' +
+    '<div class="field"><label>Catatan khusus <span style="font-weight:400;">(opsional)</span></label>' +
+    '<input class="m-note" placeholder="contoh: kelas inklusi"></div>';
+  
+  el.querySelector('.del').onclick = () => { el.remove(); rNomor(); };
+  const mp = el.querySelector('.m-mapel');
+  const bb = el.querySelector('.m-bab');
+  const lb = el.querySelector('.materi-label');
+  const upd = () => {
+    const m = mp.value.trim();
+    const b = bb.value.trim();
+    lb.textContent = m ? (m + (b ? ' — ' + b : '')) : 'Modul baru';
+  };
+  mp.oninput = upd;
+  bb.oninput = upd;
+  el.querySelector('.bi-tp').onclick = function() {
+    const bab = bb.value.trim();
+    if (!bab) {
+      toast('Isi dulu Bab / Materi Pokok-nya ya.', 'info');
+      bb.focus();
+      return;
+    }
+    const t = IDE.tujuan(function(k) { return (k === 'materi' || k === 'bab') ? bab : ''; });
+    el.querySelector('.m-tp').value = t.split('; ').map(function(x) {
+      return x.charAt(0).toUpperCase() + x.slice(1).replace(/\.$/, '');
+    }).join('\n');
+    this.textContent = '💡 Ide lain';
+  };
+  rList.appendChild(el);
+  rNomor();
+  return el;
+}
+
+function rNomor() {
+  [...rList.children].forEach((el, i) => el.querySelector('.materi-no').textContent = i + 1);
+}
+
+document.getElementById('rAddBtn').onclick = () => rTambah().querySelector('.m-mapel').focus();
+rTambah();
+
+// --- 12h. Modul Ajar Render ---
+let rSemua = [];
+
+function rRender() {
+  const id = {
+    sekolah: (document.getElementById('r_sekolah').value || '(nama sekolah)').trim(),
+    tahun: (document.getElementById('r_tahun').value || '2026/2027').trim(),
+    guru: (document.getElementById('r_guru').value || '(nama guru)').trim(),
+    nip: document.getElementById('r_nip').value.trim(),
+    kepsek: (document.getElementById('r_kepsek').value || '(nama kepala sekolah)').trim(),
+    nipkep: document.getElementById('r_nipkep').value.trim(),
+    semester: document.getElementById('r_semester').value,
+    kota: (document.getElementById('r_kota').value || '(kota)').trim(),
+    tanggal: (document.getElementById('r_tanggal').value || 'Juli 2026').trim(),
+    jenis: document.getElementById('r_jenis').value,
+    pedagogi: document.getElementById('r_pedagogi').value,
+    gayatulis: document.getElementById('r_gayatulis').value,
+    dalam: document.getElementById('r_dalam').value,
+    tema: document.getElementById('r_tema').value,
+    tagline: document.getElementById('r_tagline').value.trim()
+  };
+  
+  const daftar = [...rList.children].map(el => ({
+    mapel: (el.querySelector('.m-mapel').value || '').trim(),
+    kelas: (el.querySelector('.m-kelas').value || '-').trim(),
+    bab: (el.querySelector('.m-bab').value || '-').trim(),
+    jp: (el.querySelector('.m-jp').value || '6 JP').trim(),
+    tm: el.querySelector('.m-tm').value.trim(),
+    dur: el.querySelector('.m-dur').value.trim(),
+    tp: el.querySelector('.m-tp').value.trim(),
+    note: el.querySelector('.m-note').value.trim()
+  })).filter(x => x.mapel && x.bab && x.bab !== '-');
+  
+  const out = document.getElementById('rOutput');
+  rSemua = [];
+  
+  if (!daftar.length) {
+    out.innerHTML = '<div class="card empty">Minimal isi <b>Mata Pelajaran</b> dan <b>Bab / Materi Pokok</b> pada satu kartu ya 🙂</div>';
+    document.getElementById('rBadge').textContent = '0 modul';
+    return;
+  }
+  
+  out.innerHTML = '';
+  daftar.forEach(it => {
+    const gt = document.createElement('div');
+    gt.className = 'group-title';
+    gt.textContent = '▸ ' + it.mapel + ' — ' + it.bab + ' (' + it.kelas + ')';
+    out.appendChild(gt);
+    
+    const d = rPromptDok(id, it);
+    rSemua.push('===== DOKUMEN · ' + it.mapel + ' · ' + it.bab + ' =====\n' + d);
+    out.appendChild(blok('① Prompt Dokumen · ' + it.mapel, d));
+    
+    const c = rPromptCover(id, it);
+    rSemua.push('===== COVER · ' + it.mapel + ' · ' + it.bab + ' =====\n' + c);
+    out.appendChild(blok('② Prompt Cover · ' + it.mapel, c));
+  });
+  
+  if (document.getElementById('r_bg').checked) {
+    const b = rPromptBg(id);
+    rSemua.push('===== BACKGROUND HALAMAN =====\n' + b);
+    const gt = document.createElement('div');
+    gt.className = 'group-title';
+    gt.textContent = '▸ BACKGROUND HALAMAN ISI';
+    out.appendChild(gt);
+    out.appendChild(blok('③ Prompt Background Halaman', b));
+  }
+  
+  document.getElementById('rBadge').textContent = daftar.length + ' modul';
+  toast(daftar.length + ' modul siap — jalankan prompt dokumen dulu', 'ok', 2600);
+  guliInstan(out);
+}
+
+document.getElementById('rGenBtn').onclick = function() {
+  const b = this;
+  b.textContent = '⏳ Menyusun...';
+  nanti(() => { rRender(); b.textContent = '📝 Buat Prompt Modul'; });
+};
+
+document.getElementById('rCopyAll').onclick = function() {
+  if (!rSemua.length) {
+    toast('Belum ada prompt. Tekan "Buat Prompt Modul" dulu.', 'info');
+    return;
+  }
+  salin(rSemua.join('\n\n\n'), this);
+};
+
+document.getElementById('rResetBtn').onclick = function() {
+  if (!confirm('Kosongkan form modul ajar?')) return;
+  rList.innerHTML = '';
+  rTambah();
+  rSemua = [];
+  ['r_sekolah', 'r_tahun', 'r_guru', 'r_nip', 'r_kepsek', 'r_nipkep', 'r_kota', 'r_tanggal', 'r_tagline'].forEach(i => document.getElementById(i).value = '');
+  rDimBox.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', DIM_ON.includes(c.dataset.v)));
+  rLampBox.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', LAMP_ON.includes(c.dataset.k)));
+  document.getElementById('rOutput').innerHTML = '<div class="card empty">Form sudah dikosongkan.</div>';
+  document.getElementById('rBadge').textContent = '0 modul';
+  window.scrollTo(0, 0);
+};
+
+// ================================================================
+// 13. UI HELPERS
+// ================================================================
+
+// --- 13a. Scroll to top ---
+(function() {
+  const b = document.getElementById('keAtas');
+  let tick = false;
+  window.addEventListener('scroll', function() {
+    if (tick) return;
+    tick = true;
+    requestAnimationFrame(function() {
+      b.classList.toggle('on', window.pageYOffset > 480);
+      tick = false;
+    });
+  }, { passive: true });
+  b.onclick = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
+})();
+
+// --- 13b. Sidebar toggle ---
+document.getElementById('burger').onclick = function() {
+  document.getElementById('side').classList.toggle('open');
+  document.getElementById('scrim').classList.toggle('on');
+};
+document.getElementById('scrim').onclick = tutupSide;
+
+// --- 13c. Theme toggle ---
+const rootEl = document.documentElement;
+function toggleTema() {
+  const dark = rootEl.getAttribute('data-theme') === 'dark';
+  rootEl.setAttribute('data-theme', dark ? 'light' : 'dark');
+  document.getElementById('themeM').textContent = dark ? '🌙' : '☀️';
+  document.getElementById('themeSide').textContent = dark ? '🌙 Mode Gelap' : '☀️ Mode Terang';
+}
+document.getElementById('themeM').onclick = toggleTema;
+document.getElementById('themeSide').onclick = toggleTema;
+
+// === Handler input API Key ===
+function applyApiKeyFromInput() {
+  const input = document.getElementById('apiKeyInput');
+  const key = (input.value || '').trim();
+  if (!key) {
+    toast('⚠️ Masukkan API Key Gemini terlebih dahulu', 'err', 3000);
+    return;
+  }
+  setApiKey(key);
+  toast('✅ API Key tersimpan! Menghubungkan...', 'ok', 2000);
+  initGeminiAPI(); // uji ulang koneksi dengan key baru
+}
+
+document.getElementById('apiKeySave').onclick = applyApiKeyFromInput;
+document.getElementById('apiKeyInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') applyApiKeyFromInput();
+});
+
+// Isi input dengan key tersimpan (jika ada), tampilkan sebagai titik-titik
+if (GEMINI_API_KEY) {
+  document.getElementById('apiKeyInput').value = GEMINI_API_KEY;
+}
+
+// ================================================================
+// 14. API KEY INITIALIZATION
+// ================================================================
+
+async function initGeminiAPI() {
+  const statusEl = document.getElementById('apiStatus');
+  
+  // Cek API Key
+  if (!GEMINI_API_KEY) {
+    statusEl.className = 'api-status err';
+    statusEl.innerHTML = '❌ <b>API Key belum diisi!</b><br><span style="font-size:10px;">Isi API Key Gemini di kolom bawah.</span>';
+    return;
+  }
+  
+  statusEl.className = 'api-status';
+  statusEl.innerHTML = '🔄 Menguji koneksi ke Gemini API...';
+  
+  try {
+    // Test API dengan ping sederhana
+    const testResponse = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: 'Balas dengan "OK" saja.' }] }],
+        generationConfig: { maxOutputTokens: 10 }
+      })
+    });
+    
+    if (!testResponse.ok) {
+      const error = await testResponse.json();
+      throw new Error(error.error?.message || 'API Key tidak valid atau kuota habis.');
+    }
+    
+    API_READY = true;
+    statusEl.className = 'api-status ok';
+    statusEl.innerHTML = '✅ <b>Gemini API siap digunakan</b><br><span class="key">Model: ' + GEMINI_MODEL + '</span>';
+    document.getElementById('apiModel').textContent = GEMINI_MODEL + ' ✅';
+    toast('Gemini API berhasil terhubung!', 'ok', 3000);
+    
+  } catch (error) {
+    statusEl.className = 'api-status err';
+    statusEl.innerHTML = '❌ <b>Gagal terhubung ke Gemini</b><br><span style="font-size:10px;">' + error.message + '</span>';
+    toast('⚠️ ' + error.message, 'err', 5000);
+    API_READY = false;
+  }
+}
+
+// ================================================================
+// 15. START APPLICATION
+// ================================================================
+
+// Inisialisasi Gemini API
+initGeminiAPI();
+
+// Tampilkan tools yang sudah terdaftar
+console.log('✅ SANGCREATOR Studio Guru AI — Versi AI Studio');
+console.log('📦 Tools terdaftar:', TOOLS.length);
+console.log('🔑 Status API:', API_READY ? 'Connected' : 'Not connected');
+
+// Tambahkan ke window untuk debugging
+window.__app = {
+  TOOLS: TOOLS,
+  API_READY: API_READY,
+  generateWithGemini: generateWithGemini,
+  GEMINI_API_KEY: GEMINI_API_KEY
+};
+
+console.log('💡 Gunakan window.__app untuk debugging');
+</script>
+
+</body>
+</html>
