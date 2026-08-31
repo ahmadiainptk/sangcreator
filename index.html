@@ -729,6 +729,65 @@
       .view.on { animation: none; }
       .toast { animation: none; }
     }
+    
+    /* ===== WIZARD MODE ===== */
+    .wiz-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 11px;
+      border-radius: 11px;
+      cursor: pointer;
+      color: var(--side-ink);
+      border: 1px solid transparent;
+      transition: .14s;
+    }
+    .wiz-check:hover { background: rgba(255,255,255,.05); }
+    .wiz-check input { width: auto; margin: 0; accent-color: var(--accent); transform: scale(1.1); }
+    .wiz-check .wt { flex: 1; min-width: 0; }
+    .wiz-check .wt b { display: block; font-size: 12.5px; font-weight: 700; color: inherit; }
+    .wiz-check .wt span { display: block; font-size: 10px; color: #7f8cad; line-height: 1.3; }
+    .wiz-check.on { background: linear-gradient(135deg, rgba(139,124,255,.22), rgba(245,166,35,.1)); border-color: rgba(139,124,255,.4); color: #fff; }
+    .wiz-check.on .wt span { color: #b9c2dd; }
+    .wiz-count {
+      font-size: 10px; font-weight: 800; color: var(--accent-2);
+      background: rgba(245,166,35,.15); padding: 2px 8px; border-radius: 6px;
+      white-space: nowrap;
+    }
+    .wiz-sec-head {
+      display: flex; align-items: center; gap: 8px;
+      margin: 18px 0 10px;
+    }
+    .wiz-sec-head h3 { font-size: 15px; margin: 0; flex: 1; }
+    .wiz-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-top: 12px;
+      box-shadow: var(--shadow);
+      display: none;
+    }
+    .wiz-card.on { display: block; animation: masuk .18s ease-out; }
+    .wiz-card > .wtit {
+      font-size: 13px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .7px; color: var(--accent); margin-bottom: 4px;
+    }
+    .wiz-card > .wsub { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+    .wiz-result {
+      border-top: 1px solid var(--line);
+      margin-top: 14px; padding-top: 12px;
+    }
+    .wiz-result:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+    .wiz-result .rtit {
+      font-size: 12px; font-weight: 800; color: var(--accent);
+      margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+    }
+    .wiz-result .rtit .badge { margin-left: auto; }
+    .umum-card {
+      background: var(--accent-soft);
+      border: 1px dashed var(--accent);
+    }
   </style>
 </head>
 <body>
@@ -2855,57 +2914,239 @@ function pasangTool(T) {
 }
 
 // ================================================================
-// 12. NAVIGATION
+// 12. WIZARD MODE (identitas umum + pilih output + field spesifik)
 // ================================================================
 
-// Kelompokkan tools berdasarkan grup
-const MENU_GRUP = {};
-TOOLS.forEach(T => {
-  if (!MENU_GRUP[T.grup]) MENU_GRUP[T.grup] = [];
-  MENU_GRUP[T.grup].push(T);
-});
-
+// Field yang disatukan ke "Identitas Umum" (diinject ke semua tool, disembunyikan dari card)
+const UMUM_KEYS = ['mapel', 'kelas', 'sekolah', 'guru'];
+const UMUM_DRAFT = 'sc_wizard_umum';
 const URUTAN_GRUP = ['MEDIA BELAJAR', 'PERENCANAAN', 'PENILAIAN', 'ADMINISTRASI', 'KOMUNIKASI'];
-const MENU = URUTAN_GRUP.filter(g => MENU_GRUP[g]).map(g => ({
-  grup: g,
-  items: MENU_GRUP[g]
-}));
 
-const navBox = document.getElementById('navBox');
-const POSISI = {};
+const UMUM_FIELDS = [
+  { t: 'row', kids: [
+    { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+    { t: 'text', k: 'kelas', label: 'Kelas / Fase', ph: 'IX / D' }
+  ]},
+  { t: 'row', kids: [
+    { t: 'text', k: 'sekolah', label: 'Nama Sekolah', ph: 'SMPN 1 Sukamaju' },
+    { t: 'text', k: 'guru', label: 'Nama Guru / Penyusun', ph: 'Rina Kartika, S.Pd.' }
+  ]}
+];
 
-MENU.forEach(g => {
-  const l = document.createElement('div');
-  l.className = 'nav-label';
-  l.textContent = g.grup;
-  navBox.appendChild(l);
-  
-  g.items.forEach(T => {
-    const n = document.createElement('div');
-    n.className = 'nav';
-    if (T.id === 'ringkasan') n.classList.add('on');
-    n.dataset.view = 'v_' + T.id;
-    n.dataset.judul = T.judul;
-    n.innerHTML = '<div class="ic">' + T.icon + '</div>' +
-                  '<div class="tx"><b>' + T.nama + '</b><span>' + T.desc + '</span></div>' +
-                  '<div class="badge-n badge-free">GRATIS</div>';
-    n.onclick = function() {
-      if (n.classList.contains('on')) { tutupSide(); return; }
-      const lama = document.querySelector('.view.on');
-      if (lama) POSISI[lama.id] = window.pageYOffset;
-      document.querySelectorAll('.nav').forEach(x => x.classList.remove('on'));
-      document.querySelectorAll('.view').forEach(x => x.classList.remove('on'));
-      n.classList.add('on');
-      const sec = document.getElementById(n.dataset.view);
-      if (sec._bangun) sec._bangun();
-      sec.classList.add('on');
-      document.getElementById('mTitle').textContent = n.dataset.judul;
-      tutupSide();
-      window.scrollTo(0, POSISI[sec.id] || 0);
-    };
-    navBox.appendChild(n);
+function readStore(store) {
+  const v = {};
+  Object.keys(store).forEach(function(k) { if (k.indexOf('__') === 0) return; v[k] = store[k](); });
+  return v;
+}
+
+function skipUmum(toolId, k) {
+  if (UMUM_KEYS.indexOf(k) === -1) return false;
+  if (toolId === 'pesan') return false; // pesan punya makna khusus utk guru/kelas/sekolah
+  return true;
+}
+
+function filterUmumFields(toolId, fields) {
+  const out = [];
+  (fields || []).forEach(function(f) {
+    if (f.t === 'row' || f.t === 'row3') {
+      const kids = filterUmumFields(toolId, f.kids || []);
+      if (kids.length) out.push(Object.assign({}, f, { kids: kids }));
+    } else if (f.k && skipUmum(toolId, f.k)) {
+      // field umum -> dihandle di identitas umum
+    } else {
+      out.push(f);
+    }
   });
-});
+  return out;
+}
+
+const toolStores = {};   // id -> store (field spesifik)
+const toolChecked = {};  // id -> true/false
+
+function renderWizard() {
+  // ===== Sidebar: daftar centang output =====
+  const navBox = document.getElementById('navBox');
+  navBox.innerHTML = '';
+  const groups = {};
+  TOOLS.forEach(function(T) { (groups[T.grup] = groups[T.grup] || []).push(T); });
+
+  function updateCount() {
+    const n = TOOLS.filter(function(T) { return toolChecked[T.id]; }).length;
+    const c = document.getElementById('wizCount');
+    if (c) c.textContent = n + ' dipilih';
+  }
+
+  URUTAN_GRUP.forEach(function(g) {
+    if (!groups[g]) return;
+    const lbl = document.createElement('div');
+    lbl.className = 'nav-label';
+    lbl.textContent = g;
+    navBox.appendChild(lbl);
+
+    groups[g].forEach(function(T) {
+      const lab = document.createElement('label');
+      lab.className = 'wiz-check';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      const wt = document.createElement('span');
+      wt.className = 'wt';
+      wt.innerHTML = '<b>' + T.icon + ' ' + T.nama + '</b><span>' + T.desc + '</span>';
+      lab.appendChild(cb);
+      lab.appendChild(wt);
+      cb.onchange = function() {
+        toolChecked[T.id] = cb.checked;
+        lab.classList.toggle('on', cb.checked);
+        updateCount();
+        toggleToolCard(T, cb.checked);
+      };
+      navBox.appendChild(lab);
+    });
+  });
+
+  // ===== Main: wizard =====
+  const mainBox = document.getElementById('genericViews');
+  mainBox.innerHTML = '';
+
+  const top = document.createElement('div');
+  top.className = 'topbar';
+  top.innerHTML = '<div class="brand">SANGCREATOR</div><h1>Studio Guru AI</h1>' +
+    '<p class="sub">Isi identitas umum sekali → pilih output → generate semua prompt sekaligus</p>';
+  mainBox.appendChild(top);
+
+  // Card 1: Identitas Umum
+  const umumCard = document.createElement('div');
+  umumCard.className = 'card umum-card';
+  umumCard.innerHTML = '<h2>1 · Identitas Umum</h2>' +
+    '<p class="hint" style="margin:0 0 6px;">Otomatis dipakai di semua output yang dipilih.</p>';
+  mainBox.appendChild(umumCard);
+
+  const umumStore = { __set: {} };
+  UMUM_FIELDS.forEach(function(f) { umumCard.appendChild(buatField(f, umumStore)); });
+
+  try {
+    const d = JSON.parse(localStorage.getItem(UMUM_DRAFT) || 'null');
+    if (d) Object.keys(d).forEach(function(k) { if (umumStore.__set[k]) umumStore.__set[k](d[k]); });
+  } catch (e) {}
+
+  umumCard.addEventListener('input', function() {
+    clearTimeout(umumCard.__t);
+    umumCard.__t = setTimeout(function() {
+      try { localStorage.setItem(UMUM_DRAFT, JSON.stringify(readStore(umumStore))); } catch (e) {}
+    }, 400);
+  });
+
+  // Card 2: Field spesifik (muncul saat dicentang)
+  const secHead = document.createElement('div');
+  secHead.className = 'wiz-sec-head';
+  secHead.innerHTML = '<h3>Isi Detail</h3><span class="badge" id="wizCount">0 dipilih</span>';
+  mainBox.appendChild(secHead);
+
+  const cardsBox = document.createElement('div');
+  cardsBox.id = 'wizCards';
+  mainBox.appendChild(cardsBox);
+
+  // Tombol generate
+  const genBtn = document.createElement('button');
+  genBtn.className = 'btn btn-main';
+  genBtn.style.marginTop = '14px';
+  genBtn.textContent = '✨ Generate Semua Prompt';
+  mainBox.appendChild(genBtn);
+
+  // Area hasil
+  const outHead = document.createElement('div');
+  outHead.className = 'out-head';
+  outHead.innerHTML = '<h3>Hasil Prompt</h3><span class="badge">0 prompt</span>' +
+    '<button class="btn btn-ghost" style="padding:7px 12px;">📋 Salin Semua</button>';
+  mainBox.appendChild(outHead);
+
+  const resultsBox = document.createElement('div');
+  resultsBox.id = 'wizResults';
+  const resultsEmpty = document.createElement('div');
+  resultsEmpty.className = 'card empty';
+  resultsEmpty.textContent = 'Centang output di kiri, isi detail, lalu tekan Generate.';
+  resultsBox.appendChild(resultsEmpty);
+  mainBox.appendChild(resultsBox);
+
+  const badge = outHead.querySelector('.badge');
+  const copyAllBtn = outHead.querySelector('.btn');
+
+  // ===== Toggle card spesifik =====
+  function toggleToolCard(T, on) {
+    let card = document.getElementById('wizcard_' + T.id);
+    if (!card && on) {
+      card = document.createElement('div');
+      card.className = 'wiz-card';
+      card.id = 'wizcard_' + T.id;
+      card.innerHTML = '<div class="wtit">' + T.icon + ' ' + T.nama + '</div>' +
+        '<div class="wsub">' + T.sub + '</div>';
+      const st = { __set: {} };
+      toolStores[T.id] = st;
+      const DKEY = 'sc_wizard_' + T.id;
+      filterUmumFields(T.id, T.fields).forEach(function(f) { card.appendChild(buatField(f, st)); });
+      // restore draft
+      try {
+        const d = JSON.parse(localStorage.getItem(DKEY) || 'null');
+        if (d) Object.keys(d).forEach(function(k) { if (st.__set[k]) st.__set[k](d[k]); });
+      } catch (e) {}
+      card.addEventListener('input', function() {
+        clearTimeout(card.__t);
+        card.__t = setTimeout(function() {
+          try { localStorage.setItem(DKEY, JSON.stringify(readStore(st))); } catch (e) {}
+        }, 400);
+      });
+      // posisikan setelah head section (sebelum cardsBox).append? -> append ke cardsBox
+      cardsBox.appendChild(card);
+    }
+    if (card) card.classList.toggle('on', on);
+  }
+
+  // ===== Generate =====
+  function generateAll() {
+    const checked = TOOLS.filter(function(T) { return toolChecked[T.id]; });
+    if (!checked.length) { toast('Centang dulu minimal satu output di panel kiri.', 'info'); return; }
+
+    const umumV = readStore(umumStore);
+    resultsBox.innerHTML = '';
+    let total = 0;
+
+    checked.forEach(function(T) {
+      const st = toolStores[T.id] || { __set: {} };
+      const v = Object.assign({}, umumV, readStore(st));
+      const r = T.build(v) || [];
+      total += r.length;
+
+      const head = document.createElement('div');
+      head.className = 'wiz-result';
+      head.innerHTML = '<div class="rtit">' + T.icon + ' ' + T.nama +
+        ' <span class="badge">' + r.length + ' prompt</span></div>';
+      resultsBox.appendChild(head);
+      r.forEach(function(b) { resultsBox.appendChild(blok(b.title, b.text)); });
+    });
+
+    badge.textContent = total + ' prompt';
+    guliInstan(resultsBox);
+    toast(total + ' prompt siap disalin', 'ok');
+    resultsBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  genBtn.onclick = function() {
+    genBtn.textContent = '⏳ Menyusun...';
+    nanti(function() { generateAll(); genBtn.textContent = '✨ Generate Semua Prompt'; });
+  };
+
+  copyAllBtn.onclick = function() {
+    const titles = resultsBox.querySelectorAll('.block-title');
+    const et = [];
+    resultsBox.querySelectorAll('.block-title').forEach(function(b) {
+      const pre = b.closest('.block') ? b.closest('.block').querySelector('pre') : null;
+      if (pre) et.push('===== ' + b.textContent + ' =====\n' + pre.textContent);
+    });
+    if (!et.length) { toast('Belum ada hasil. Generate dulu.', 'info'); return; }
+    salin(et.join('\n\n\n'), this);
+  };
+
+  updateCount();
+}
 
 function tutupSide() {
   document.getElementById('side').classList.remove('open');
@@ -3039,21 +3280,9 @@ async function initGeminiAPI(force) {
 // 17. START APPLICATION
 // ================================================================
 
-// Register all tools
-TOOLS.forEach(T => pasangTool(T));
-
-// Aktifkan view pertama (Ringkasan) + bangun isinya
-(function() {
-  const first = TOOLS[0];
-  if (first) {
-    const sec = document.getElementById('v_' + first.id);
-    if (sec) {
-      if (sec._bangun) sec._bangun();
-      sec.classList.add('on');
-      document.getElementById('mTitle').textContent = first.judul;
-    }
-  }
-})();
+// Render wizard (identitas umum + pilih output + field spesifik)
+renderWizard();
+document.getElementById('mTitle').textContent = 'Studio Guru AI';
 
 // Inisialisasi API
 initGeminiAPI();
