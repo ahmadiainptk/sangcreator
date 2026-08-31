@@ -580,13 +580,16 @@
     #keAtas.on { opacity: 1; pointer-events: auto; transform: none; }
     
     /* ===== RESPONSIVE ===== */
+    /* Default desktop: sembunyikan elemen mobile */
+    .mtop, .burger, .scrim { display: none; }
+    
     @media(max-width: 880px) {
       .side {
         position: fixed;
         top: 0;
         left: 0;
         bottom: 0;
-        width: 280px;
+        width: min(280px, 84vw);
         flex: none;
         height: 100vh;
         transform: translateX(-102%);
@@ -611,6 +614,9 @@
       .mtop .t b { display: block; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .mtop .t span { font-size: 10px; color: var(--muted); letter-spacing: 1.2px; font-weight: 700; }
       .burger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border: 1px solid var(--line);
         background: var(--bg);
         color: var(--ink);
@@ -630,7 +636,20 @@
       }
       .scrim.on { display: block; }
     }
-    .mtop { display: none; }
+    
+    /* ===== MOBILE COMPACT (< 620px) ===== */
+    @media(max-width: 620px) {
+      .card { padding: 14px; }
+      .card h2 { margin-bottom: 10px; }
+      input, select, textarea { padding: 9px 11px; font-size: 15px; }
+      textarea { min-height: 60px; }
+      .field { margin-bottom: 11px; }
+      .fsec { margin: 13px 0 8px; }
+      .main { padding: 12px 12px 70px; }
+      .btn { padding: 12px 16px; font-size: 14.5px; }
+      .btn-ghost { padding: 9px 14px; }
+      .inner { max-width: 100%; }
+    }
     
     /* ===== MATERI ===== */
     .materi {
@@ -3022,6 +3041,19 @@ async function initGeminiAPI(force) {
 
 // Register all tools
 TOOLS.forEach(T => pasangTool(T));
+
+// Aktifkan view pertama (Ringkasan) + bangun isinya
+(function() {
+  const first = TOOLS[0];
+  if (first) {
+    const sec = document.getElementById('v_' + first.id);
+    if (sec) {
+      if (sec._bangun) sec._bangun();
+      sec.classList.add('on');
+      document.getElementById('mTitle').textContent = first.judul;
+    }
+  }
+})();
 
 // Inisialisasi API
 initGeminiAPI();
