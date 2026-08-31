@@ -813,7 +813,7 @@
       <button class="side-theme" id="themeSide">🌙 Mode Gelap</button>
       <div style="font-size:10px;color:#5d6a90;line-height:1.6;">
         💡 Semua prompt di-generate oleh AI<br>
-        · 13 tools · v3.0 · <span id="apiModel">Gemini 1.5 Pro</span>
+        · 13 tools · v3.0 · <span id="apiModel">Gemini 2.5 Flash</span>
       </div>
     </div>
   </aside>
@@ -1100,7 +1100,7 @@
 // === KONFIGURASI API KEY ===
 // API key disimpan di localStorage (dapat diinput dari halaman web, tanpa edit kode).
 // Cara mendapatkan key: https://aistudio.google.com/app/apikey
-const GEMINI_MODEL = 'gemini-1.5-pro'; // atau 'gemini-1.5-flash'
+const GEMINI_MODEL = 'gemini-2.5-flash'; // model default (stabil & hemat). Alternatif: 'gemini-2.5-pro', 'gemini-3.7-flash', 'gemini-3.5-flash'
 
 // Baca API key dari localStorage; fallback ke placeholder jika belum ada.
 let GEMINI_API_KEY = localStorage.getItem('sangcreator_gemini_key') || '';
