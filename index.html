@@ -4,14 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SANGCREATOR · Studio Guru AI</title>
-  
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   
   <style>
-    /* ===== RESET & ROOT ===== */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
+    /* ===== SAME STYLES AS PREVIOUS VERSION ===== */
+    /* (Copy semua style dari versi sebelumnya) */
     :root {
       --bg: #f4f6fb;
       --card: #ffffff;
@@ -49,6 +46,7 @@
       --shadow: 0 6px 24px rgba(0,0,0,.35);
     }
     
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       margin: 0;
       background: var(--bg);
@@ -61,7 +59,6 @@
     
     /* ===== LAYOUT ===== */
     .app { display: flex; min-height: 100vh; }
-    
     .side {
       width: 260px;
       flex: 0 0 260px;
@@ -77,16 +74,9 @@
       gap: 2px;
       z-index: 70;
     }
-    
     .side::-webkit-scrollbar { width: 5px; }
     .side::-webkit-scrollbar-thumb { background: #2b3555; border-radius: 4px; }
-    
-    .main {
-      flex: 1;
-      min-width: 0;
-      padding: 20px 20px 80px;
-    }
-    
+    .main { flex: 1; min-width: 0; padding: 20px 20px 80px; }
     .inner { max-width: 960px; margin: 0 auto; }
     
     /* ===== SIDE BRAND ===== */
@@ -98,7 +88,6 @@
       border-bottom: 1px solid var(--side-line);
       margin-bottom: 12px;
     }
-    
     .side-brand .logo {
       width: 44px;
       height: 44px;
@@ -112,19 +101,8 @@
       color: #fff;
       flex: 0 0 auto;
     }
-    
-    .side-brand .bn {
-      font-size: 14px;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: .4px;
-      line-height: 1.2;
-    }
-    
-    .side-brand .bs {
-      font-size: 10.5px;
-      color: #7b88a8;
-    }
+    .side-brand .bn { font-size: 14px; font-weight: 800; color: #fff; letter-spacing: .4px; line-height: 1.2; }
+    .side-brand .bs { font-size: 10.5px; color: #7b88a8; }
     
     /* ===== NAVIGATION ===== */
     .nav-label {
@@ -135,7 +113,6 @@
       padding: 14px 8px 6px;
       text-transform: uppercase;
     }
-    
     .nav {
       display: flex;
       align-items: center;
@@ -147,20 +124,17 @@
       transition: .14s;
       border: 1px solid transparent;
     }
-    
     .nav:hover { background: rgba(255,255,255,.05); }
     .nav.on {
       background: linear-gradient(135deg, rgba(139,124,255,.24), rgba(245,166,35,.12));
       border-color: rgba(139,124,255,.45);
       color: #fff;
     }
-    
     .nav .ic { font-size: 17px; line-height: 1.25; flex: 0 0 auto; width: 22px; text-align: center; }
     .nav .tx { flex: 1; min-width: 0; }
     .nav .tx b { display: block; font-size: 12.5px; font-weight: 700; letter-spacing: -.1px; }
     .nav .tx span { display: block; font-size: 10px; color: #7f8cad; line-height: 1.3; margin-top: 1px; }
     .nav.on .tx span { color: #b9c2dd; }
-    
     .badge-n {
       font-size: 8px;
       font-weight: 800;
@@ -171,7 +145,6 @@
     }
     .badge-free { background: rgba(23,166,115,.22); color: #4ade9b; border: 1px solid rgba(23,166,115,.5); }
     .badge-pro { background: rgba(245,166,35,.18); color: #f5c069; border: 1px solid rgba(245,166,35,.45); }
-    .badge-on { background: rgba(23,166,115,.22); color: #4ade9b; border: 1px solid rgba(23,166,115,.5); }
     
     /* ===== SIDE FOOTER ===== */
     .side-foot {
@@ -183,7 +156,6 @@
       text-align: center;
       line-height: 1.6;
     }
-    
     .side-theme {
       display: flex;
       align-items: center;
@@ -202,7 +174,7 @@
       font-family: inherit;
     }
     
-    /* ===== API KEY STATUS ===== */
+    /* ===== API STATUS ===== */
     .api-status {
       background: rgba(23,166,115,.15);
       border: 1px solid rgba(23,166,115,.3);
@@ -213,7 +185,6 @@
       color: #7b88a8;
       text-align: center;
     }
-    
     .api-status.ok { border-color: var(--ok); color: var(--ok); }
     .api-status.err { border-color: var(--danger); color: var(--danger); }
     .api-status .key { font-family: monospace; font-size: 10px; color: var(--accent); }
@@ -277,10 +248,8 @@
       color: transparent;
       text-transform: uppercase;
     }
-    
     h1 { font-size: 20px; margin: 0; letter-spacing: -.4px; }
     .sub { font-size: 12.5px; color: var(--muted); margin: 2px 0 8px; }
-    
     .pill {
       display: inline-block;
       font-size: 10px;
@@ -304,7 +273,6 @@
       margin-top: 14px;
       box-shadow: var(--shadow);
     }
-    
     .card h2 {
       font-size: 13px;
       text-transform: uppercase;
@@ -318,7 +286,6 @@
       color: var(--muted);
       font-weight: 400;
     }
-    
     .fsec {
       font-size: 11.5px;
       font-weight: 800;
@@ -331,7 +298,7 @@
     }
     .fsec:first-child { margin-top: 0; }
     
-    /* ===== FORM ELEMENTS ===== */
+    /* ===== FORM ===== */
     label {
       display: block;
       font-size: 12.5px;
@@ -339,14 +306,12 @@
       margin: 0 0 5px;
       color: var(--muted);
     }
-    
     .hint {
       font-size: 11.5px;
       color: var(--muted);
       font-weight: 400;
       margin-top: 4px;
     }
-    
     input, select, textarea {
       width: 100%;
       padding: 11px 13px;
@@ -358,19 +323,15 @@
       font-family: inherit;
       transition: .15s;
     }
-    
     input:focus, select:focus, textarea:focus {
       outline: 2px solid var(--accent);
       outline-offset: -1px;
       border-color: transparent;
     }
-    
     textarea { resize: vertical; min-height: 70px; }
     .field { margin-bottom: 14px; }
-    
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-    
     @media(max-width: 620px) { .row, .row3 { grid-template-columns: 1fr; } }
     
     /* ===== BUTTONS ===== */
@@ -385,7 +346,6 @@
       transition: transform .09s, background .15s;
     }
     .btn:active { transform: scale(.97); }
-    
     .btn-main {
       background: linear-gradient(135deg, var(--accent), #7a5cf0);
       color: #fff;
@@ -393,7 +353,6 @@
       margin-top: 4px;
       box-shadow: 0 4px 14px rgba(91,75,214,.32);
     }
-    
     .btn-ghost {
       background: var(--bg);
       color: var(--muted);
@@ -402,7 +361,6 @@
       font-weight: 600;
       padding: 10px 16px;
     }
-    
     .btn-add {
       background: var(--accent-soft);
       color: var(--accent);
@@ -411,7 +369,6 @@
       font-size: 13.5px;
       padding: 11px;
     }
-    
     .btn-row {
       display: flex;
       gap: 8px;
@@ -419,7 +376,6 @@
       flex-wrap: wrap;
     }
     .btn-row .btn { flex: 1; min-width: 118px; }
-    
     .btn-ide {
       border: 1px solid var(--accent);
       background: var(--accent-soft);
@@ -488,7 +444,6 @@
       border-radius: 99px;
       font-weight: 700;
     }
-    
     .block {
       background: var(--code-bg);
       border-radius: var(--radius);
@@ -535,7 +490,6 @@
     }
     .copy.done { background: var(--ok); color: #fff; }
     .copy:active { transform: scale(.97); }
-    
     .empty {
       text-align: center;
       color: var(--muted);
@@ -585,7 +539,6 @@
     .toast.ok { background: #0f8f63; }
     .toast.err { background: #c0394b; }
     .toast.info { background: #3b3486; }
-    
     @keyframes toastIn {
       from { opacity: 0; transform: translate3d(0, 14px, 0) scale(.96); }
       to { opacity: 1; transform: none; }
@@ -633,22 +586,43 @@
       .side.open { transform: translateX(0); }
       .main { padding: 14px 14px 60px; }
       #keAtas { bottom: 18px; right: 14px; }
+      .mtop {
+        display: flex;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--card);
+        border-bottom: 1px solid var(--line);
+        padding: 10px 14px;
+        align-items: center;
+        gap: 12px;
+      }
+      .mtop .t { flex: 1; min-width: 0; }
+      .mtop .t b { display: block; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .mtop .t span { font-size: 10px; color: var(--muted); letter-spacing: 1.2px; font-weight: 700; }
+      .burger {
+        border: 1px solid var(--line);
+        background: var(--bg);
+        color: var(--ink);
+        width: 38px;
+        height: 38px;
+        border-radius: 11px;
+        font-size: 18px;
+        cursor: pointer;
+        flex: 0 0 auto;
+      }
+      .scrim {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(6,10,22,.55);
+        z-index: 65;
+      }
+      .scrim.on { display: block; }
     }
+    .mtop { display: none; }
     
-    /* ===== SKELETON ===== */
-    .skel {
-      background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.14) 37%, rgba(255,255,255,.06) 63%);
-      background-size: 400% 100%;
-      animation: shim 1.1s ease-in-out infinite;
-      border-radius: 8px;
-      height: 12px;
-    }
-    @keyframes shim {
-      0% { background-position: 100% 50%; }
-      100% { background-position: 0 50%; }
-    }
-    
-    /* ===== MATERI ITEMS ===== */
+    /* ===== MATERI ===== */
     .materi {
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -700,57 +674,6 @@
       margin-bottom: 5px;
     }
     .lbl-row label { margin: 0; flex: 1; }
-    
-    /* ===== LOCKED ===== */
-    .locked { position: relative; overflow: hidden; }
-    .locked .fade {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 120px;
-      background: linear-gradient(to bottom, rgba(15,20,36,0), var(--code-bg) 78%);
-    }
-    .locked pre.blur { filter: blur(4.5px); opacity: .55; user-select: none; max-height: 210px; overflow: hidden; }
-    
-    /* ===== MISC ===== */
-    .mtop { display: none; }
-    @media(max-width: 880px) {
-      .mtop {
-        display: flex;
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        background: var(--card);
-        border-bottom: 1px solid var(--line);
-        padding: 10px 14px;
-        align-items: center;
-        gap: 12px;
-      }
-      .mtop .t { flex: 1; min-width: 0; }
-      .mtop .t b { display: block; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .mtop .t span { font-size: 10px; color: var(--muted); letter-spacing: 1.2px; font-weight: 700; }
-      .burger {
-        border: 1px solid var(--line);
-        background: var(--bg);
-        color: var(--ink);
-        width: 38px;
-        height: 38px;
-        border-radius: 11px;
-        font-size: 18px;
-        cursor: pointer;
-        flex: 0 0 auto;
-      }
-      .scrim {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(6,10,22,.55);
-        z-index: 65;
-      }
-      .scrim.on { display: block; }
-    }
-    
     .draft-tag {
       font-size: 10.5px;
       color: var(--muted);
@@ -761,7 +684,18 @@
     }
     .draft-tag.on { opacity: 1; }
     
-    /* ===== ACCESSIBILITY ===== */
+    .skel {
+      background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.14) 37%, rgba(255,255,255,.06) 63%);
+      background-size: 400% 100%;
+      animation: shim 1.1s ease-in-out infinite;
+      border-radius: 8px;
+      height: 12px;
+    }
+    @keyframes shim {
+      0% { background-position: 100% 50%; }
+      100% { background-position: 0 50%; }
+    }
+    
     @media (prefers-reduced-motion: reduce) {
       .view.on { animation: none; }
       .toast { animation: none; }
@@ -775,7 +709,7 @@
   <button class="burger" id="burger">☰</button>
   <div class="t">
     <span>SANGCREATOR</span>
-    <b id="mTitle">Ringkasan Materi Studio</b>
+    <b id="mTitle">Studio Guru AI</b>
   </div>
   <button class="burger" id="themeM">🌙</button>
 </div>
@@ -794,10 +728,7 @@
       </div>
     </div>
     
-    <!-- API Status -->
-    <div class="api-status" id="apiStatus">
-      ⚙️ Menginisialisasi Gemini API...
-    </div>
+    <div class="api-status" id="apiStatus">⚙️ Menginisialisasi Gemini API...</div>
     
     <!-- API Key Input -->
     <div class="api-key-box" id="apiKeyBox">
@@ -812,8 +743,8 @@
     <div class="side-foot">
       <button class="side-theme" id="themeSide">🌙 Mode Gelap</button>
       <div style="font-size:10px;color:#5d6a90;line-height:1.6;">
-        💡 Semua prompt di-generate oleh AI<br>
-        · 13 tools · v3.0 · <span id="apiModel">Gemini 2.5 Flash</span>
+        💡 13 tools siap pakai<br>
+        · Powered by Gemini AI · <span id="apiModel">v3.0</span>
       </div>
     </div>
   </aside>
@@ -821,264 +752,8 @@
   <!-- ===== MAIN ===== -->
   <main class="main">
     <div class="inner">
-      
-      <!-- ===== VIEW: RINGKASAN ===== -->
-      <section class="view on" id="v_ringkasan">
-        <div class="topbar">
-          <div class="brand">SANGCREATOR</div>
-          <h1>Ringkasan Materi Studio</h1>
-          <p class="sub">Prompt poster ringkasan materi — banyak mapel sekaligus</p>
-          <div class="pill pill-free">✅ GRATIS</div>
-        </div>
-        
-        <div class="card">
-          <h2>1 · Daftar Materi</h2>
-          <div id="materiList"></div>
-          <button class="btn btn-add" id="addBtn">➕ Tambah Mata Pelajaran</button>
-          
-          <div class="field" style="margin-top:16px;">
-            <label>Tempel Cepat <span style="font-weight:400;">(opsional)</span></label>
-            <textarea id="bulk" placeholder="IPA | IX/D | LISTRIK DAN MAGNET | Listrik Statis, Rangkaian Listrik"></textarea>
-            <div class="hint">Format per baris: <b>Mapel | Kelas | Bab | Submateri</b>. Submateri pisahkan dengan koma.</div>
-            <div class="btn-row">
-              <button class="btn btn-ghost" id="bulkBtn">📥 Masukkan ke Daftar</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card">
-          <h2>2 · Gaya Desain <span class="lite">(berlaku untuk semua materi)</span></h2>
-          <div class="row">
-            <div class="field">
-              <label>Gaya Visual</label>
-              <select id="gaya">
-                <option value="ilustrasi kartun edukatif yang ceria dengan karakter lucu, ikon berwarna, dan bidang-bidang kotak informasi yang rapi">Kartun Edukatif Ceria</option>
-                <option value="aesthetic pastel lembut ala catatan cantik (aesthetic study notes), rapi, banyak ikon kecil dan washi tape">Aesthetic Pastel / Study Notes</option>
-                <option value="infografis modern profesional, flat design, ikon garis tebal, grid rapi, kontras tinggi">Infografis Flat Modern</option>
-                <option value="minimalis bersih dengan banyak ruang kosong, satu warna aksen, tipografi tegas">Minimalis Bersih</option>
-                <option value="doodle handwriting seperti catatan tulis tangan berwarna, sticky note, panah manual, dan highlight stabilo">Doodle Tulis Tangan</option>
-                <option value="mind map / peta konsep bercabang dengan node berwarna dan garis penghubung yang jelas">Mind Map / Peta Konsep</option>
-                <option value="gaya komik strip edukatif dengan panel dan balon dialog karakter">Komik Edukatif</option>
-                <option value="render 3D bergaya film animasi Pixar/Disney — karakter dan objek dibuat 3D dengan permukaan halus mengkilap, pencahayaan sinematik lembut, warna sangat vibrant dan jenuh, kedalaman ruang terasa nyata, ekspresi karakter hidup dan ramah">✨ 3D Pixar Vibrant</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Palet Warna</label>
-              <select id="warna">
-                <option value="AUTO">🎨 Otomatis per mata pelajaran</option>
-                <option value="biru, tosca, dan kuning cerah di atas latar putih bersih">Biru–Tosca–Kuning</option>
-                <option value="pastel lembut (peach, mint, lavender, cream) di atas latar krem">Pastel Lembut</option>
-                <option value="hijau daun dan kuning hangat, nuansa alam">Hijau Alam</option>
-                <option value="oranye, merah bata, dan cokelat hangat">Oranye Hangat</option>
-                <option value="ungu, pink, dan biru muda, nuansa ceria">Ungu Ceria</option>
-              </select>
-              <div class="hint">Mode otomatis memberi warna berbeda tiap mapel.</div>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="field">
-              <label>Ukuran &amp; Orientasi</label>
-              <select id="ukuran">
-                <option value="A4 Portrait (21 × 29,7 cm)">A4 Portrait (21 × 29,7 cm)</option>
-                <option value="A4 Landscape (29,7 × 21 cm)">A4 Landscape</option>
-                <option value="A3 Portrait (29,7 × 42 cm) untuk poster dinding kelas">A3 Portrait (poster dinding)</option>
-                <option value="rasio 16:9 untuk slide presentasi di proyektor">Slide 16:9</option>
-                <option value="rasio 9:16 (potrait HP) untuk dibagikan di WhatsApp/Instagram">Story 9:16 (HP)</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Maskot / Karakter</label>
-              <select id="maskot">
-                <option value="">Tanpa maskot</option>
-                <option value="satu karakter siswa kartun berseragam yang ramah sebagai maskot pemandu">Siswa berseragam</option>
-                <option value="karakter guru kartun ramah yang menunjuk ke arah penjelasan">Guru menunjuk</option>
-                <option value="maskot hewan lucu yang relevan dengan materi">Maskot hewan lucu</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="field">
-              <label>Tingkat Kepadatan Isi</label>
-              <select id="padat">
-                <option value="AUTO">🎯 Otomatis dari kelas</option>
-                <option value="ringkas — hanya poin-poin inti, banyak ruang kosong, cocok untuk anak SD">Ringkas (SD)</option>
-                <option value="sedang — poin inti disertai penjelasan singkat 1–2 kalimat per bagian">Sedang (SMP)</option>
-                <option value="padat — penjelasan lengkap, rumus, dan contoh, namun tetap tertata rapi">Padat (SMA/lengkap)</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Konsistensi Seri</label>
-              <select id="seri">
-                <option value="on">Seragam — satu seri poster (disarankan)</option>
-                <option value="off">Bebas — tiap poster berdiri sendiri</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card">
-          <h2>3 · Elemen yang Ditampilkan</h2>
-          <div class="chips" id="chips"></div>
-          <div class="field" style="margin-top:14px;">
-            <label>Identitas Sekolah / Guru <span style="font-weight:400;">(opsional)</span></label>
-            <input id="identitas" placeholder="contoh: SMPN 1 Sukamaju — Bu Rina">
-          </div>
-          <div class="btn-row">
-            <label class="switch" style="flex:1;margin:0;">
-              <input type="checkbox" id="enBahasa" checked>
-              <span>Prompt Indonesia</span>
-            </label>
-            <label class="switch" style="flex:1;margin:0;">
-              <input type="checkbox" id="enEnglish">
-              <span>Versi English</span>
-            </label>
-          </div>
-          <button class="btn btn-main" id="genBtn" style="margin-top:14px;">✨ Buat Semua Prompt</button>
-          <div class="btn-row">
-            <button class="btn btn-ghost" id="againBtn">🔁 Variasi Kalimat</button>
-            <button class="btn btn-ghost" id="resetBtn">🧹 Reset</button>
-          </div>
-        </div>
-        
-        <div class="out-head">
-          <h3>Hasil Prompt</h3>
-          <span class="badge" id="countBadge">0 poster</span>
-          <button class="btn btn-ghost" id="copyAllBtn" style="padding:7px 12px;">📋 Salin Semua</button>
-        </div>
-        <div id="output">
-          <div class="card empty">Isi daftar materi lalu tekan <b>Buat Semua Prompt</b>.</div>
-        </div>
-      </section>
-      
-      <!-- ===== VIEW: RPM ===== -->
-      <section class="view" id="v_rpm">
-        <div class="topbar">
-          <div class="brand">SANGCREATOR</div>
-          <h1>Modul Ajar / RPM Studio</h1>
-          <p class="sub">Prompt dokumen perangkat ajar lengkap + cover</p>
-          <div class="pill pill-free">✅ GRATIS</div>
-        </div>
-        
-        <div class="card">
-          <h2>1 · Identitas Sekolah</h2>
-          <div class="row">
-            <div class="field"><label>Nama Sekolah</label><input id="r_sekolah" placeholder="SMPN 1 Sukamaju"></div>
-            <div class="field"><label>Tahun Pelajaran</label><input id="r_tahun" placeholder="2026/2027"></div>
-          </div>
-          <div class="row">
-            <div class="field"><label>Nama Guru Penyusun</label><input id="r_guru" placeholder="Rina Kartika, S.Pd."></div>
-            <div class="field"><label>NIP Guru <span style="font-weight:400;">(opsional)</span></label><input id="r_nip"></div>
-          </div>
-          <div class="row">
-            <div class="field"><label>Kepala Sekolah</label><input id="r_kepsek" placeholder="Drs. Ahmad Fauzi, M.Pd."></div>
-            <div class="field"><label>NIP Kepala Sekolah</label><input id="r_nipkep"></div>
-          </div>
-          <div class="row3">
-            <div class="field"><label>Semester</label><select id="r_semester"><option>Ganjil</option><option>Genap</option></select></div>
-            <div class="field"><label>Kota / Kabupaten</label><input id="r_kota" placeholder="Bekasi"></div>
-            <div class="field"><label>Tanggal Pengesahan</label><input id="r_tanggal" placeholder="Juli 2026"></div>
-          </div>
-        </div>
-        
-        <div class="card">
-          <h2>2 · Materi yang Dibuat</h2>
-          <div id="rList"></div>
-          <button class="btn btn-add" id="rAddBtn">➕ Tambah Modul</button>
-          <div class="hint" style="margin-top:9px;">Tiap kartu menghasilkan satu dokumen modul ajar utuh.</div>
-        </div>
-        
-        <div class="card">
-          <h2>3 · Format &amp; Pendekatan</h2>
-          <div class="row">
-            <div class="field">
-              <label>Jenis Dokumen</label>
-              <select id="r_jenis">
-                <option value="RPM">RPM — Rencana Pembelajaran Mendalam</option>
-                <option value="MODUL">Modul Ajar (Kurikulum Merdeka)</option>
-                <option value="RPP">RPP Ringkas 1 Lembar</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Praktik Pedagogis</label>
-              <select id="r_pedagogi">
-                <option value="Pembelajaran Berbasis Masalah (Problem Based Learning)">Problem Based Learning</option>
-                <option value="Pembelajaran Berbasis Proyek (Project Based Learning)">Project Based Learning</option>
-                <option value="Pembelajaran Inkuiri Terbimbing">Inkuiri Terbimbing</option>
-                <option value="Pembelajaran Penemuan (Discovery Learning)">Discovery Learning</option>
-                <option value="Pembelajaran Kooperatif (Cooperative Learning)">Cooperative Learning</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="field">
-              <label>Bahasa &amp; Gaya Penulisan</label>
-              <select id="r_gayatulis">
-                <option value="bahasa formal administratif sesuai kaidah dokumen kedinasan sekolah, kalimat efektif dan baku">Formal Kedinasan</option>
-                <option value="bahasa formal namun mengalir dan mudah dipahami, tidak kaku">Formal Ringan</option>
-                <option value="ringkas dan padat, banyak memakai tabel dan poin bernomor">Ringkas Berpoin</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Kedalaman Isi</label>
-              <select id="r_dalam">
-                <option value="lengkap dan detail, setiap bagian diuraikan menyeluruh siap dipakai tanpa banyak revisi">Lengkap &amp; Detail</option>
-                <option value="standar, cukup memenuhi kebutuhan administrasi tanpa bertele-tele">Standar</option>
-                <option value="sangat ringkas, hanya poin utama tiap bagian">Sangat Ringkas</option>
-              </select>
-            </div>
-          </div>
-          <div class="field">
-            <label>Dimensi Profil Lulusan</label>
-            <div class="chips" id="rDim"></div>
-          </div>
-          <div class="field">
-            <label>Lampiran yang Disertakan</label>
-            <div class="chips" id="rLamp"></div>
-          </div>
-        </div>
-        
-        <div class="card">
-          <h2>4 · Desain Cover &amp; Halaman</h2>
-          <div class="row">
-            <div class="field">
-              <label>Tema Visual Cover</label>
-              <select id="r_tema">
-                <option value="nuansa Nusantara — perpaduan pemandangan alam Indonesia, rumah adat, dan ornamen budaya dengan gradasi biru laut dan hijau">Nusantara (alam &amp; budaya)</option>
-                <option value="modern edukatif — bentuk geometris lembut, gradasi biru dan tosca, ikon pendidikan minimalis">Modern Edukatif</option>
-                <option value="batik modern — ornamen batik disederhanakan sebagai aksen tepi dengan gradasi cokelat emas dan biru tua">Batik Modern</option>
-                <option value="sains &amp; teknologi — partikel, garis sirkuit halus, dan gradasi biru elektrik keunguan">Sains &amp; Teknologi</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Tagline Cover</label>
-              <input id="r_tagline" placeholder="Mindful · Meaningful · Joyful">
-            </div>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="r_bg" checked>
-            <span>Sertakan prompt background halaman isi</span>
-          </label>
-          <button class="btn btn-main" id="rGenBtn">📝 Buat Prompt Modul</button>
-          <div class="btn-row">
-            <button class="btn btn-ghost" id="rResetBtn">🧹 Reset</button>
-          </div>
-        </div>
-        
-        <div class="out-head">
-          <h3>Hasil Prompt</h3>
-          <span class="badge" id="rBadge">0 modul</span>
-          <button class="btn btn-ghost" id="rCopyAll" style="padding:7px 12px;">📋 Salin Semua</button>
-        </div>
-        <div id="rOutput">
-          <div class="card empty">Isi identitas dan materi lalu tekan <b>Buat Prompt Modul</b>.</div>
-        </div>
-      </section>
-      
-      <!-- ===== GENERIC VIEWS ===== -->
+      <!-- Semua view akan di-generate oleh JavaScript -->
       <div id="genericViews"></div>
-      
     </div>
   </main>
 </div>
@@ -1091,7 +766,8 @@
 <datalist id="mapelList"></datalist>
 
 <!-- ============================================================ -->
-<!-- ===== SCRIPT ===== -->
+<!-- ===== JAVASCRIPT LENGKAP ===== -->
+<!-- ============================================================ -->
 <script>
 // ================================================================
 // 1. KONFIGURASI GEMINI API
@@ -1120,79 +796,14 @@ function setApiKey(key) {
 }
 
 // ================================================================
-// 2. STATE & CONFIG
+// 2. STATE
 // ================================================================
 
-const TOOLS = [];
-let PREMIUM = true; // Semua tools terbuka di versi AI Studio
 let API_READY = false;
-
-const CFG = {
-  TOOL_GRATIS: '', // Semua gratis di versi AI Studio
-  JUMLAH_USER: 'AI Studio'
-};
+let PREMIUM = true; // Semua tools terbuka
 
 // ================================================================
-// 3. API GEMINI - GENERATE PROMPT
-// ================================================================
-
-/**
- * Kirim prompt ke Gemini API dan kembalikan hasilnya
- */
-async function generateWithGemini(promptText) {
-  if (!GEMINI_API_KEY) {
-    throw new Error('API Key belum diisi. Masukkan API Key Gemini di panel kiri (sidebar).');
-  }
-  
-  const response = await fetch(GEMINI_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      contents: [{
-        parts: [{ text: promptText }]
-      }],
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 8192,
-        topP: 0.95,
-        topK: 40,
-      }
-    })
-  });
-  
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(`Gemini API Error: ${errorData.error?.message || response.statusText}`);
-  }
-  
-  const data = await response.json();
-  const result = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-  return result;
-}
-
-/**
- * Generate prompt dengan loading indicator
- */
-async function generateWithUI(promptText, onSuccess, onError) {
-  const toastId = toast('⏳ Menghubungi Gemini AI...', 'info', 0);
-  
-  try {
-    const result = await generateWithGemini(promptText);
-    closeToast(toastId);
-    if (onSuccess) onSuccess(result);
-    return result;
-  } catch (error) {
-    closeToast(toastId);
-    toast(`❌ ${error.message}`, 'err', 4000);
-    if (onError) onError(error);
-    throw error;
-  }
-}
-
-// ================================================================
-// 4. TOAST SYSTEM
+// 3. TOAST SYSTEM
 // ================================================================
 
 let _toastAntri = [];
@@ -1201,7 +812,6 @@ let _toastIdCounter = 0;
 function toast(pesan, tipe, ms) {
   const w = document.getElementById('toastWrap');
   if (!w) return;
-  
   const t = document.createElement('div');
   const id = ++_toastIdCounter;
   t.className = 'toast ' + (tipe || 'info');
@@ -1209,22 +819,13 @@ function toast(pesan, tipe, ms) {
   t.dataset.toastId = id;
   w.appendChild(t);
   _toastAntri.push(t);
-  
-  if (_toastAntri.length > 3) {
-    const x = _toastAntri.shift();
-    x.remove();
-  }
-  
+  if (_toastAntri.length > 3) { const x = _toastAntri.shift(); x.remove(); }
   if (ms && ms > 0) {
     setTimeout(() => {
       t.classList.add('keluar');
-      setTimeout(() => {
-        t.remove();
-        _toastAntri = _toastAntri.filter(z => z !== t);
-      }, 220);
+      setTimeout(() => { t.remove(); _toastAntri = _toastAntri.filter(z => z !== t); }, 220);
     }, ms);
   }
-  
   return id;
 }
 
@@ -1232,15 +833,12 @@ function closeToast(id) {
   const t = _toastAntri.find(el => parseInt(el.dataset.toastId) === id);
   if (t) {
     t.classList.add('keluar');
-    setTimeout(() => {
-      t.remove();
-      _toastAntri = _toastAntri.filter(z => z !== t);
-    }, 220);
+    setTimeout(() => { t.remove(); _toastAntri = _toastAntri.filter(z => z !== t); }, 220);
   }
 }
 
 // ================================================================
-// 5. UTILITY FUNCTIONS
+// 4. UTILITY FUNCTIONS
 // ================================================================
 
 const $ = id => document.getElementById(id);
@@ -1252,17 +850,11 @@ function salin(text, btn) {
     if (!btn.dataset.old) btn.dataset.old = btn.textContent;
     btn.textContent = '✓ Tersalin';
     btn.classList.add('done');
-    setTimeout(() => {
-      btn.textContent = btn.dataset.old;
-      btn.classList.remove('done');
-    }, 1600);
+    setTimeout(() => { btn.textContent = btn.dataset.old; btn.classList.remove('done'); }, 1600);
   };
-  
   if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text).then(() => {
-      done();
-      toast('Prompt tersalin — tinggal tempel di AI lain', 'ok');
-    }).catch(() => fallbackCopy(text, done));
+    navigator.clipboard.writeText(text).then(() => { done(); toast('Prompt tersalin', 'ok'); })
+      .catch(() => fallbackCopy(text, done));
   } else {
     fallbackCopy(text, done);
   }
@@ -1275,13 +867,8 @@ function fallbackCopy(text, done) {
   ta.style.opacity = '0';
   document.body.appendChild(ta);
   ta.select();
-  try {
-    document.execCommand('copy');
-    done();
-    toast('Prompt tersalin', 'ok');
-  } catch (e) {
-    toast('Gagal menyalin — blok teksnya lalu tekan Ctrl+C', 'err', 3200);
-  }
+  try { document.execCommand('copy'); done(); toast('Prompt tersalin', 'ok'); } 
+  catch(e) { toast('Gagal menyalin', 'err', 3200); }
   document.body.removeChild(ta);
 }
 
@@ -1354,111 +941,95 @@ const NAMA_CONTOH = [
 ];
 
 // ================================================================
-// 6. IDE FUNCTIONS (AI-assisted ideas)
+// 5. GEMINI API
+// ================================================================
+
+async function generateWithGemini(promptText) {
+  if (!GEMINI_API_KEY) {
+    throw new Error('API Key belum diisi. Masukkan API Key Gemini di panel kiri (sidebar).');
+  }
+  
+  const response = await fetch(GEMINI_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: promptText }] }],
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 8192,
+        topP: 0.95,
+        topK: 40,
+      }
+    })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Gemini API Error: ${errorData.error?.message || response.statusText}`);
+  }
+  
+  const data = await response.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+}
+
+// ================================================================
+// 6. IDE FUNCTIONS
 // ================================================================
 
 const IDE = {
-  submateri: function(g) {
-    return pecahTopik(g('bab') || g('materi'), 4).join('\n');
-  },
-  poinVideo: function(g) {
-    return pecahTopik(g('materi'), 4).join('\n');
-  },
-  materiUji: function(g) {
-    return pecahTopik(g('materi') || g('bab'), 5).join('\n');
-  },
+  submateri: function(g) { return pecahTopik(g('bab') || g('materi'), 4).join('\n'); },
+  poinVideo: function(g) { return pecahTopik(g('materi'), 4).join('\n'); },
+  materiUji: function(g) { return pecahTopik(g('materi') || g('bab'), 5).join('\n'); },
   materiTahun: function(g) {
     const m = (g('mapel') || 'Mata Pelajaran').trim();
     const out = [];
-    for (let i = 1; i <= 8; i++) {
-      out.push('Bab ' + i + ' — (judul bab ' + m + ' ke-' + i + ')');
-    }
+    for (let i = 1; i <= 8; i++) out.push('Bab ' + i + ' — (judul bab ' + m + ' ke-' + i + ')');
     return out.join('\n');
   },
   tujuan: function(g) {
     const T = (g('materi') || g('bab') || 'materi ini').trim();
     const kko = acak(['menjelaskan', 'menganalisis', 'membandingkan', 'menerapkan', 'menyimpulkan', 'merancang'], 3);
-    return 'Murid mampu ' + kko[0] + ' konsep ' + T + ' dengan tepat setelah mengikuti pembelajaran; ' +
-           'murid mampu ' + kko[1] + ' penerapan ' + T + ' dalam kehidupan sehari-hari; ' +
+    return 'Murid mampu ' + kko[0] + ' konsep ' + T + ' dengan tepat; ' +
+           'murid mampu ' + kko[1] + ' penerapan ' + T + '; ' +
            'murid mampu ' + kko[2] + ' hasil pengamatannya secara mandiri.';
   },
   posterIsi: function(g) {
     const j = String(g('jenis') || '').toUpperCase();
     const P = {
-      'TATA TERTIB': ['Datang ke sekolah tepat waktu', 'Berpakaian rapi dan sopan', 'Mengucapkan salam kepada guru', 'Menjaga kebersihan kelas', 'Tidak makan saat pelajaran berlangsung', 'Mengumpulkan tugas tepat waktu', 'Menghormati teman dan tidak mengejek', 'Meminta izin sebelum keluar kelas'],
-      'PIKET': ['Menyapu lantai kelas', 'Mengepel bila perlu', 'Menghapus papan tulis', 'Merapikan meja dan kursi', 'Membuang sampah ke tempatnya', 'Menyiram tanaman kelas', 'Mematikan lampu dan kipas sebelum pulang'],
-      'SUDUT BACA': ['Ambil buku dengan tangan bersih', 'Baca dengan tenang', 'Kembalikan buku ke rak semula', 'Jangan melipat halaman buku', 'Catat judul buku yang sudah dibaca', 'Ajak temanmu ikut membaca'],
-      'MOTIVASI': ['Belajar hari ini, sukses esok hari', 'Gagal itu proses, menyerah itu pilihan', 'Sedikit demi sedikit, lama-lama bisa', 'Orang pintar bukan yang tak pernah salah, tapi yang mau belajar dari salahnya', 'Kamu tidak harus hebat untuk memulai, tapi harus memulai untuk jadi hebat'],
-      '7K': ['Keamanan — jaga barang dan keselamatan diri', 'Kebersihan — buang sampah pada tempatnya', 'Ketertiban — patuhi aturan sekolah', 'Keindahan — hias dan rawat kelas', 'Kekeluargaan — saling tolong menolong', 'Kerindangan — rawat tanaman sekolah', 'Kesehatan — cuci tangan dan makan bergizi'],
-      'PHBS': ['Cuci tangan pakai sabun sebelum makan', 'Jajan di kantin sekolah yang bersih', 'Buang sampah pada tempatnya', 'Gunakan jamban yang bersih', 'Olahraga teratur setiap hari', 'Tidak merokok di lingkungan sekolah'],
-      'STRUKTUR': ['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua Kelas', 'Sekretaris', 'Bendahara', 'Seksi Kebersihan', 'Seksi Keamanan', 'Seksi Kerohanian'],
-      'JADWAL PELAJARAN': ['Senin — (isi mata pelajaran)', 'Selasa — (isi mata pelajaran)', 'Rabu — (isi mata pelajaran)', 'Kamis — (isi mata pelajaran)', 'Jumat — (isi mata pelajaran)'],
-      'ABSENSI': ['Hadir', 'Izin', 'Sakit', 'Tanpa Keterangan', 'Murid Terajin Bulan Ini']
+      'TATA TERTIB': ['Datang tepat waktu', 'Berpakaian rapi', 'Mengucapkan salam', 'Menjaga kebersihan', 'Tidak makan saat pelajaran', 'Mengumpulkan tugas tepat waktu', 'Menghormati teman', 'Meminta izin sebelum keluar'],
+      'PIKET': ['Menyapu lantai', 'Mengepel', 'Menghapus papan tulis', 'Merapikan meja kursi', 'Membuang sampah', 'Menyiram tanaman', 'Mematikan lampu'],
+      'SUDUT BACA': ['Ambil buku dengan tangan bersih', 'Baca dengan tenang', 'Kembalikan buku ke rak', 'Jangan melipat halaman', 'Catat judul buku', 'Ajak teman membaca']
     };
-    for (const k in P) {
-      if (j.indexOf(k) > -1) return P[k].join('\n');
-    }
+    for (const k in P) { if (j.indexOf(k) > -1) return P[k].join('\n'); }
     return ['(poin 1)', '(poin 2)', '(poin 3)', '(poin 4)', '(poin 5)', '(poin 6)'].join('\n');
   },
   dataNilai: function(g) {
     const n = Math.min(parseInt(g('nsiswa'), 10) || 10, 24);
     const ns = parseInt(g('nsoal'), 10) || 10;
-    const out = ['Nama | Skor per butir (1 = benar, 0 = salah)'];
+    const out = ['Nama | Skor per butir (1=benar, 0=salah)'];
     acak(NAMA_CONTOH, n).forEach(function(nm) {
       const b = [];
       for (let i = 0; i < ns; i++) b.push(Math.random() < 0.68 ? 1 : 0);
       out.push(nm + ' | ' + b.join(','));
     });
-    out.push('');
-    out.push('(Ini contoh format. Hapus lalu tempel data aslimu dari Excel dengan susunan yang sama.)');
+    out.push('', '(Ini contoh format. Hapus lalu tempel data aslimu.)');
     return out.join('\n');
   },
-  idePoster: function() {
-    return acak([
-      'POSTER JADWAL SHOLAT BERJAMAAH KELAS',
-      'POSTER POJOK LITERASI DIGITAL',
-      'POSTER KESEPAKATAN KELAS',
-      'POSTER TARGET NILAI KELAS BULAN INI',
-      'POSTER ALUR MENCUCI TANGAN'
-    ], 1)[0];
-  },
-  ideSertifikat: function() {
-    return acak([
-      'PIAGAM PELANTIKAN PENGURUS OSIS',
-      'SERTIFIKAT MURID TERAJIN BULAN INI',
-      'PIAGAM PENGHARGAAN PETUGAS UPACARA',
-      'SERTIFIKAT KELULUSAN TAHFIDZ'
-    ], 1)[0];
-  },
+  idePoster: function() { return acak(['POSTER JADWAL SHOLAT', 'POSTER POJOK LITERASI', 'POSTER KESEPAKATAN KELAS'], 1)[0]; },
+  ideSertifikat: function() { return acak(['PIAGAM PELANTIKAN OSIS', 'SERTIFIKAT TERAJIN', 'PIAGAM APRESIASI'], 1)[0]; },
   ideInteraktif: function(g) {
     const T = (g('materi') || 'materi').trim();
-    return acak([
-      'PERMAINAN DOMINO ' + T + ' — kartu dipasangkan antara istilah dan pengertiannya',
-      'BINGO KOSAKATA ' + T + ' — murid menandai kotak saat guru menyebut definisinya',
-      'KARTU MISTERI ' + T + ' — murid menebak konsep dari 3 petunjuk bertahap'
-    ], 1)[0];
+    return acak(['PERMAINAN DOMINO ' + T, 'BINGO KOSAKATA ' + T, 'KARTU MISTERI ' + T], 1)[0];
   },
-  ideHalaman: function() {
-    return acak([
-      '2 halaman A4, halaman kedua khusus kolom kesimpulan dan refleksi',
-      '3 halaman A4, halaman terakhir berisi rubrik penilaian untuk guru',
-      '4 halaman A4 dijilid jadi buklet kecil A5'
-    ], 1)[0];
-  },
-  karakterIde: function() {
-    return acak([
-      'seorang nenek pendongeng berkebaya dengan selendang batik, wajah teduh dan ramah',
-      'seorang ilmuwan muda berjas lab putih dengan kacamata bulat, ekspresi antusias',
-      'seorang petani ramah bertopi caping dengan baju lengan panjang lusuh yang bersih'
-    ], 1)[0];
-  }
+  ideHalaman: function() { return acak(['2 halaman A4', '3 halaman A4', '4 halaman A4 dijilid'], 1)[0]; },
+  karakterIde: function() { return acak(['nenek pendongeng berkebaya', 'ilmuwan muda berjas lab', 'petani ramah bertopi caping'], 1)[0]; }
 };
 
 // ================================================================
-// 7. TOOL DEFINITIONS
+// 7. TOOL DEFINITIONS (13 Tools)
 // ================================================================
 
-// --- 7a. Ringkasan Materi ---
+// --- Tool 1: Ringkasan Materi ---
 const ELEMEN = [
   ['judul', 'Judul besar', 'judul besar yang mencolok di bagian atas berisi nama submateri'],
   ['kunci', 'Kotak Kata Kunci', 'satu kotak khusus berisi daftar KATA KUNCI penting'],
@@ -1475,74 +1046,58 @@ const ELEMEN = [
   ['ingat', 'Kotak "Jangan Lupa"', 'kotak peringatan berisi kesalahan yang sering dilakukan siswa'],
   ['peta', 'Peta konsep mini', 'peta konsep mini yang menghubungkan seluruh bagian materi']
 ];
-
 const DEFAULT_ON = ['judul', 'kunci', 'definisi', 'gambar', 'ikon', 'sehari'];
 
 const WARNA_MAPEL = {
-  'ipa': 'hijau daun dan biru tosca dengan aksen kuning, nuansa sains yang segar',
-  'fisika': 'biru tua dan tosca dengan aksen oranye terang, nuansa sains modern',
-  'kimia': 'ungu dan tosca dengan aksen hijau neon lembut, nuansa laboratorium',
-  'biologi': 'hijau daun dan hijau muda dengan aksen cokelat hangat, nuansa alam',
-  'matematika': 'biru royal dan putih dengan aksen oranye cerah, tegas dan bersih',
-  'ips': 'cokelat hangat dan krem dengan aksen oranye, nuansa peta kuno modern',
-  'sejarah': 'cokelat sepia dan krem dengan aksen emas, nuansa klasik',
+  'ipa': 'hijau daun dan biru tosca dengan aksen kuning',
+  'fisika': 'biru tua dan tosca dengan aksen oranye terang',
+  'kimia': 'ungu dan tosca dengan aksen hijau neon lembut',
+  'biologi': 'hijau daun dan hijau muda dengan aksen cokelat hangat',
+  'matematika': 'biru royal dan putih dengan aksen oranye cerah',
+  'ips': 'cokelat hangat dan krem dengan aksen oranye',
+  'sejarah': 'cokelat sepia dan krem dengan aksen emas',
   'geografi': 'hijau bumi dan biru laut dengan aksen kuning pasir',
-  'ekonomi': 'hijau tosca dan biru gelap dengan aksen emas, kesan profesional',
-  'sosiologi': 'oranye dan ungu lembut dengan aksen krem, nuansa hangat sosial',
-  'bahasa indonesia': 'merah bata dan krem dengan aksen kuning mustard, nuansa sastra hangat',
-  'bahasa inggris': 'biru navy dan merah dengan aksen putih, nuansa segar internasional',
-  'bahasa daerah': 'cokelat batik dan emas dengan aksen merah, nuansa tradisional',
-  'ppkn': 'merah dan putih dengan aksen abu-abu gelap, nuansa nasionalis rapi',
-  'pendidikan agama islam': 'hijau zamrud dan emas dengan ornamen geometris islami sederhana',
-  'informatika': 'biru elektrik dan ungu dengan aksen tosca neon, nuansa digital',
+  'ekonomi': 'hijau tosca dan biru gelap dengan aksen emas',
+  'sosiologi': 'oranye dan ungu lembut dengan aksen krem',
+  'bahasa indonesia': 'merah bata dan krem dengan aksen kuning mustard',
+  'bahasa inggris': 'biru navy dan merah dengan aksen putih',
+  'ppkn': 'merah dan putih dengan aksen abu-abu gelap',
+  'pendidikan agama islam': 'hijau zamrud dan emas dengan ornamen geometris',
+  'informatika': 'biru elektrik dan ungu dengan aksen tosca neon',
   'seni budaya': 'warna-warni cerah palet seniman dengan aksen ungu dan pink',
-  'pjok': 'oranye dan biru energik dengan aksen putih, nuansa olahraga',
-  'prakarya': 'kuning mustard dan cokelat kayu dengan aksen hijau, nuansa kriya',
-  'bimbingan konseling': 'biru muda dan lavender dengan aksen putih, nuansa tenang'
+  'pjok': 'oranye dan biru energik dengan aksen putih',
+  'prakarya': 'kuning mustard dan cokelat kayu dengan aksen hijau'
 };
-
 const WARNA_CADANGAN = [
   'biru, tosca, dan kuning cerah di atas latar putih bersih',
   'pastel lembut (peach, mint, lavender, cream) di atas latar krem',
   'oranye, merah bata, dan cokelat hangat',
-  'ungu, pink, dan biru muda, nuansa ceria',
-  'hijau daun dan kuning hangat, nuansa alam'
+  'ungu, pink, dan biru muda, nuansa ceria'
 ];
-
-const V_TUTUP = [
-  'menarik, aesthetic, informatif, mudah dibaca, dan siap print',
-  'rapi, enak dipandang, mudah dipahami siswa, dan siap dicetak',
-  'eye-catching, tertata, ramah anak, dan langsung bisa dicetak',
-  'estetik, komunikatif, tidak berantakan, dan siap dibagikan ke siswa'
-];
-
+const V_TUTUP = ['menarik, aesthetic, informatif, mudah dibaca, dan siap print',
+  'rapi, enak dipandang, mudah dipahami siswa, dan siap dicetak'];
 const V_LAYOUT = [
   'Tata letak dibagi menjadi kotak-kotak (card) bersekat rapi dengan jarak antar bagian yang lega',
-  'Susun konten dalam grid bersekat yang seimbang, tidak berdesakan, alur baca dari atas ke bawah',
-  'Gunakan panel-panel berwarna dengan sudut membulat, hierarki jelas antara judul, subjudul, dan isi',
-  'Bagi halaman menjadi beberapa blok informasi dengan header berwarna di tiap bloknya'
+  'Susun konten dalam grid bersekat yang seimbang, tidak berdesakan, alur baca dari atas ke bawah'
 ];
 
-// --- 7b. Modul Ajar ---
-const DIMENSI = ['Keimanan dan Ketakwaan terhadap Tuhan Yang Maha Esa', 'Kewargaan', 'Penalaran Kritis', 'Kreativitas', 'Kolaborasi', 'Kemandirian', 'Kesehatan', 'Komunikasi'];
+// --- Tool 2: Modul Ajar ---
+const DIMENSI = ['Keimanan dan Ketakwaan', 'Kewargaan', 'Penalaran Kritis', 'Kreativitas', 'Kolaborasi', 'Kemandirian', 'Kesehatan', 'Komunikasi'];
 const DIM_ON = ['Penalaran Kritis', 'Kolaborasi', 'Kemandirian'];
-
 const LAMPIRAN = [
-  ['lkpd', 'LKPD', 'Lembar Kerja Peserta Didik (LKPD) yang siap dicetak, lengkap dengan petunjuk pengerjaan dan kolom jawaban'],
-  ['rubrik', 'Rubrik penilaian', 'rubrik penilaian dalam bentuk tabel dengan kriteria dan rentang skor yang jelas'],
+  ['lkpd', 'LKPD', 'Lembar Kerja Peserta Didik (LKPD) yang siap dicetak'],
+  ['rubrik', 'Rubrik penilaian', 'rubrik penilaian dalam bentuk tabel dengan kriteria dan rentang skor'],
   ['pg', 'Soal pilihan ganda', '10 soal pilihan ganda beserta kunci jawaban'],
   ['uraian', 'Soal uraian', '5 soal uraian beserta kunci jawaban dan pedoman penskoran'],
-  ['sikap', 'Instrumen penilaian sikap', 'lembar observasi penilaian sikap murid selama pembelajaran'],
-  ['media', 'Media pembelajaran', 'daftar media pembelajaran digital yang relevan beserta tautannya'],
+  ['sikap', 'Instrumen penilaian sikap', 'lembar observasi penilaian sikap murid'],
+  ['media', 'Media pembelajaran', 'daftar media pembelajaran digital yang relevan'],
   ['bacaan', 'Bahan bacaan', 'ringkasan bahan bacaan materi untuk guru dan murid'],
   ['glosarium', 'Glosarium', 'glosarium istilah penting pada materi ini'],
   ['pustaka', 'Daftar pustaka', 'daftar pustaka dengan format penulisan baku'],
   ['remedial', 'Remedial & pengayaan', 'rencana pembelajaran remedial dan pengayaan'],
   ['refleksi', 'Refleksi guru & murid', 'lembar refleksi untuk guru dan untuk murid']
 ];
-
 const LAMP_ON = ['lkpd', 'rubrik', 'pg', 'uraian', 'media', 'pustaka'];
-
 const JENIS_NAMA = {
   'RPM': 'Rencana Pembelajaran Mendalam (RPM)',
   'MODUL': 'Modul Ajar Kurikulum Merdeka',
@@ -1551,70 +1106,59 @@ const JENIS_NAMA = {
 
 function strukturDok(j) {
   if (j === 'RPM') return [
-    'A. IDENTITAS — nama sekolah, mata pelajaran, kelas/fase, semester, alokasi waktu, jumlah pertemuan, nama penyusun, tahun pelajaran (buat dalam bentuk tabel)',
-    'B. IDENTIFIKASI — kesiapan murid, dimensi profil lulusan yang disasar, materi insersi/lintas disiplin, sarana prasarana',
-    'C. DESAIN PEMBELAJARAN — capaian pembelajaran, lintas disiplin ilmu, tujuan pembelajaran, topik pembelajaran, praktik pedagogis, kemitraan pembelajaran, lingkungan pembelajaran, pemanfaatan digital',
-    'D. PENGALAMAN BELAJAR — dijabarkan per pertemuan dalam tabel dengan tiga tahap: MEMAHAMI (awal), MENGAPLIKASI (inti), MEREFLEKSI (penutup); tiap tahap berisi langkah kegiatan guru dan murid secara rinci beserta perkiraan waktunya',
-    'E. ASESMEN PEMBELAJARAN — asesmen awal (diagnostik), asesmen proses (formatif), asesmen akhir (sumatif); dilengkapi bentuk instrumen dan teknik penilaian',
-    'F. REFLEKSI — refleksi guru dan refleksi murid',
-    'G. LEMBAR PENGESAHAN — kolom tanda tangan Kepala Sekolah dan Guru Mata Pelajaran beserta nama dan NIP',
+    'A. IDENTITAS — nama sekolah, mata pelajaran, kelas/fase, semester, alokasi waktu, jumlah pertemuan, nama penyusun, tahun pelajaran (tabel)',
+    'B. IDENTIFIKASI — kesiapan murid, dimensi profil lulusan, materi insersi, sarana prasarana',
+    'C. DESAIN PEMBELAJARAN — capaian pembelajaran, lintas disiplin, tujuan, topik, praktik pedagogis, kemitraan, lingkungan, digital',
+    'D. PENGALAMAN BELAJAR — per pertemuan: MEMAHAMI, MENGAPLIKASI, MEREFLEKSI; lengkap dengan waktu',
+    'E. ASESMEN — diagnostik, formatif, sumatif; dilengkapi instrumen dan teknik',
+    'F. REFLEKSI — refleksi guru dan murid',
+    'G. LEMBAR PENGESAHAN — tanda tangan Kepala Sekolah dan Guru',
     'H. DAFTAR PUSTAKA'
   ];
   if (j === 'MODUL') return [
-    'A. INFORMASI UMUM — identitas modul, kompetensi awal, profil pelajar Pancasila, sarana prasarana, target peserta didik, model pembelajaran (tabel)',
-    'B. KOMPONEN INTI — capaian pembelajaran, tujuan pembelajaran, pemahaman bermakna, pertanyaan pemantik, persiapan pembelajaran',
-    'C. KEGIATAN PEMBELAJARAN — per pertemuan: pendahuluan, kegiatan inti, penutup, lengkap dengan alokasi waktu tiap langkah',
-    'D. ASESMEN — diagnostik, formatif, dan sumatif beserta instrumennya',
+    'A. INFORMASI UMUM — identitas modul, kompetensi awal, profil pelajar Pancasila, sarana, target, model (tabel)',
+    'B. KOMPONEN INTI — capaian, tujuan, pemahaman bermakna, pertanyaan pemantik, persiapan',
+    'C. KEGIATAN PEMBELAJARAN — pendahuluan, inti, penutup; lengkap dengan waktu',
+    'D. ASESMEN — diagnostik, formatif, sumatif beserta instrumen',
     'E. PENGAYAAN DAN REMEDIAL',
     'F. REFLEKSI GURU DAN PESERTA DIDIK',
-    'G. LEMBAR PENGESAHAN — tanda tangan Kepala Sekolah dan Guru Mata Pelajaran',
+    'G. LEMBAR PENGESAHAN',
     'H. DAFTAR PUSTAKA'
   ];
-  return [
-    'A. IDENTITAS singkat dalam satu tabel',
-    'B. TUJUAN PEMBELAJARAN',
-    'C. LANGKAH PEMBELAJARAN — pendahuluan, inti, penutup secara ringkas per pertemuan',
-    'D. ASESMEN DAN PENILAIAN',
-    'E. LEMBAR PENGESAHAN'
-  ];
+  return ['A. IDENTITAS singkat', 'B. TUJUAN PEMBELAJARAN', 'C. LANGKAH PEMBELAJARAN', 'D. ASESMEN', 'E. LEMBAR PENGESAHAN'];
 }
 
 // ================================================================
-// 8. BUILD FUNCTIONS FOR TOOLS
+// 8. BUILD FUNCTIONS
 // ================================================================
 
 // --- 8a. Ringkasan Materi ---
-function promptID(item, sub, seed, idx) {
+function promptRingkasan(item, sub, seed, idx) {
   const G = {
-    gaya: document.getElementById('gaya').value,
-    ukuran: document.getElementById('ukuran').value,
-    maskot: document.getElementById('maskot').value,
-    seri: document.getElementById('seri').value,
-    identitas: document.getElementById('identitas').value.trim()
+    gaya: document.getElementById('gaya')?.value || 'ilustrasi kartun edukatif',
+    ukuran: document.getElementById('ukuran')?.value || 'A4 Portrait',
+    maskot: document.getElementById('maskot')?.value || '',
+    seri: document.getElementById('seri')?.value || 'on',
+    identitas: document.getElementById('identitas')?.value.trim() || ''
   };
   
   function warnaUntuk(mapel, idx) {
-    const p = document.getElementById('warna').value;
+    const p = document.getElementById('warna')?.value || 'AUTO';
     if (p !== 'AUTO') return p;
     const key = mapel.toLowerCase().trim();
     if (WARNA_MAPEL[key]) return WARNA_MAPEL[key];
-    const hit = Object.keys(WARNA_MAPEL).find(k => key.includes(k) || k.includes(key));
-    return hit ? WARNA_MAPEL[hit] : WARNA_CADANGAN[idx % WARNA_CADANGAN.length];
+    return WARNA_CADANGAN[idx % WARNA_CADANGAN.length];
   }
   
   function padatUntuk(kelas) {
-    const p = document.getElementById('padat').value;
+    const p = document.getElementById('padat')?.value || 'AUTO';
     if (p !== 'AUTO') return p;
     const k = kelas.toUpperCase();
     const angka = (k.match(/\d+/) || [''])[0];
-    const romawi = (k.match(/\b(X{0,3}(IX|IV|V?I{0,3}))\b/) || [''])[0];
-    const map = { 'I':1, 'II':2, 'III':3, 'IV':4, 'V':5, 'VI':6, 'VII':7, 'VIII':8, 'IX':9, 'X':10, 'XI':11, 'XII':12 };
-    const n = angka ? parseInt(angka, 10) : (map[romawi] || 0);
+    const n = angka ? parseInt(angka, 10) : 0;
     if (n && n <= 6) return 'ringkas — hanya poin-poin inti, banyak ruang kosong, cocok untuk anak SD';
     if (n && n <= 9) return 'sedang — poin inti disertai penjelasan singkat 1–2 kalimat per bagian';
-    if (n) return 'padat — penjelasan lengkap, rumus, dan contoh, namun tetap tertata rapi';
-    if (k.includes('E') || k.includes('F')) return 'padat — penjelasan lengkap, rumus, dan contoh, namun tetap tertata rapi';
-    return 'sedang — poin inti disertai penjelasan singkat 1–2 kalimat per bagian';
+    return 'padat — penjelasan lengkap, rumus, dan contoh, namun tetap tertata rapi';
   }
   
   function pilihElemen() {
@@ -1641,8 +1185,7 @@ function promptID(item, sub, seed, idx) {
   if (G.maskot) L.push('- Sertakan ' + G.maskot + '.');
   L.push('- ' + V_LAYOUT[seed % V_LAYOUT.length] + '.');
   L.push('- Kepadatan isi: ' + padatUntuk(item.kelas) + '.');
-  L.push('- Tipografi: judul tebal dan besar, isi memakai huruf sans-serif bersih dan terbaca jelas walau dicetak kecil.');
-  if (G.seri === 'on') L.push('- Poster ini bagian dari satu seri: pertahankan template, posisi judul, bentuk kotak, dan gaya ikon yang sama persis seperti poster sebelumnya.');
+  if (G.seri === 'on') L.push('- Poster ini bagian dari satu seri: pertahankan template yang sama.');
   L.push('');
   L.push('ISI YANG HARUS ADA');
   pilihElemen().forEach((e, i) => L.push((i + 1) + '. Sertakan ' + e + '.'));
@@ -1657,50 +1200,10 @@ function promptID(item, sub, seed, idx) {
   }
   L.push('');
   L.push('ATURAN PENTING');
-  L.push('- Seluruh teks WAJIB dalam Bahasa Indonesia, ejaan benar, tanpa typo, tanpa huruf acak.');
+  L.push('- Seluruh teks WAJIB dalam Bahasa Indonesia, ejaan benar, tanpa typo.');
   L.push('- Isi materi harus benar secara keilmuan dan sesuai tingkat ' + item.kelas + '.');
   L.push('- Jangan ada teks yang terpotong atau tertumpuk gambar.');
   L.push('- Resolusi tinggi dan tajam, siap cetak (300 DPI).');
-  return L.join('\n');
-}
-
-function promptEN(item, sub, idx) {
-  const G = {
-    gaya: document.getElementById('gaya').value,
-    ukuran: document.getElementById('ukuran').value,
-    maskot: document.getElementById('maskot').value,
-    identitas: document.getElementById('identitas').value.trim()
-  };
-  
-  function warnaUntuk(mapel, idx) {
-    const p = document.getElementById('warna').value;
-    if (p !== 'AUTO') return p;
-    const key = mapel.toLowerCase().trim();
-    if (WARNA_MAPEL[key]) return WARNA_MAPEL[key];
-    const hit = Object.keys(WARNA_MAPEL).find(k => key.includes(k) || k.includes(key));
-    return hit ? WARNA_MAPEL[hit] : WARNA_CADANGAN[idx % WARNA_CADANGAN.length];
-  }
-  
-  function pilihElemen() {
-    return [...document.querySelectorAll('#chips .chip.on')].map(c => {
-      const r = ELEMEN.find(e => e[0] === c.dataset.k);
-      return r ? r[2] : '';
-    }).filter(Boolean);
-  }
-  
-  const L = [];
-  L.push('Role: Instructional Graphic Designer and Learning Media Expert.');
-  L.push('');
-  L.push('Create an educational summary poster about "' + sub + '" (chapter: ' + item.bab + ', subject: ' + item.mapel + ', grade level: ' + item.kelas + ').');
-  L.push('Format: ' + G.ukuran + ', print-ready, high resolution 300 DPI.');
-  L.push('Visual style: ' + G.gaya + '.');
-  L.push('Color palette: ' + warnaUntuk(item.mapel, idx) + '.');
-  if (G.maskot) L.push('Include ' + G.maskot + '.');
-  L.push('Layout: clean grid of rounded info cards, clear hierarchy, generous spacing, bold readable headline at top.');
-  L.push('Must include: ' + pilihElemen().join('; ') + '.');
-  if (item.poin) L.push('Teacher notes to include: ' + item.poin + '.');
-  if (G.identitas) L.push('Small footer text: "' + G.identitas + '".');
-  L.push('IMPORTANT: all text must be in correct Indonesian language, no typos, no gibberish, no cut-off words.');
   return L.join('\n');
 }
 
@@ -1713,9 +1216,9 @@ function rPromptDok(id, it) {
   }).filter(Boolean);
   
   const L = [];
-  L.push('Peran: Kamu adalah Pengawas Sekolah sekaligus Guru Ahli penyusun perangkat ajar yang sangat berpengalaman menyusun dokumen kurikulum di Indonesia.');
+  L.push('Peran: Pengawas Sekolah dan Guru Ahli penyusun perangkat ajar.');
   L.push('');
-  L.push('Tugas: Susun dokumen ' + JENIS_NAMA[id.jenis] + ' yang LENGKAP, SIAP PAKAI, dan siap dicetak untuk:');
+  L.push('Tugas: Susun dokumen ' + JENIS_NAMA[id.jenis] + ' yang LENGKAP, SIAP PAKAI untuk:');
   L.push('');
   L.push('IDENTITAS');
   L.push('• Satuan Pendidikan : ' + id.sekolah);
@@ -1723,43 +1226,39 @@ function rPromptDok(id, it) {
   L.push('• Kelas / Fase      : ' + it.kelas);
   L.push('• Semester          : ' + id.semester);
   L.push('• Materi Pokok      : ' + it.bab);
-  L.push('• Alokasi Waktu     : ' + it.jp + (it.tm ? ' (' + it.tm + ' pertemuan' + (it.dur ? ' × ' + it.dur : '') + ')' : ''));
+  L.push('• Alokasi Waktu     : ' + it.jp + (it.tm ? ' (' + it.tm + ' pertemuan)' : ''));
   L.push('• Guru Penyusun     : ' + id.guru + (id.nip ? ' / NIP ' + id.nip : ''));
   L.push('• Tahun Pelajaran   : ' + id.tahun);
   L.push('');
   if (it.tp) {
-    L.push('TUJUAN PEMBELAJARAN YANG DIMINTA GURU');
+    L.push('TUJUAN PEMBELAJARAN');
     it.tp.split('\n').map(s => s.trim()).filter(Boolean).forEach((t, i) => L.push((i + 1) + '. ' + t));
     L.push('');
   } else {
-    L.push('Susunkan sendiri tujuan pembelajaran yang tepat (3–4 butir), gunakan kata kerja operasional yang terukur dan sesuai tingkat kognitif kelas ' + it.kelas + '.');
+    L.push('Susunkan sendiri tujuan pembelajaran yang tepat (3–4 butir).');
     L.push('');
   }
   L.push('KETENTUAN ISI');
-  L.push('- Praktik pedagogis yang dipakai: ' + id.pedagogi + '.');
-  L.push('- Dimensi Profil Lulusan yang disasar: ' + (dims.length ? dims.join(', ') : 'pilih yang paling relevan') + '.');
+  L.push('- Praktik pedagogis: ' + id.pedagogi + '.');
+  L.push('- Dimensi Profil Lulusan: ' + (dims.length ? dims.join(', ') : 'pilih yang paling relevan') + '.');
   L.push('- Gaya bahasa: ' + id.gayatulis + '.');
   L.push('- Kedalaman: ' + id.dalam + '.');
-  if (it.note) L.push('- Catatan khusus dari guru: ' + it.note + '.');
+  if (it.note) L.push('- Catatan khusus: ' + it.note + '.');
   L.push('');
-  L.push('STRUKTUR DOKUMEN (ikuti urutan ini persis)');
+  L.push('STRUKTUR DOKUMEN');
   strukturDok(id.jenis).forEach(s => L.push(s));
   if (lamps.length) {
     L.push('');
-    L.push('LAMPIRAN YANG WAJIB DISERTAKAN');
+    L.push('LAMPIRAN');
     lamps.forEach((s, i) => L.push('Lampiran ' + (i + 1) + ': ' + s + '.'));
   }
   L.push('');
   L.push('ATURAN PENULISAN');
-  L.push('- Tulis dalam Bahasa Indonesia baku sesuai PUEBI, tanpa typo.');
-  L.push('- Gunakan TABEL untuk bagian identitas, langkah pembelajaran, asesmen, dan rubrik.');
-  L.push('- Isi materi harus benar secara keilmuan dan sesuai tingkat kelas ' + it.kelas + '.');
-  L.push('- Jangan memakai placeholder seperti "…" atau "isi sendiri" — semua bagian harus terisi penuh.');
-  L.push('- Pada lembar pengesahan tulis: ' + id.kota + ', ' + id.tanggal + '; Kepala Sekolah ' + id.kepsek +
-         (id.nipkep ? ' (NIP ' + id.nipkep + ')' : '') + ' dan Guru Mata Pelajaran ' + id.guru + (id.nip ? ' (NIP ' + id.nip + ')' : '') + '.');
-  L.push('- Format keluaran rapi dan siap disalin ke Google Docs atau Microsoft Word.');
-  L.push('');
-  L.push('Kerjakan sampai tuntas. Jika jawabanmu terpotong, lanjutkan otomatis saat aku ketik "lanjutkan".');
+  L.push('- Tulis dalam Bahasa Indonesia baku sesuai PUEBI.');
+  L.push('- Gunakan TABEL untuk bagian identitas, langkah, asesmen.');
+  L.push('- Isi materi benar secara keilmuan dan sesuai tingkat ' + it.kelas + '.');
+  L.push('- Jangan memakai placeholder seperti "…" — semua bagian terisi penuh.');
+  L.push('- Format rapi dan siap disalin ke Google Docs atau Word.');
   return L.join('\n');
 }
 
@@ -1767,28 +1266,27 @@ function rPromptCover(id, it) {
   const L = [];
   L.push('Peran: Desainer Grafis Dokumen Pendidikan.');
   L.push('');
-  L.push('Buatkan desain COVER dokumen perangkat ajar, ukuran A4 Portrait (21 × 29,7 cm), resolusi tinggi 300 DPI, siap cetak.');
+  L.push('Buatkan desain COVER dokumen perangkat ajar, A4 Portrait, 300 DPI.');
   L.push('');
-  L.push('TEKS YANG HARUS TAMPIL DI COVER (tulis persis, ejaan Bahasa Indonesia yang benar)');
-  L.push('- Judul utama besar : ' + (id.jenis === 'RPM' ? 'RENCANA PEMBELAJARAN MENDALAM' : id.jenis === 'MODUL' ? 'MODUL AJAR' : 'RENCANA PELAKSANAAN PEMBELAJARAN'));
-  if (id.tagline) L.push('- Tagline di bawah judul: ' + id.tagline);
-  L.push('- Mata Pelajaran    : ' + it.mapel);
-  L.push('- Kelas / Fase      : ' + it.kelas);
-  L.push('- Materi            : ' + it.bab);
-  L.push('- Nama sekolah di pojok kiri atas : ' + id.sekolah);
-  L.push('- Nama penyusun di bagian bawah   : ' + id.guru);
-  L.push('- Tahun Pelajaran ' + id.tahun);
+  L.push('TEKS DI COVER');
+  L.push('- Judul utama : ' + (id.jenis === 'RPM' ? 'RENCANA PEMBELAJARAN MENDALAM' : id.jenis === 'MODUL' ? 'MODUL AJAR' : 'RPP'));
+  if (id.tagline) L.push('- Tagline: ' + id.tagline);
+  L.push('- Mata Pelajaran: ' + it.mapel);
+  L.push('- Kelas / Fase: ' + it.kelas);
+  L.push('- Materi: ' + it.bab);
+  L.push('- Sekolah: ' + id.sekolah);
+  L.push('- Penyusun: ' + id.guru);
+  L.push('- Tahun: ' + id.tahun);
   L.push('');
   L.push('KETENTUAN DESAIN');
   L.push('- Tema visual: ' + id.tema + '.');
-  L.push('- Latar belakang penuh sampai tepi (full bleed), tanpa bingkai putih.');
-  L.push('- Komposisi vertikal: identitas sekolah di atas, judul besar di sepertiga atas, ilustrasi tema di tengah bawah, identitas penyusun di kaki halaman.');
-  L.push('- Tipografi tegas dan profesional, judul memakai huruf tebal besar berkontras tinggi dengan latar.');
-  L.push('- Kesan dokumen resmi sekolah yang modern dan rapi, bukan poster iklan.');
+  L.push('- Full bleed, tanpa bingkai putih.');
+  L.push('- Tipografi tegas dan profesional.');
+  L.push('- Kesan dokumen resmi sekolah yang modern dan rapi.');
   L.push('');
   L.push('ATURAN PENTING');
-  L.push('- Semua teks WAJIB Bahasa Indonesia, ejaan benar, tanpa typo dan tanpa huruf acak.');
-  L.push('- Jangan ada teks yang terpotong atau tertimpa gambar.');
+  L.push('- Semua teks WAJIB Bahasa Indonesia, ejaan benar.');
+  L.push('- Jangan ada teks yang terpotong.');
   return L.join('\n');
 }
 
@@ -1796,23 +1294,489 @@ function rPromptBg(id) {
   const L = [];
   L.push('Peran: Desainer Grafis Dokumen Pendidikan.');
   L.push('');
-  L.push('Buatkan BACKGROUND HALAMAN ISI untuk dokumen perangkat ajar, ukuran A4 Portrait (21 × 29,7 cm), 300 DPI.');
+  L.push('Buatkan BACKGROUND HALAMAN ISI, A4 Portrait, 300 DPI.');
   L.push('');
   L.push('KETENTUAN');
-  L.push('- Tema visual mengikuti cover: ' + id.tema + '.');
-  L.push('- SANGAT PENTING: bagian tengah halaman harus KOSONG dan berwarna putih bersih karena akan diisi teks dan tabel.');
-  L.push('- Ornamen hanya diletakkan di tepi atas dan tepi bawah halaman, dengan opasitas rendah (samar seperti watermark).');
-  L.push('- Sisakan margin kosong minimal 2,5 cm di keempat sisi.');
-  L.push('- Tidak boleh ada teks, tulisan, huruf, atau angka apa pun pada gambar ini — murni background polos berornamen.');
-  L.push('- Warna ornamen lembut agar teks hitam di atasnya tetap terbaca jelas saat dicetak hitam-putih.');
+  L.push('- Tema: ' + id.tema + '.');
+  L.push('- Bagian tengah KOSONG putih bersih untuk teks dan tabel.');
+  L.push('- Ornamen hanya di tepi atas dan bawah, opasitas rendah.');
+  L.push('- Margin minimal 2,5 cm di keempat sisi.');
+  L.push('- Tidak boleh ada teks/tulisan pada gambar — murni background.');
   return L.join('\n');
 }
 
+// --- 8c. Tool Builders untuk 13 Tools ---
+
+// Tool 3: Bank Soal & Kisi-Kisi
+function buildSoal(v) {
+  const L = P();
+  L.push('Peran: Guru Ahli penyusun soal dan tim pengembang kurikulum.');
+  L.push('');
+  L.push('Tugas: Susun perangkat penilaian LENGKAP untuk:');
+  L.push('');
+  L.push('• Satuan Pendidikan : ' + v.sekolah);
+  L.push('• Mata Pelajaran    : ' + v.mapel);
+  L.push('• Kelas / Fase      : ' + v.kelas);
+  L.push('• Jenis Penilaian   : ' + v.jenis);
+  L.push('• Alokasi Waktu     : ' + v.waktu);
+  L.push('');
+  const mt = (v.materi || '').split('\n').map(s => s.trim()).filter(Boolean);
+  if (mt.length) {
+    L.push('MATERI YANG DIUJIKAN');
+    mt.forEach((m, i) => L.push((i + 1) + '. ' + m));
+    L.push('');
+  }
+  L.push('KOMPOSISI SOAL');
+  if (v.npg) L.push('- Pilihan ganda : ' + v.npg + ' butir (4 opsi A–D)');
+  if (v.nuraian) L.push('- Uraian        : ' + v.nuraian + ' butir');
+  if (v.nlain) L.push('- Isian/BS      : ' + v.nlain + ' butir');
+  L.push('- Level kognitif: ' + v.kognitif);
+  if (v.stimulus && v.stimulus.length) L.push('- Stimulus: ' + v.stimulus.join('; '));
+  L.push('');
+  L.push('DOKUMEN YANG DIHASILKAN');
+  (v.lamp || []).forEach(s => L.push('- ' + s));
+  if (v.catatan) { L.push(''); L.push('CATATAN: ' + v.catatan); }
+  L.push('');
+  L.push('ATURAN:');
+  L.push('- Setiap butir soal benar secara keilmuan.');
+  L.push('- Pengecoh harus masuk akal.');
+  L.push('- Sajikan kisi-kisi dan kartu soal dalam TABEL.');
+  L.push('- Format rapi siap disalin ke Word.');
+  return [{ title: 'Prompt Bank Soal · ' + (v.mapel || ''), text: L.join('\n') }];
+}
+
+// Tool 4: Analisis Butir Soal
+function buildAnalisis(v) {
+  const L = P();
+  L.push('Peran: Guru Ahli evaluasi pembelajaran.');
+  L.push('');
+  L.push('Tugas: Olah data hasil penilaian menjadi LAPORAN ANALISIS BUTIR SOAL.');
+  L.push('');
+  L.push('• Mata Pelajaran : ' + v.mapel);
+  L.push('• Kelas          : ' + v.kelas);
+  L.push('• Jumlah Butir   : ' + v.nsoal);
+  L.push('• Jumlah Murid   : ' + v.nsiswa);
+  L.push('• KKM/KKTP       : ' + v.kkm);
+  L.push('');
+  L.push('DATA');
+  L.push('```');
+  L.push(v.data || '(tempel data di sini)');
+  L.push('```');
+  L.push('');
+  L.push('ANALISIS YANG DIMINTA');
+  (v.jenis || []).forEach(s => L.push('- ' + s));
+  if (v.catatan) { L.push(''); L.push('CATATAN: ' + v.catatan); }
+  L.push('');
+  L.push('ATURAN:');
+  L.push('- Sajikan dalam TABEL.');
+  L.push('- Tampilkan rumus perhitungan singkat.');
+  L.push('- Tutup dengan narasi kesimpulan 1 paragraf.');
+  return [{ title: 'Prompt Analisis Butir Soal', text: L.join('\n') }];
+}
+
+// Tool 5: LKPD
+function buildLKPD(v) {
+  const L = P();
+  L.push('Peran: Guru Ahli pengembang bahan ajar.');
+  L.push('');
+  L.push('Tugas: Susun LKPD lengkap untuk:');
+  L.push('');
+  L.push('• Mata Pelajaran : ' + v.mapel);
+  L.push('• Kelas / Fase   : ' + v.kelas);
+  L.push('• Materi         : ' + v.materi);
+  L.push('• Durasi         : ' + v.durasi);
+  L.push('• Dikerjakan     : ' + v.mode);
+  L.push('');
+  L.push('KETENTUAN');
+  L.push('- Jenis aktivitas: ' + v.aktivitas);
+  L.push('- Panjang: ' + (v.halaman === 'MANUAL' ? v.halamanManual : v.halaman));
+  if (v.catatan) L.push('- Catatan: ' + v.catatan);
+  L.push('');
+  L.push('BAGIAN YANG HARUS ADA');
+  (v.elemen || []).forEach(s => L.push('- ' + s));
+  L.push('');
+  L.push('ATURAN:');
+  L.push('- Bahasa mudah dipahami murid ' + v.kelas + '.');
+  L.push('- Sediakan garis titik-titik untuk jawaban.');
+  L.push('- Pertanyaan mendorong berpikir, bukan menyalin.');
+  L.push('- Format siap disalin ke Word.');
+  
+  // Prompt desain LKPD
+  const D = P();
+  D.push('Peran: Desainer Grafis Bahan Ajar.');
+  D.push('');
+  D.push('Buatkan desain LKPD A4 Portrait, 300 DPI.');
+  D.push('');
+  D.push('KONTEN');
+  D.push('- Judul: LKPD — ' + (v.materi || ''));
+  D.push('- Sub judul: ' + v.mapel + ' · Kelas ' + v.kelas);
+  D.push('- Kotak identitas di pojok kanan atas.');
+  D.push('- Bagian bersekat: petunjuk, alat, langkah, tabel, pertanyaan, kesimpulan.');
+  D.push('');
+  D.push('KETENTUAN DESAIN');
+  D.push('- Gaya: ' + v.gaya);
+  D.push('- Sediakan RUANG KOSONG untuk menulis.');
+  D.push('- Header berwarna dan nomor urut.');
+  D.push('- Ornamen hanya di tepi dengan opasitas rendah.');
+  
+  return [
+    { title: '① Prompt Isi LKPD · ' + (v.materi || ''), text: L.join('\n') },
+    { title: '② Prompt Desain LKPD', text: D.join('\n') }
+  ];
+}
+
+// Tool 6: Poster & Dekorasi Kelas
+function buildPoster(v) {
+  const L = P();
+  L.push('Peran: Desainer Grafis Media Pendidikan.');
+  L.push('');
+  const jenis = v.jenis === 'MANUAL' ? v.jenisManual : v.jenis;
+  L.push('Buatkan ' + jenis + '.');
+  L.push('Ukuran ' + v.ukuran + ', 300 DPI, siap cetak.');
+  L.push('');
+  L.push('TEKS PADA POSTER');
+  if (v.judul) L.push('- Judul besar : ' + v.judul);
+  if (v.sekolah) L.push('- Identitas   : ' + v.sekolah);
+  const isi = (v.isi || '').split('\n').map(s => s.trim()).filter(Boolean);
+  if (isi.length) {
+    L.push('- Isi poin:');
+    isi.forEach((s, i) => L.push('  ' + (i + 1) + '. ' + s));
+  } else {
+    L.push('- Susun sendiri 6–8 poin isi yang sesuai.');
+  }
+  L.push('');
+  L.push('KETENTUAN DESAIN');
+  L.push('- Target: ' + v.jenjang);
+  L.push('- Gaya: ' + v.gaya);
+  L.push('- Palet: ' + v.warna);
+  if (v.maskot) L.push('- Maskot: ' + v.maskot);
+  L.push('- Setiap poin diberi ikon berwarna.');
+  L.push('- Judul paling mencolok.');
+  L.push('- Full bleed tanpa bingkai putih.');
+  L.push('');
+  L.push('ATURAN:');
+  L.push('- Jumlah poin sama persis dengan yang diminta.');
+  L.push('- Teks Bahasa Indonesia, ejaan benar.');
+  return [{ title: 'Prompt Poster · ' + (v.judul || ''), text: L.join('\n') }];
+}
+
+// Tool 7: Slide Materi
+function buildSlide(v) {
+  const L = P();
+  L.push('Peran: Guru Ahli dan desainer materi presentasi.');
+  L.push('');
+  L.push('Tugas: Susun STRUKTUR SLIDE PRESENTASI untuk:');
+  L.push('');
+  L.push('• Mata Pelajaran : ' + v.mapel);
+  L.push('• Kelas / Fase   : ' + v.kelas);
+  L.push('• Materi         : ' + v.materi);
+  L.push('• Jumlah Slide   : ' + v.nslide);
+  L.push('• Durasi         : ' + v.durasi);
+  L.push('');
+  L.push('KETENTUAN');
+  L.push('- Format: ' + v.target);
+  L.push('- Gaya: ' + v.gaya);
+  L.push('- Rasio: ' + v.rasio);
+  L.push('- Kepadatan: ' + v.teks);
+  if (v.narasi) L.push('- Sertakan naskah penjelasan guru per slide.');
+  L.push('');
+  L.push('BAGIAN SLIDE');
+  (v.struktur || []).forEach(s => L.push('- ' + s));
+  L.push('');
+  L.push('FORMAT TIAP SLIDE');
+  L.push('Slide [nomor] — [Judul]');
+  L.push('  Isi     : poin-poin singkat');
+  L.push('  Visual  : saran gambar/diagram');
+  if (v.narasi) L.push('  Narasi  : kalimat yang diucapkan guru');
+  L.push('');
+  L.push('ATURAN:');
+  L.push('- Materi benar secara keilmuan.');
+  L.push('- Urutan slide logis.');
+  L.push('- Jangan menumpuk info dalam satu slide.');
+  return [{ title: 'Prompt Slide · ' + (v.materi || ''), text: L.join('\n') }];
+}
+
+// Tool 8: Sertifikat & Piagam
+function buildSertifikat(v) {
+  const L = P();
+  L.push('Peran: Desainer Grafis Dokumen Resmi Sekolah.');
+  L.push('');
+  const jenis = v.jenis === 'MANUAL' ? v.jenisManual : v.jenis;
+  L.push('Buatkan desain ' + jenis + ', ' + v.orientasi + ', 300 DPI.');
+  L.push('');
+  L.push('TEKS YANG TAMPIL');
+  if (v.penyelenggara) L.push('- Kop: ' + v.penyelenggara);
+  if (v.nomor) L.push('- Nomor: ' + v.nomor);
+  L.push('- Judul: ' + (v.jenis === 'MANUAL' ? (v.jenisManual || '').toUpperCase() : v.jenis.split(' ').slice(0, 2).join(' ').toUpperCase()));
+  if (v.penerima) L.push('- Untuk: ' + v.penerima);
+  else L.push('- Sediakan GARIS KOSONG untuk nama penerima.');
+  if (v.predikat) L.push('- Predikat: ' + v.predikat);
+  if (v.kegiatan) L.push('- Kegiatan: ' + v.kegiatan);
+  if (v.tempat) L.push('- Tempat/Tanggal: ' + v.tempat);
+  if (v.ttd1) L.push('- Tanda tangan 1: ' + v.ttd1);
+  if (v.ttd2) L.push('- Tanda tangan 2: ' + v.ttd2);
+  L.push('');
+  L.push('KETENTUAN DESAIN');
+  L.push('- Gaya: ' + v.gaya);
+  L.push('- Komposisi simetris dan resmi.');
+  L.push('- Ruang kosong untuk tanda tangan basah.');
+  L.push('- Bagian tengah tidak terlalu ramai ornamen.');
+  return [{ title: 'Prompt ' + (v.jenis === 'MANUAL' ? (v.jenisManual || 'Desain') : v.jenis), text: L.join('\n') }];
+}
+
+// Tool 9: Diferensiasi
+function buildDiferensiasi(v) {
+  const L = P();
+  L.push('Peran: Guru Ahli pembelajaran berdiferensiasi.');
+  L.push('');
+  L.push('Tugas: Susun RENCANA PEMBELAJARAN BERDIFERENSIASI untuk:');
+  L.push('');
+  L.push('• Mata Pelajaran : ' + v.mapel);
+  L.push('• Kelas / Fase   : ' + v.kelas);
+  L.push('• Materi         : ' + v.materi);
+  L.push('• Tujuan         : ' + v.tp);
+  L.push('• Waktu          : ' + v.durasi);
+  if (v.catatan) { L.push(''); L.push('KONDISI KELAS: ' + v.catatan); L.push(''); }
+  if (v.asesmen) {
+    L.push('BAGIAN 1 — ASESMEN AWAL');
+    L.push('Susun asesmen diagnostik singkat (5 soal) untuk memetakan murid.');
+    L.push('');
+  }
+  L.push('BAGIAN 2 — ASPEK DIFERENSIASI');
+  (v.aspek || []).forEach(s => L.push('- ' + s));
+  L.push('');
+  L.push('BAGIAN 3 — RANCANGAN TIAP KELOMPOK');
+  (v.kelompok || []).forEach(s => L.push('- ' + s));
+  if (v.abk) {
+    L.push('');
+    L.push('MODIFIKASI KHUSUS');
+    L.push('- Penyesuaian untuk ' + v.abk + ': cara penyampaian, tugas, penilaian.');
+  }
+  L.push('');
+  L.push('BAGIAN 4 — LANGKAH PEMBELAJARAN');
+  L.push('Susun langkah satu pertemuan, tunjukkan KAPAN guru menangani tiap kelompok.');
+  L.push('');
+  L.push('BAGIAN 5 — ASESMEN DAN TINDAK LANJUT');
+  L.push('Sertakan rubrik penilaian yang adil untuk semua kelompok.');
+  L.push('');
+  L.push('ATURAN:');
+  L.push('- Sajikan perbandingan dalam TABEL.');
+  L.push('- Berikan contoh tugas KONKRET tiap kelompok.');
+  L.push('- Rancangan realistis untuk 30 murid dengan satu guru.');
+  return [{ title: 'Prompt Diferensiasi · ' + (v.materi || ''), text: L.join('\n') }];
+}
+
+// Tool 10: Media Interaktif
+function buildInteraktif(v) {
+  const L = P();
+  L.push('Peran: Guru Ahli kreatif merancang media interaktif pembelajaran.');
+  L.push('');
+  const jenis = v.jenis === 'MANUAL' ? v.jenisManual : v.jenis;
+  L.push('Tugas: Buatkan ' + jenis + '.');
+  L.push('');
+  L.push('• Mata Pelajaran : ' + v.mapel);
+  L.push('• Kelas / Fase   : ' + v.kelas);
+  L.push('• Materi         : ' + v.materi);
+  L.push('• Jumlah Item    : ' + v.jumlah);
+  L.push('• Durasi         : ' + v.durasi);
+  L.push('');
+  L.push('KETENTUAN');
+  L.push('- Tingkat kesulitan: ' + v.tingkat);
+  if (v.kunci) L.push('- Sertakan KUNCI JAWABAN dan pembahasan.');
+  if (v.aturan) L.push('- Sertakan ATURAN MAIN dan langkah pelaksanaan.');
+  if (v.catatan) L.push('- Kondisi: ' + v.catatan);
+  L.push('');
+  L.push('ATURAN:');
+  L.push('- Isi benar secara keilmuan.');
+  L.push('- Bahasa singkat, jelas, tidak ambigu.');
+  L.push('- Sajikan dalam TABEL untuk kemudahan copy.');
+  L.push('- Buat suasana menyenangkan tapi bermakna.');
+  return [{ title: 'Prompt Media Interaktif · ' + (v.materi || ''), text: L.join('\n') }];
+}
+
+// Tool 11: Pesan Wali Murid
+function buildPesan(v) {
+  const L = P();
+  L.push('Peran: Guru senior dan wali kelas berpengalaman berkomunikasi dengan orang tua.');
+  L.push('');
+  L.push('Tugas: Tulis draft ' + v.jenis + '.');
+  L.push('');
+  L.push('• Murid   : ' + v.murid);
+  L.push('• Kelas   : ' + v.kelas);
+  L.push('• Pengirim: ' + v.guru);
+  L.push('• Sekolah : ' + v.sekolah);
+  L.push('');
+  L.push('POIN YANG DISAMPAIKAN');
+  (v.isi || '').split('\n').map(s => s.trim()).filter(Boolean).forEach(s => L.push('- ' + s));
+  L.push('');
+  L.push('KETENTUAN');
+  L.push('- Media: ' + v.media);
+  L.push('- Nada: ' + v.nada);
+  L.push('- Buatkan ' + v.versi + ' versi berbeda, beri label tiap versi.');
+  L.push('');
+  L.push('WAJIB:');
+  L.push('- Awali dengan sapaan hormat.');
+  L.push('- Sampaikan fakta, jangan menuduh.');
+  L.push('- Hindari kata merendahkan.');
+  L.push('- Tutup dengan ajakan kerja sama.');
+  L.push('- Jangan bertele-tele.');
+  return [{ title: 'Prompt Pesan · ' + (v.jenis || ''), text: L.join('\n') }];
+}
+
+// Tool 12: Administrasi Guru
+function buildAdmin(v) {
+  const L = P();
+  L.push('Peran: Pengawas Sekolah dan Guru Ahli administrasi.');
+  L.push('');
+  L.push('Tugas: Susun ' + v.jenis + ' yang LENGKAP untuk:');
+  L.push('');
+  L.push('• Satuan Pendidikan : ' + v.sekolah);
+  L.push('• Mata Pelajaran    : ' + v.mapel);
+  L.push('• Kelas / Fase      : ' + v.kelas);
+  L.push('• Semester          : ' + v.semester);
+  L.push('• Guru              : ' + v.guru + (v.nip ? ' / NIP ' + v.nip : ''));
+  L.push('• Tahun Pelajaran   : ' + v.tahun);
+  L.push('');
+  const mt = (v.materi || '').split('\n').map(s => s.trim()).filter(Boolean);
+  if (mt.length) {
+    L.push('DAFTAR MATERI');
+    mt.forEach((m, i) => L.push((i + 1) + '. ' + m));
+    L.push('');
+  } else {
+    L.push('Susunkan sendiri daftar materi sesuai kurikulum.');
+    L.push('');
+  }
+  L.push('DATA PENDUKUNG');
+  if (v.jp) L.push('- JP/minggu : ' + v.jp);
+  if (v.minggu) L.push('- Minggu efektif: ' + v.minggu);
+  if (v.kkm) L.push('- KKM/KKTP: ' + v.kkm);
+  if (v.catatan) L.push('- Catatan: ' + v.catatan);
+  L.push('');
+  L.push('ATURAN:');
+  L.push('- Sajikan dalam TABEL sesuai format baku.');
+  L.push('- Distribusi waktu masuk akal.');
+  L.push('- Sertakan kolom tanda tangan di bagian bawah.');
+  L.push('- Format rapi siap disalin ke Excel/Word.');
+  return [{ title: 'Prompt Administrasi · ' + (v.jenis || '').split(' —')[0], text: L.join('\n') }];
+}
+
+// Tool 13: Video Pembelajaran
+function buildVideo(v) {
+  const hasil = [];
+  const n = parseInt(v.nscene, 10) || 6;
+  const karakter = v.karakter === 'MANUAL' ? (v.karakterManual || 'educational guide') : v.karakter;
+  const poin = String(v.poin || '').split('\n').map(s => s.trim()).filter(Boolean);
+  
+  // Character Sheet
+  const C = P();
+  C.push('CHARACTER REFERENCE SHEET — 360° TURNAROUND');
+  C.push('For: ' + v.imgTarget + ' | Aspect: 16:9');
+  C.push('');
+  C.push('Create a professional character design reference sheet of ' + karakter + '.');
+  C.push('');
+  C.push('SHEET LAYOUT');
+  C.push('- 8 full-body views in one row: front 0°, front-3/4 45°, side 90°, back-3/4 135°, back 180°, back-3/4 225°, side 270°, front-3/4 315°.');
+  C.push('- Second row: 4 head close-ups: neutral, smiling, explaining, surprised.');
+  C.push('- Neutral A-pose, arms slightly away from body.');
+  C.push('- Orthographic camera, no perspective distortion.');
+  C.push('');
+  C.push('RENDER SPEC');
+  C.push('- Unreal Engine 5, Lumen GI, Nanite.');
+  C.push('- PBR materials, realistic fabric, skin, hair.');
+  C.push('- Style: ' + v.gaya);
+  C.push('- Neutral 3-point studio lighting, soft shadows.');
+  C.push('- Plain light grey background (#EDEDED), no props, no text.');
+  C.push('- Ultra high detail, 8K, sharp focus.');
+  C.push('');
+  C.push('CONSISTENCY RULES');
+  C.push('- Every view EXACT same character: same face, hair, clothing, colors.');
+  C.push('- No watermark, signature, or text.');
+  hasil.push({ title: '① Character Sheet 360° — Unreal', text: C.join('\n') });
+  
+  // Narasi
+  const N = P();
+  N.push('Peran: Guru Ahli dan penulis naskah video pembelajaran.');
+  N.push('');
+  N.push('Tulis NASKAH NARASI video pembelajaran untuk:');
+  N.push('• Mata Pelajaran : ' + v.mapel);
+  N.push('• Kelas / Fase   : ' + v.kelas);
+  N.push('• Materi         : ' + v.materi);
+  N.push('• Durasi         : ' + v.durasi + ' dibagi ke ' + n + ' scene');
+  N.push('');
+  N.push('SCENE');
+  for (let i = 0; i < n; i++) {
+    const judul = i === 0 ? 'Pembuka' : i === n - 1 ? 'Penutup' : (poin[i - 1] || 'Scene ' + (i + 1));
+    N.push('Scene ' + (i + 1) + ' — ' + judul);
+  }
+  N.push('');
+  N.push('KETENTUAN');
+  N.push('- Gaya narasi: ' + v.narasi);
+  N.push('- Tiap scene: durasi, NARASI, dan TEKS LAYAR (maks 8 kata).');
+  N.push('- Scene pertama harus punya hook 3 detik pertama.');
+  N.push('- Bahasa sesuai tingkat ' + v.kelas + '.');
+  N.push('- Total durasi mendekati ' + v.durasi + '.');
+  hasil.push({ title: '② Naskah Narasi ' + n + ' Scene', text: N.join('\n') });
+  
+  // Image & Video prompts per scene
+  for (let i = 0; i < n; i++) {
+    const sc = i + 1;
+    const judul = i === 0 ? 'Pembuka' : i === n - 1 ? 'Penutup' : (poin[i - 1] || 'Scene ' + sc);
+    
+    // Image prompt
+    const I = P();
+    I.push('SCENE ' + sc + ' — IMAGE PROMPT (for ' + v.imgTarget + ')');
+    I.push('Aspect: ' + v.rasio);
+    I.push('');
+    I.push('Use attached character reference. Keep character 100% identical.');
+    I.push('');
+    I.push('SUBJECT');
+    I.push(karakter + ', shown ' + (sc === 1 ? 'facing camera, welcoming gesture' : sc % 2 === 0 ? '3/4 view, gesturing' : 'slightly to side, pointing'));
+    I.push('');
+    I.push('SCENE CONTENT');
+    I.push('Illustrates: ' + judul);
+    I.push('Include supporting visual element (diagram/object) beside character.');
+    I.push('');
+    I.push('STYLE');
+    I.push('- ' + v.gaya);
+    I.push('- ' + (sc === 1 ? 'Medium wide shot' : sc === n ? 'Medium shot, wider' : 'Medium shot, eye level'));
+    I.push('- Soft cinematic lighting, clean background.');
+    I.push('- Leave negative space for text.');
+    I.push('- Ultra sharp, 8K.');
+    I.push('');
+    I.push('NEGATIVE: No text, no watermark, no extra limbs.');
+    hasil.push({ title: 'Scene ' + sc + ' · 🖼️ Gambar — ' + judul, text: I.join('\n') });
+    
+    // Video prompt
+    const V = P();
+    V.push('SCENE ' + sc + ' — VIDEO PROMPT (for ' + v.target + ')');
+    V.push('Aspect: ' + v.rasio + ' | Duration: ~' + Math.round((parseFloat(v.durasi) || 3) * 60 / n) + 's');
+    V.push('');
+    V.push('Animate from Scene ' + sc + ' still. Keep character identical.');
+    V.push('');
+    V.push('ACTION');
+    V.push(karakter + ' ' + (sc === 1 ? 'looks at camera, smiles, begins speaking' : sc === n ? 'warm closing gesture, waves goodbye' : 'speaks naturally, gestures toward visual'));
+    V.push('Natural lip movement, blinking, subtle body shift.');
+    V.push('Visual element ' + (sc === 1 ? 'fades in' : 'animates softly'));
+    V.push('');
+    V.push('CAMERA');
+    V.push('- ' + (sc === 1 ? 'Slow push-in' : sc === n ? 'Slow pull-back' : sc % 2 === 0 ? 'Slow pan right' : 'Static with subtle float'));
+    V.push('- Consistent framing, single continuous take.');
+    V.push('');
+    V.push('STYLE');
+    V.push('- ' + v.gaya);
+    V.push('- Stable lighting, consistent color grading.');
+    V.push('');
+    V.push('NEGATIVE: No text, no cuts, no morphing, no extra characters.');
+    hasil.push({ title: 'Scene ' + sc + ' · 🎬 Video — ' + judul, text: V.join('\n') });
+  }
+  
+  return hasil;
+}
+
 // ================================================================
-// 9. UI BUILDERS
+// 9. UI FIELD BUILDER
 // ================================================================
 
-// --- 9a. Field Builder ---
 function buatField(f, store) {
   if (f.t === 'sec') {
     const d = document.createElement('div');
@@ -1823,7 +1787,7 @@ function buatField(f, store) {
   if (f.t === 'row' || f.t === 'row3') {
     const d = document.createElement('div');
     d.className = f.t;
-    f.kids.forEach(k => d.appendChild(buatField(k, store)));
+    (f.kids || []).forEach(k => d.appendChild(buatField(k, store)));
     return d;
   }
   
@@ -1844,7 +1808,6 @@ function buatField(f, store) {
     wrap.appendChild(lab);
     store[f.k] = () => cb.checked;
     if (store.__set) store.__set[f.k] = function(v) { if (typeof v === 'boolean') cb.checked = v; };
-    if (store.__dirty) cb.addEventListener('change', store.__dirty, { passive: true });
     return wrap;
   }
   
@@ -1869,7 +1832,7 @@ function buatField(f, store) {
   if (f.t === 'chips') {
     const box = document.createElement('div');
     box.className = 'chips';
-    f.opts.forEach(([k, full]) => {
+    (f.opts || []).forEach(([k, full]) => {
       const c = document.createElement('div');
       c.className = 'chip' + ((f.on || []).includes(k) ? ' on' : '');
       c.dataset.full = full;
@@ -1882,18 +1845,15 @@ function buatField(f, store) {
     store[f.k] = () => [...box.querySelectorAll('.chip.on')].map(c => c.dataset.full);
     if (store.__set) store.__set[f.k] = function(v) {
       if (!Array.isArray(v)) return;
-      box.querySelectorAll('.chip').forEach(function(c) {
-        c.classList.toggle('on', v.indexOf(c.dataset.full) > -1);
-      });
+      box.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', v.indexOf(c.dataset.full) > -1));
     };
-    if (store.__dirty) box.addEventListener('click', store.__dirty, { passive: true });
     return wrap;
   }
   
   let el;
   if (f.t === 'select') {
     el = document.createElement('select');
-    f.opts.forEach(([val, txt]) => {
+    (f.opts || []).forEach(([val, txt]) => {
       const o = document.createElement('option');
       o.value = val;
       o.innerHTML = txt;
@@ -1911,7 +1871,6 @@ function buatField(f, store) {
   wrap.appendChild(el);
   store[f.k] = () => el.value.trim ? el.value.trim() : el.value;
   if (store.__set) store.__set[f.k] = function(v) { if (v != null) el.value = v; };
-  if (store.__dirty) el.addEventListener('input', store.__dirty, { passive: true });
   
   if (wrap._ideBtn) {
     const fn = wrap._ideFn;
@@ -1920,19 +1879,607 @@ function buatField(f, store) {
       el.value = IDE[fn](g);
       el.dispatchEvent(new Event('input'));
       wrap._ideBtn.textContent = '💡 Ide lain';
-      toast('Ide terisi — silakan diedit sesuai kebutuhan', 'info', 1900);
+      toast('Ide terisi — silakan diedit', 'info', 1900);
       el.focus();
     };
   }
   return wrap;
 }
 
-// --- 9b. Tool Builder ---
+// ================================================================
+// 10. TOOL REGISTRATION (13 Tools)
+// ================================================================
+
+const TOOLS = [
+  {
+    id: 'ringkasan',
+    icon: '📘',
+    grup: 'MEDIA BELAJAR',
+    nama: 'Ringkasan Materi',
+    desc: 'Poster ringkasan untuk siswa',
+    judul: 'Ringkasan Materi Studio',
+    sub: 'Prompt poster ringkasan materi — banyak mapel sekaligus',
+    fields: [
+      { t: 'sec', label: 'Daftar Materi' },
+      // Fields di-render manual di HTML
+    ],
+    build: function(v) {
+      // Build dari fungsi global
+      return [];
+    }
+  },
+  {
+    id: 'rpm',
+    icon: '📝',
+    grup: 'PERENCANAAN',
+    nama: 'Modul Ajar / RPM',
+    desc: 'Dokumen perangkat ajar lengkap',
+    judul: 'Modul Ajar / RPM Studio',
+    sub: 'Prompt dokumen perangkat ajar lengkap + cover',
+    fields: [],
+    build: function(v) { return []; }
+  },
+  {
+    id: 'soal',
+    icon: '📊',
+    grup: 'PENILAIAN',
+    nama: 'Bank Soal & Kisi-Kisi',
+    desc: 'Kisi-kisi, naskah soal, kunci jawaban',
+    judul: 'Bank Soal & Kisi-Kisi Studio',
+    sub: 'Kisi-kisi, kartu soal, naskah, kunci, dan pedoman penskoran',
+    fields: [
+      { t: 'sec', label: 'Identitas' },
+      { t: 'text', k: 'sekolah', label: 'Nama Sekolah', ph: 'SMPN 1 Sukamaju' },
+      { t: 'row', kids: [
+        { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+        { t: 'text', k: 'kelas', label: 'Kelas / Fase', ph: 'IX / D' }
+      ]},
+      { t: 'row', kids: [
+        { t: 'select', k: 'jenis', label: 'Jenis Penilaian', opts: [
+          ['Ulangan Harian', 'Ulangan Harian'],
+          ['Penilaian Tengah Semester (PTS)', 'PTS'],
+          ['Penilaian Akhir Semester (PAS)', 'PAS'],
+          ['Ujian Sekolah', 'Ujian Sekolah']
+        ]},
+        { t: 'text', k: 'waktu', label: 'Alokasi Waktu', ph: '90 menit' }
+      ]},
+      { t: 'textarea', k: 'materi', label: 'Materi / Lingkup yang Diujikan', ide: 'materiUji', ph: 'satu baris satu materi' },
+      { t: 'sec', label: 'Komposisi Soal' },
+      { t: 'row3', kids: [
+        { t: 'text', k: 'npg', label: 'Jumlah Pilihan Ganda', ph: '20' },
+        { t: 'text', k: 'nuraian', label: 'Jumlah Uraian', ph: '5' },
+        { t: 'text', k: 'nlain', label: 'Jumlah Isian/BS', ph: 'kosongkan' }
+      ]},
+      { t: 'select', k: 'kognitif', label: 'Komposisi Level Kognitif', opts: [
+        ['seimbang: 30% LOTS, 40% MOTS, 30% HOTS', 'Seimbang (disarankan)'],
+        ['dominan LOTS: 60% C1-C2, 30% C3, 10% C4', 'Dominan LOTS'],
+        ['dominan HOTS: 20% C1-C2, 30% C3, 50% C4-C6', 'Dominan HOTS']
+      ]},
+      { t: 'chips', k: 'stimulus', label: 'Bentuk Stimulus Soal', opts: [
+        ['teks', 'teks bacaan pendek'],
+        ['tabel', 'tabel/grafik'],
+        ['gambar', 'deskripsi gambar'],
+        ['kasus', 'kasus kontekstual']
+      ], on: ['kasus'] },
+      { t: 'chips', k: 'lamp', label: 'Dokumen yang Dihasilkan', opts: [
+        ['kisi', 'KISI-KISI dalam tabel'],
+        ['naskah', 'NASKAH SOAL siap cetak'],
+        ['kunci', 'KUNCI JAWABAN'],
+        ['skor', 'PEDOMAN PENSKORAN'],
+        ['kartu', 'KARTU SOAL per butir']
+      ], on: ['kisi', 'naskah', 'kunci', 'skor'] },
+      { t: 'text', k: 'catatan', label: 'Catatan khusus (opsional)', ph: 'contoh: hindari hitungan panjang' }
+    ],
+    build: buildSoal
+  },
+  {
+    id: 'analisis',
+    icon: '📈',
+    grup: 'PENILAIAN',
+    nama: 'Analisis Butir Soal',
+    desc: 'Tingkat kesukaran, daya pembeda, remedial',
+    judul: 'Analisis Butir Soal Studio',
+    sub: 'Ubah data nilai mentah jadi laporan analisis siap lampir',
+    fields: [
+      { t: 'row', kids: [
+        { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+        { t: 'text', k: 'kelas', label: 'Kelas', ph: 'IX A' }
+      ]},
+      { t: 'row3', kids: [
+        { t: 'text', k: 'nsoal', label: 'Jumlah Butir Soal', ph: '20' },
+        { t: 'text', k: 'nsiswa', label: 'Jumlah Murid', ph: '32' },
+        { t: 'text', k: 'kkm', label: 'KKM / KKTP', ph: '75' }
+      ]},
+      { t: 'textarea', k: 'data', label: 'Data Jawaban / Nilai Murid', ide: 'dataNilai', h: 150, ph: 'Tempel dari Excel. Nama | Skor per butir (1=benar, 0=salah)' },
+      { t: 'chips', k: 'jenis', label: 'Analisis yang Diminta', opts: [
+        ['sukar', 'TINGKAT KESUKARAN tiap butir'],
+        ['beda', 'DAYA PEMBEDA tiap butir'],
+        ['ketuntasan', 'ANALISIS KETUNTASAN'],
+        ['materi', 'PEMETAAN MATERI yang salah'],
+        ['remedial', 'DAFTAR MURID REMEDIAL'],
+        ['simpul', 'KESIMPULAN dan REKOMENDASI']
+      ], on: ['sukar', 'ketuntasan', 'remedial', 'simpul'] },
+      { t: 'text', k: 'catatan', label: 'Catatan (opsional)', ph: 'contoh: ada 3 murid tidak ikut ujian' }
+    ],
+    build: buildAnalisis
+  },
+  {
+    id: 'lkpd',
+    icon: '📋',
+    grup: 'MEDIA BELAJAR',
+    nama: 'LKPD Studio',
+    desc: 'Lembar kerja murid berdesain + prompt gambar',
+    judul: 'LKPD Studio',
+    sub: 'Lembar Kerja Peserta Didik lengkap dengan desainnya',
+    fields: [
+      { t: 'row', kids: [
+        { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+        { t: 'text', k: 'kelas', label: 'Kelas / Fase', ph: 'IX / D' }
+      ]},
+      { t: 'text', k: 'materi', label: 'Materi / Topik', ph: 'Rangkaian Listrik' },
+      { t: 'row', kids: [
+        { t: 'select', k: 'aktivitas', label: 'Jenis Aktivitas', opts: [
+          ['percobaan/praktikum sederhana', 'Percobaan / Praktikum'],
+          ['pengamatan', 'Pengamatan'],
+          ['diskusi kelompok', 'Diskusi Kelompok'],
+          ['proyek sederhana', 'Proyek / Produk']
+        ]},
+        { t: 'select', k: 'halaman', label: 'Jumlah Halaman', opts: [
+          ['1 halaman A4', '1 halaman'],
+          ['2 halaman A4', '2 halaman'],
+          ['3-4 halaman A4', '3-4 halaman'],
+          ['MANUAL', '✏️ Tulis Sendiri']
+        ]}
+      ]},
+      { t: 'text', k: 'halamanManual', label: 'Isi bila memilih ✏️ Tulis Sendiri', ide: 'ideHalaman', ph: 'contoh: 8 halaman A4' },
+      { t: 'row', kids: [
+        { t: 'text', k: 'durasi', label: 'Durasi Pengerjaan', ph: '40 menit' },
+        { t: 'select', k: 'mode', label: 'Dikerjakan Secara', opts: [
+          ['berkelompok 4-5 orang', 'Berkelompok'],
+          ['individu', 'Individu'],
+          ['berpasangan', 'Berpasangan']
+        ]}
+      ]},
+      { t: 'chips', k: 'elemen', label: 'Bagian LKPD', opts: [
+        ['identitas', 'kolom identitas murid'],
+        ['tujuan', 'tujuan pembelajaran'],
+        ['petunjuk', 'petunjuk pengerjaan'],
+        ['alat', 'daftar alat dan bahan'],
+        ['langkah', 'langkah kerja runut'],
+        ['tabel', 'tabel pengamatan'],
+        ['diskusi', 'pertanyaan diskusi'],
+        ['kesimpulan', 'kolom kesimpulan'],
+        ['rubrik', 'rubrik penilaian']
+      ], on: ['identitas', 'tujuan', 'petunjuk', 'langkah', 'tabel', 'kesimpulan'] },
+      { t: 'select', k: 'gaya', label: 'Gaya Desain', opts: [
+        ['ceria ramah anak', 'Ceria Ramah Anak'],
+        ['rapi formal', 'Rapi Formal'],
+        ['aesthetic pastel', 'Aesthetic Pastel'],
+        ['hemat tinta hitam putih', 'Hemat Tinta']
+      ]},
+      { t: 'text', k: 'catatan', label: 'Catatan khusus (opsional)', ph: 'contoh: alat terbatas' }
+    ],
+    build: buildLKPD
+  },
+  {
+    id: 'poster',
+    icon: '🎨',
+    grup: 'MEDIA BELAJAR',
+    nama: 'Poster & Dekorasi Kelas',
+    desc: 'Tata tertib, jadwal piket, mading, sudut baca',
+    judul: 'Poster & Dekorasi Kelas Studio',
+    sub: 'Sekali generate langsung jadi gambar siap cetak',
+    fields: [
+      { t: 'select', k: 'jenis', label: 'Jenis Poster', opts: [
+        ['POSTER TATA TERTIB KELAS', 'Tata Tertib Kelas'],
+        ['POSTER JADWAL PIKET', 'Jadwal Piket'],
+        ['POSTER JADWAL PELAJARAN', 'Jadwal Pelajaran'],
+        ['POSTER MOTIVASI BELAJAR', 'Poster Motivasi'],
+        ['POSTER 7K', 'Poster 7K'],
+        ['POSTER CUCI TANGAN/PHBS', 'Poster PHBS'],
+        ['MANUAL', '✏️ Tulis Sendiri']
+      ]},
+      { t: 'text', k: 'jenisManual', label: 'Isi bila memilih ✏️ Tulis Sendiri', ide: 'idePoster', ph: 'contoh: POSTER JADWAL SHOLAT' },
+      { t: 'textarea', k: 'isi', label: 'Isi / Poin yang Ditulis', ide: 'posterIsi', h: 110, ph: 'satu baris satu poin' },
+      { t: 'row', kids: [
+        { t: 'text', k: 'judul', label: 'Judul Poster', ph: 'TATA TERTIB KELAS IX A' },
+        { t: 'text', k: 'sekolah', label: 'Nama Sekolah / Kelas', ph: 'SMPN 1 Sukamaju' }
+      ]},
+      { t: 'row', kids: [
+        { t: 'select', k: 'jenjang', label: 'Jenjang', opts: [
+          ['PAUD/TK — sangat ceria', 'PAUD / TK'],
+          ['SD — ceria ramah anak', 'SD'],
+          ['SMP — seimbang', 'SMP'],
+          ['SMA/SMK — modern', 'SMA / SMK']
+        ]},
+        { t: 'select', k: 'ukuran', label: 'Ukuran', opts: [
+          ['A4 Portrait', 'A4 Portrait'],
+          ['A3 Portrait', 'A3 Portrait'],
+          ['A3 Landscape', 'A3 Landscape'],
+          ['banner 3:1', 'Banner 3:1']
+        ]}
+      ]},
+      { t: 'row', kids: [
+        { t: 'select', k: 'gaya', label: 'Gaya Visual', opts: [
+          ['ilustrasi kartun ceria', 'Kartun Ceria'],
+          ['flat design modern', 'Flat Modern'],
+          ['doodle tulis tangan', 'Doodle Tulis Tangan'],
+          ['minimalis elegan', 'Minimalis Elegan']
+        ]},
+        { t: 'select', k: 'warna', label: 'Palet Warna', opts: [
+          ['biru, tosca, kuning', 'Biru–Tosca–Kuning'],
+          ['pastel lembut', 'Pastel Lembut'],
+          ['oranye hangat', 'Oranye Hangat'],
+          ['rainbow cerah', 'Rainbow Cerah']
+        ]}
+      ]},
+      { t: 'text', k: 'maskot', label: 'Maskot (opsional)', ph: 'contoh: karakter murid berseragam' }
+    ],
+    build: buildPoster
+  },
+  {
+    id: 'slide',
+    icon: '📽️',
+    grup: 'MEDIA BELAJAR',
+    nama: 'Slide Materi Studio',
+    desc: 'Outline slide siap tempel ke Gamma/Canva',
+    judul: 'Slide Materi Studio',
+    sub: 'Struktur slide mengajar + tema visualnya',
+    fields: [
+      { t: 'row', kids: [
+        { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+        { t: 'text', k: 'kelas', label: 'Kelas / Fase', ph: 'IX / D' }
+      ]},
+      { t: 'text', k: 'materi', label: 'Materi / Topik', ph: 'Listrik Statis' },
+      { t: 'row3', kids: [
+        { t: 'text', k: 'nslide', label: 'Jumlah Slide', ph: '12' },
+        { t: 'text', k: 'durasi', label: 'Durasi Mengajar', ph: '2 × 40 menit' },
+        { t: 'select', k: 'target', label: 'Akan Dibuat di', opts: [
+          ['Gamma.app — outline bertingkat', 'Gamma.app'],
+          ['Canva — per slide', 'Canva'],
+          ['PowerPoint/Google Slides', 'PPT/Google Slides']
+        ]}
+      ]},
+      { t: 'chips', k: 'struktur', label: 'Bagian Slide', opts: [
+        ['cover', 'slide cover'],
+        ['tujuan', 'tujuan pembelajaran'],
+        ['pemantik', 'pertanyaan pemantik'],
+        ['isi', 'isi materi'],
+        ['visual', 'saran ilustrasi'],
+        ['contoh', 'contoh soal'],
+        ['rangkum', 'rangkuman'],
+        ['penutup', 'penutup']
+      ], on: ['cover', 'tujuan', 'isi', 'contoh', 'rangkum', 'penutup'] },
+      { t: 'row', kids: [
+        { t: 'select', k: 'gaya', label: 'Gaya Slide', opts: [
+          ['modern minimalis', 'Modern Minimalis'],
+          ['ceria berwarna', 'Ceria Berwarna'],
+          ['profesional', 'Profesional'],
+          ['ilustratif', 'Ilustratif']
+        ]},
+        { t: 'select', k: 'rasio', label: 'Rasio Slide', opts: [
+          ['16:9', '16:9 Widescreen'],
+          ['4:3', '4:3 Standar'],
+          ['9:16', '9:16 Portrait HP']
+        ]}
+      ]},
+      { t: 'row', kids: [
+        { t: 'select', k: 'teks', label: 'Kepadatan Teks', opts: [
+          ['sangat sedikit teks', 'Sedikit (disarankan)'],
+          ['sedang', 'Sedang'],
+          ['lengkap', 'Lengkap']
+        ]}
+      ]},
+      { t: 'switch', k: 'narasi', label: 'Sertakan naskah penjelasan guru per slide', on: true }
+    ],
+    build: buildSlide
+  },
+  {
+    id: 'sertifikat',
+    icon: '🏅',
+    grup: 'MEDIA BELAJAR',
+    nama: 'Sertifikat & Piagam',
+    desc: 'Piagam, sertifikat, label nama, undangan',
+    judul: 'Sertifikat & Piagam Studio',
+    sub: 'Desain penghargaan dan perlengkapan kegiatan sekolah',
+    fields: [
+      { t: 'select', k: 'jenis', label: 'Jenis Dokumen', opts: [
+        ['SERTIFIKAT kegiatan', 'Sertifikat Kegiatan'],
+        ['PIAGAM PENGHARGAAN', 'Piagam Penghargaan'],
+        ['SERTIFIKAT PESERTA', 'Sertifikat Peserta'],
+        ['LABEL NAMA/ID CARD', 'Label Nama / ID Card'],
+        ['UNDANGAN kegiatan', 'Undangan Kegiatan'],
+        ['MANUAL', '✏️ Tulis Sendiri']
+      ]},
+      { t: 'text', k: 'jenisManual', label: 'Isi bila memilih ✏️ Tulis Sendiri', ide: 'ideSertifikat', ph: 'contoh: PIAGAM PELANTIKAN OSIS' },
+      { t: 'row', kids: [
+        { t: 'text', k: 'kegiatan', label: 'Nama Kegiatan', ph: 'Lomba Cerdas Cermat' },
+        { t: 'text', k: 'penyelenggara', label: 'Penyelenggara', ph: 'SMPN 1 Sukamaju' }
+      ]},
+      { t: 'row', kids: [
+        { t: 'text', k: 'penerima', label: 'Diberikan Kepada', ph: 'kosongkan untuk diisi tangan' },
+        { t: 'text', k: 'predikat', label: 'Predikat / Keterangan', ph: 'Juara 1' }
+      ]},
+      { t: 'row', kids: [
+        { t: 'text', k: 'tempat', label: 'Tempat & Tanggal', ph: 'Bekasi, 12 Mei 2026' },
+        { t: 'text', k: 'nomor', label: 'Nomor Surat (opsional)', ph: '421/SMP-01/V/2026' }
+      ]},
+      { t: 'row', kids: [
+        { t: 'text', k: 'ttd1', label: 'Penandatangan 1', ph: 'Kepala Sekolah' },
+        { t: 'text', k: 'ttd2', label: 'Penandatangan 2 (opsional)', ph: 'Ketua Panitia' }
+      ]},
+      { t: 'row', kids: [
+        { t: 'select', k: 'gaya', label: 'Gaya Desain', opts: [
+          ['elegan klasik emas', 'Elegan Klasik Emas'],
+          ['modern minimalis', 'Modern Minimalis'],
+          ['formal resmi', 'Formal Resmi'],
+          ['ceria untuk anak', 'Ceria untuk Anak']
+        ]},
+        { t: 'select', k: 'orientasi', label: 'Orientasi', opts: [
+          ['A4 Landscape', 'A4 Landscape'],
+          ['A4 Portrait', 'A4 Portrait'],
+          ['spanduk 3:1', 'Spanduk 3:1']
+        ]}
+      ]}
+    ],
+    build: buildSertifikat
+  },
+  {
+    id: 'diferensiasi',
+    icon: '🎯',
+    grup: 'PERENCANAAN',
+    nama: 'Diferensiasi Studio',
+    desc: 'Satu materi, tiga level kesiapan murid',
+    judul: 'Diferensiasi Pembelajaran Studio',
+    sub: 'Rencana pembelajaran berdiferensiasi + modifikasi inklusi',
+    fields: [
+      { t: 'row', kids: [
+        { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+        { t: 'text', k: 'kelas', label: 'Kelas / Fase', ph: 'IX / D' }
+      ]},
+      { t: 'text', k: 'materi', label: 'Materi / Topik', ph: 'Rangkaian Listrik' },
+      { t: 'row', kids: [
+        { t: 'text', k: 'tp', label: 'Tujuan Pembelajaran', ide: 'tujuan', ph: 'kosongkan bila disusun AI' },
+        { t: 'text', k: 'durasi', label: 'Alokasi Waktu', ph: '2 × 40 menit' }
+      ]},
+      { t: 'chips', k: 'aspek', label: 'Aspek yang Didiferensiasi', opts: [
+        ['konten', 'DIFERENSIASI KONTEN'],
+        ['proses', 'DIFERENSIASI PROSES'],
+        ['produk', 'DIFERENSIASI PRODUK']
+      ], on: ['konten', 'proses', 'produk'] },
+      { t: 'chips', k: 'kelompok', label: 'Kelompok Kesiapan Murid', opts: [
+        ['bimbingan', 'Perlu Bimbingan'],
+        ['berkembang', 'Berkembang'],
+        ['mahir', 'Mahir'],
+        ['abk', 'Berkebutuhan Khusus']
+      ], on: ['bimbingan', 'berkembang', 'mahir'] },
+      { t: 'select', k: 'abk', label: 'Jenis Kebutuhan Khusus', opts: [
+        ['', '— tidak ada —'],
+        ['hambatan penglihatan (low vision)', 'Hambatan penglihatan'],
+        ['hambatan pendengaran', 'Hambatan pendengaran'],
+        ['slow learner', 'Slow learner'],
+        ['disleksia', 'Disleksia']
+      ]},
+      { t: 'switch', k: 'asesmen', label: 'Sertakan asesmen awal (diagnostik)', on: true },
+      { t: 'text', k: 'catatan', label: 'Catatan kelas (opsional)', ph: 'contoh: 32 murid, 6 belum lancar baca grafik' }
+    ],
+    build: buildDiferensiasi
+  },
+  {
+    id: 'interaktif',
+    icon: '🎮',
+    grup: 'MEDIA BELAJAR',
+    nama: 'Media Interaktif',
+    desc: 'Kuis Quizizz, TTS, word search, game kelas',
+    judul: 'Media Interaktif Studio',
+    sub: 'Permainan dan kuis untuk menghidupkan kelas',
+    fields: [
+      { t: 'row', kids: [
+        { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+        { t: 'text', k: 'kelas', label: 'Kelas / Fase', ph: 'IX / D' }
+      ]},
+      { t: 'text', k: 'materi', label: 'Materi / Topik', ph: 'Listrik dan Magnet' },
+      { t: 'select', k: 'jenis', label: 'Jenis Media', opts: [
+        ['KUIS untuk Quizizz (siap impor)', 'Kuis Quizizz'],
+        ['KUIS untuk Kahoot', 'Kuis Kahoot'],
+        ['TEKA-TEKI SILANG', 'Teka-Teki Silang'],
+        ['WORD SEARCH', 'Word Search'],
+        ['KARTU KUIS kelompok', 'Kartu Kuis Kelompok'],
+        ['PERMAINAN PAPAN', 'Board Game Edukatif'],
+        ['MANUAL', '✏️ Tulis Sendiri']
+      ]},
+      { t: 'text', k: 'jenisManual', label: 'Isi bila memilih ✏️ Tulis Sendiri', ide: 'ideInteraktif', ph: 'contoh: PERMAINAN DOMINO PECAHAN' },
+      { t: 'row3', kids: [
+        { t: 'text', k: 'jumlah', label: 'Jumlah Butir/Item', ph: '15' },
+        { t: 'text', k: 'durasi', label: 'Durasi Bermain', ph: '20 menit' },
+        { t: 'select', k: 'tingkat', label: 'Tingkat Kesulitan', opts: [
+          ['mudah', 'Mudah'],
+          ['sedang', 'Sedang'],
+          ['menantang', 'Menantang'],
+          ['bertingkat', 'Bertingkat']
+        ]}
+      ]},
+      { t: 'switch', k: 'kunci', label: 'Sertakan kunci jawaban dan pembahasan', on: true },
+      { t: 'switch', k: 'aturan', label: 'Sertakan aturan main', on: true },
+      { t: 'text', k: 'catatan', label: 'Catatan (opsional)', ph: 'contoh: kelas tanpa proyektor' }
+    ],
+    build: buildInteraktif
+  },
+  {
+    id: 'pesan',
+    icon: '💬',
+    grup: 'KOMUNIKASI',
+    nama: 'Pesan Wali Murid',
+    desc: 'Draft WA/surat yang sopan dan tepat sasaran',
+    judul: 'Pesan Wali Murid Studio',
+    sub: 'Draft komunikasi guru ke orang tua tanpa salah nada',
+    fields: [
+      { t: 'select', k: 'jenis', label: 'Jenis Pesan', opts: [
+        ['LAPORAN PERKEMBANGAN belajar', 'Laporan Perkembangan'],
+        ['TEGURAN KEHADIRAN (sering absen)', 'Teguran Kehadiran'],
+        ['TEGURAN PERILAKU', 'Teguran Perilaku'],
+        ['PENAGIHAN TUGAS', 'Penagihan Tugas'],
+        ['UNDANGAN PERTEMUAN', 'Undangan Pertemuan'],
+        ['APRESIASI prestasi', 'Apresiasi / Kabar Baik']
+      ]},
+      { t: 'row', kids: [
+        { t: 'text', k: 'murid', label: 'Nama Murid', ph: 'Andi Pratama' },
+        { t: 'text', k: 'kelas', label: 'Kelas', ph: 'IX A' }
+      ]},
+      { t: 'row', kids: [
+        { t: 'text', k: 'guru', label: 'Nama & Jabatan Pengirim', ph: 'Rina Kartika, S.Pd. — Wali Kelas' },
+        { t: 'text', k: 'sekolah', label: 'Nama Sekolah', ph: 'SMPN 1 Sukamaju' }
+      ]},
+      { t: 'textarea', k: 'isi', label: 'Poin yang Ingin Disampaikan', h: 110, ph: 'tulis apa adanya, nanti dirapikan' },
+      { t: 'row', kids: [
+        { t: 'select', k: 'nada', label: 'Nada Pesan', opts: [
+          ['hangat dan kolaboratif', 'Hangat & Kolaboratif'],
+          ['formal dan santun', 'Formal Santun'],
+          ['tegas tapi sopan', 'Tegas tapi Sopan'],
+          ['ringan dan akrab', 'Ringan & Akrab']
+        ]},
+        { t: 'select', k: 'media', label: 'Dikirim Lewat', opts: [
+          ['WhatsApp pribadi', 'WhatsApp Pribadi'],
+          ['WhatsApp grup kelas', 'WhatsApp Grup'],
+          ['surat resmi sekolah', 'Surat Resmi']
+        ]}
+      ]},
+      { t: 'select', k: 'versi', label: 'Jumlah Versi', opts: [
+        ['3', '3 versi (nada berbeda)'],
+        ['1', '1 versi saja'],
+        ['2', '2 versi']
+      ]}
+    ],
+    build: buildPesan
+  },
+  {
+    id: 'admin',
+    icon: '🗂️',
+    grup: 'ADMINISTRASI',
+    nama: 'Administrasi Guru',
+    desc: 'Prota, Prosem, jurnal, KKTP, e-Kinerja',
+    judul: 'Administrasi Guru Studio',
+    sub: 'Dokumen wajib yang repetitif, sekali isi langsung jadi',
+    fields: [
+      { t: 'sec', label: 'Identitas' },
+      { t: 'row', kids: [
+        { t: 'text', k: 'sekolah', label: 'Nama Sekolah', ph: 'SMPN 1 Sukamaju' },
+        { t: 'text', k: 'tahun', label: 'Tahun Pelajaran', ph: '2026/2027' }
+      ]},
+      { t: 'row', kids: [
+        { t: 'text', k: 'guru', label: 'Nama Guru', ph: 'Rina Kartika, S.Pd.' },
+        { t: 'text', k: 'nip', label: 'NIP (opsional)', ph: '' }
+      ]},
+      { t: 'row3', kids: [
+        { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+        { t: 'text', k: 'kelas', label: 'Kelas / Fase', ph: 'IX / D' },
+        { t: 'select', k: 'semester', label: 'Semester', opts: [
+          ['Ganjil', 'Ganjil'],
+          ['Genap', 'Genap'],
+          ['Ganjil dan Genap', 'Keduanya']
+        ]}
+      ]},
+      { t: 'sec', label: 'Dokumen' },
+      { t: 'select', k: 'jenis', label: 'Jenis Dokumen', opts: [
+        ['PROGRAM TAHUNAN (PROTA)', 'Program Tahunan (Prota)'],
+        ['PROGRAM SEMESTER (PROSEM)', 'Program Semester (Prosem)'],
+        ['ANALISIS ALOKASI WAKTU', 'Analisis Pekan Efektif'],
+        ['JURNAL MENGAJAR HARIAN', 'Jurnal Mengajar'],
+        ['KKTP / KKM', 'KKTP / KKM'],
+        ['PROGRAM REMEDIAL & PENGAYAAN', 'Program Remedial & Pengayaan'],
+        ['ATP / ALUR TUJUAN', 'ATP / Alur Tujuan'],
+        ['e-KINERJA / SKP', 'e-Kinerja / SKP']
+      ]},
+      { t: 'textarea', k: 'materi', label: 'Daftar Materi / Bab Satu Tahun', ide: 'materiTahun', h: 120, ph: 'satu baris satu bab' },
+      { t: 'row3', kids: [
+        { t: 'text', k: 'jp', label: 'JP per Minggu', ph: '5 JP' },
+        { t: 'text', k: 'minggu', label: 'Minggu Efektif', ph: '18' },
+        { t: 'text', k: 'kkm', label: 'KKM / KKTP', ph: '75' }
+      ]},
+      { t: 'text', k: 'catatan', label: 'Catatan (opsional)', ph: 'contoh: ada 2 minggu libur' }
+    ],
+    build: buildAdmin
+  },
+  {
+    id: 'video',
+    icon: '🎬',
+    grup: 'MEDIA BELAJAR',
+    nama: 'Video Pembelajaran',
+    desc: 'Karakter 360° + prompt gambar & video per scene',
+    judul: 'Video Pembelajaran Studio',
+    sub: 'Character sheet Unreal Engine, lalu prompt gambar dan video tiap scene',
+    fields: [
+      { t: 'sec', label: 'Materi' },
+      { t: 'row', kids: [
+        { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+        { t: 'text', k: 'kelas', label: 'Kelas / Fase', ph: 'IX / D' }
+      ]},
+      { t: 'text', k: 'materi', label: 'Materi / Topik', ph: 'Rangkaian Listrik' },
+      { t: 'textarea', k: 'poin', label: 'Poin yang Dijelaskan', ide: 'poinVideo', h: 100, ph: 'satu baris satu poin' },
+      { t: 'sec', label: 'Karakter Utama' },
+      { t: 'select', k: 'karakter', label: 'Siapa yang Tampil di Video', opts: [
+        ['guru perempuan (batik)', 'Guru perempuan (batik)'],
+        ['guru laki-laki (kemeja)', 'Guru laki-laki (kemeja)'],
+        ['murid SMP berseragam', 'Murid SMP berseragam'],
+        ['maskot lucu', 'Maskot lucu'],
+        ['robot pemandu', 'Robot pemandu'],
+        ['MANUAL', '✏️ Tulis Sendiri']
+      ]},
+      { t: 'text', k: 'karakterManual', label: 'Isi bila memilih ✏️ Tulis Sendiri', ide: 'karakterIde', ph: 'contoh: nenek pendongeng berkebaya' },
+      { t: 'sec', label: 'Format Video' },
+      { t: 'row3', kids: [
+        { t: 'text', k: 'durasi', label: 'Durasi Video', ph: '3 menit' },
+        { t: 'select', k: 'nscene', label: 'Jumlah Scene', opts: [
+          ['3', '3 scene'], ['4', '4 scene'], ['5', '5 scene'],
+          ['6', '6 scene'], ['8', '8 scene'], ['10', '10 scene']
+        ]},
+        { t: 'select', k: 'rasio', label: 'Rasio', opts: [
+          ['16:9', '16:9 (YouTube)'],
+          ['9:16', '9:16 (TikTok/Reels)'],
+          ['1:1', '1:1 (Instagram)']
+        ]}
+      ]},
+      { t: 'select', k: 'gaya', label: 'Gaya Visual Video', opts: [
+        ['photorealistic Unreal Engine 5', 'Realistis Sinematik'],
+        ['3D Pixar style', '3D Pixar Vibrant'],
+        ['animasi 2D flat', 'Animasi 2D Flat'],
+        ['motion graphic', 'Motion Graphic']
+      ]},
+      { t: 'row', kids: [
+        { t: 'select', k: 'target', label: 'Video Generator', opts: [
+          ['Google Veo', 'Google Veo'],
+          ['Runway Gen-3', 'Runway'],
+          ['Sora', 'Sora'],
+          ['Pika', 'Pika']
+        ]},
+        { t: 'select', k: 'imgTarget', label: 'Image Generator', opts: [
+          ['Nano Banana/Gemini', 'Nano Banana/Gemini'],
+          ['Midjourney', 'Midjourney'],
+          ['ChatGPT (DALL·E)', 'ChatGPT'],
+          ['Flux', 'Flux']
+        ]}
+      ]},
+      { t: 'select', k: 'narasi', label: 'Gaya Narasi', opts: [
+        ['ramah dan bersemangat', 'Ramah & Bersemangat'],
+        ['tenang dan jelas', 'Tenang & Jelas'],
+        ['santai kekinian', 'Santai Kekinian']
+      ]},
+      { t: 'switch', k: 'teksLayar', label: 'Sertakan teks di layar tiap scene', on: true }
+    ],
+    build: buildVideo
+  }
+];
+
+// ================================================================
+// 11. PASANG TOOLS KE UI
+// ================================================================
+
 function pasangTool(T) {
   const sec = document.createElement('section');
   sec.className = 'view';
   sec.id = 'v_' + T.id;
   
+  // Topbar
   const top = document.createElement('div');
   top.className = 'topbar';
   top.innerHTML = '<div class="brand">SANGCREATOR</div><h1>' + T.judul + '</h1><p class="sub">' + T.sub + '</p>';
@@ -1943,6 +2490,7 @@ function pasangTool(T) {
   pill.textContent = '✅ GRATIS';
   top.appendChild(pill);
   
+  // Card
   const card = document.createElement('div');
   card.className = 'card';
   const h = document.createElement('h2');
@@ -1969,7 +2517,7 @@ function pasangTool(T) {
         });
         localStorage.setItem(KEY, JSON.stringify(d));
         if (tagDraft) {
-          tagDraft.textContent = '✓ Draft tersimpan di perangkat ini';
+          tagDraft.textContent = '✓ Draft tersimpan';
           tagDraft.classList.add('on');
           setTimeout(function() { tagDraft.classList.remove('on'); }, 1900);
         }
@@ -1982,7 +2530,7 @@ function pasangTool(T) {
     if (sudahBangun) return;
     sudahBangun = true;
     const frag = document.createDocumentFragment();
-    T.fields.forEach(f => frag.appendChild(buatField(f, store)));
+    (T.fields || []).forEach(f => frag.appendChild(buatField(f, store)));
     card.insertBefore(frag, gen);
     tagDraft = document.createElement('div');
     tagDraft.className = 'draft-tag';
@@ -1996,6 +2544,7 @@ function pasangTool(T) {
   card.appendChild(gen);
   sec.appendChild(card);
   
+  // Output
   const oh = document.createElement('div');
   oh.className = 'out-head';
   const h3 = document.createElement('h3');
@@ -2016,13 +2565,6 @@ function pasangTool(T) {
   out.innerHTML = '<div class="card empty">Isi data di atas lalu tekan <b>Buat Prompt</b>.</div>';
   sec.appendChild(out);
   
-  if (T.tip) {
-    const c = document.createElement('div');
-    c.className = 'card';
-    c.innerHTML = '<h2>Catatan</h2><div class="steps">' + T.tip + '</div>';
-    sec.appendChild(c);
-  }
-  
   let hasil = [];
   gen.onclick = function() {
     gen.textContent = '⏳ Menyusun...';
@@ -2034,7 +2576,7 @@ function pasangTool(T) {
       const r = T.build(v) || [];
       gen.textContent = '✨ Buat Prompt';
       
-      // Semua tools gratis di versi AI Studio
+      // Semua tools gratis
       hasil = r;
       const frag = document.createDocumentFragment();
       hasil.forEach(b => frag.appendChild(blok(b.title, b.text)));
@@ -2066,49 +2608,24 @@ function pasangTool(T) {
 }
 
 // ================================================================
-// 10. TOOL REGISTRATION
+// 12. NAVIGATION
 // ================================================================
 
-// Register Ringkasan Materi
-TOOLS.push({
-  id: 'ringkasan',
-  icon: '📘',
-  grup: 'MEDIA BELAJAR',
-  nama: 'Ringkasan Materi',
-  desc: 'Poster ringkasan untuk siswa',
-  judul: 'Ringkasan Materi Studio',
-  sub: 'Prompt poster ringkasan materi — banyak mapel sekaligus',
-  fields: [], // Fields already defined in HTML
-  build: function(v) {
-    // Build function already defined in HTML
-    return [];
-  }
+// Kelompokkan tools berdasarkan grup
+const MENU_GRUP = {};
+TOOLS.forEach(T => {
+  if (!MENU_GRUP[T.grup]) MENU_GRUP[T.grup] = [];
+  MENU_GRUP[T.grup].push(T);
 });
 
-// Register Modul Ajar
-TOOLS.push({
-  id: 'rpm',
-  icon: '📝',
-  grup: 'PERENCANAAN',
-  nama: 'Modul Ajar / RPM',
-  desc: 'Dokumen perangkat ajar lengkap',
-  judul: 'Modul Ajar / RPM Studio',
-  sub: 'Prompt dokumen perangkat ajar lengkap + cover',
-  fields: [],
-  build: function(v) { return []; }
-});
+const URUTAN_GRUP = ['MEDIA BELAJAR', 'PERENCANAAN', 'PENILAIAN', 'ADMINISTRASI', 'KOMUNIKASI'];
+const MENU = URUTAN_GRUP.filter(g => MENU_GRUP[g]).map(g => ({
+  grup: g,
+  items: MENU_GRUP[g]
+}));
 
-// ================================================================
-// 11. NAVIGATION
-// ================================================================
-
-const MENU = [
-  { grup: 'MEDIA BELAJAR', items: [{ id: 'ringkasan', icon: '📘', nama: 'Ringkasan Materi', desc: 'Poster ringkasan untuk siswa', judul: 'Ringkasan Materi Studio' }] },
-  { grup: 'PERENCANAAN', items: [{ id: 'rpm', icon: '📝', nama: 'Modul Ajar / RPM', desc: 'Dokumen perangkat ajar lengkap', judul: 'Modul Ajar / RPM Studio' }] }
-];
-
-const POSISI = {};
 const navBox = document.getElementById('navBox');
+const POSISI = {};
 
 MENU.forEach(g => {
   const l = document.createElement('div');
@@ -2116,13 +2633,14 @@ MENU.forEach(g => {
   l.textContent = g.grup;
   navBox.appendChild(l);
   
-  g.items.forEach(it => {
+  g.items.forEach(T => {
     const n = document.createElement('div');
-    n.className = 'nav' + (it.id === 'ringkasan' ? ' on' : '');
-    n.dataset.view = 'v_' + it.id;
-    n.dataset.judul = it.judul;
-    n.innerHTML = '<div class="ic">' + it.icon + '</div>' +
-                  '<div class="tx"><b>' + it.nama + '</b><span>' + it.desc + '</span></div>' +
+    n.className = 'nav';
+    if (T.id === 'ringkasan') n.classList.add('on');
+    n.dataset.view = 'v_' + T.id;
+    n.dataset.judul = T.judul;
+    n.innerHTML = '<div class="ic">' + T.icon + '</div>' +
+                  '<div class="tx"><b>' + T.nama + '</b><span>' + T.desc + '</span></div>' +
                   '<div class="badge-n badge-free">GRATIS</div>';
     n.onclick = function() {
       if (n.classList.contains('on')) { tutupSide(); return; }
@@ -2148,21 +2666,10 @@ function tutupSide() {
 }
 
 // ================================================================
-// 12. INITIALIZATION
+// 13. RINGKASAN MATERI - UI KHUSUS
 // ================================================================
 
-// --- 12a. Mapel List ---
-const MAPEL_LIST = ['IPA', 'IPS', 'Matematika', 'Bahasa Indonesia', 'Bahasa Inggris', 'PPKn',
-  'Pendidikan Agama Islam', 'Informatika', 'Seni Budaya', 'PJOK', 'Fisika', 'Kimia', 'Biologi',
-  'Sejarah', 'Ekonomi', 'Geografi', 'Sosiologi', 'Prakarya', 'Bahasa Daerah', 'Bimbingan Konseling'
-];
-MAPEL_LIST.forEach(m => {
-  const o = document.createElement('option');
-  o.value = m;
-  document.getElementById('mapelList').appendChild(o);
-});
-
-// --- 12b. Chips for Ringkasan ---
+// Chips
 const chipBox = document.getElementById('chips');
 ELEMEN.forEach(([k, label]) => {
   const b = document.createElement('div');
@@ -2173,9 +2680,8 @@ ELEMEN.forEach(([k, label]) => {
   chipBox.appendChild(b);
 });
 
-// --- 12c. Materi List ---
+// Materi List
 const listBox = document.getElementById('materiList');
-
 function tambahMateri(data) {
   data = data || {};
   const el = document.createElement('div');
@@ -2205,11 +2711,7 @@ function tambahMateri(data) {
   sb.oninput = upd;
   el.querySelector('.bi-sub').onclick = function() {
     const bab = el.querySelector('.f-bab').value.trim();
-    if (!bab) {
-      toast('Isi dulu Bab / Topik-nya ya, biar idenya nyambung.', 'info');
-      el.querySelector('.f-bab').focus();
-      return;
-    }
+    if (!bab) { toast('Isi dulu Bab / Topik-nya.', 'info'); return; }
     sb.value = IDE.submateri(function(k) { return k === 'bab' ? bab : ''; });
     upd();
     this.textContent = '💡 Ide lain';
@@ -2231,13 +2733,10 @@ function nomorUlang() {
 document.getElementById('addBtn').onclick = () => tambahMateri().querySelector('.f-mapel').focus();
 tambahMateri();
 
-// --- 12d. Bulk Import ---
+// Bulk import
 document.getElementById('bulkBtn').onclick = function() {
   const baris = document.getElementById('bulk').value.split('\n').map(s => s.trim()).filter(Boolean);
-  if (!baris.length) {
-    toast('Kotak Tempel Cepat masih kosong.', 'info');
-    return;
-  }
+  if (!baris.length) { toast('Kotak Tempel Cepat masih kosong.', 'info'); return; }
   [...listBox.children].forEach(el => {
     if (!el.querySelector('.f-mapel').value.trim() && !el.querySelector('.f-sub').value.trim()) el.remove();
   });
@@ -2254,7 +2753,7 @@ document.getElementById('bulkBtn').onclick = function() {
   nomorUlang();
 };
 
-// --- 12e. Ringkasan Render ---
+// Render ringkasan
 function bacaDaftar() {
   return [...listBox.children].map(el => ({
     mapel: (el.querySelector('.f-mapel').value || '').trim(),
@@ -2274,7 +2773,7 @@ function renderRingkasan() {
   semuaTeks = [];
   
   if (!daftar.length) {
-    out.innerHTML = '<div class="card empty">Minimal isi <b>Mata Pelajaran</b> dan <b>Submateri</b> pada satu kartu ya 🙂</div>';
+    out.innerHTML = '<div class="card empty">Minimal isi <b>Mata Pelajaran</b> dan <b>Submateri</b> pada satu kartu.</div>';
     document.getElementById('countBadge').textContent = '0 poster';
     return;
   }
@@ -2297,7 +2796,7 @@ function renderRingkasan() {
     item.subs.forEach(sub => {
       total++;
       if (document.getElementById('enBahasa').checked) {
-        const t = promptID(item, sub, seed++, idx);
+        const t = promptRingkasan(item, sub, seed++, idx);
         semuaTeks.push('===== ' + item.mapel + ' · ' + sub + ' =====\n' + t);
         out.appendChild(blok(item.mapel + ' · ' + sub, t));
       }
@@ -2314,7 +2813,45 @@ function renderRingkasan() {
   guliInstan(out);
 }
 
-// --- 12f. Ringkasan Events ---
+function promptEN(item, sub, idx) {
+  const G = {
+    gaya: document.getElementById('gaya')?.value || 'ilustrasi kartun edukatif',
+    ukuran: document.getElementById('ukuran')?.value || 'A4 Portrait',
+    maskot: document.getElementById('maskot')?.value || '',
+    identitas: document.getElementById('identitas')?.value.trim() || ''
+  };
+  
+  function warnaUntuk(mapel, idx) {
+    const p = document.getElementById('warna')?.value || 'AUTO';
+    if (p !== 'AUTO') return p;
+    const key = mapel.toLowerCase().trim();
+    if (WARNA_MAPEL[key]) return WARNA_MAPEL[key];
+    return WARNA_CADANGAN[idx % WARNA_CADANGAN.length];
+  }
+  
+  function pilihElemen() {
+    return [...document.querySelectorAll('#chips .chip.on')].map(c => {
+      const r = ELEMEN.find(e => e[0] === c.dataset.k);
+      return r ? r[2] : '';
+    }).filter(Boolean);
+  }
+  
+  const L = [];
+  L.push('Role: Instructional Graphic Designer and Learning Media Expert.');
+  L.push('');
+  L.push('Create an educational summary poster about "' + sub + '" (chapter: ' + item.bab + ', subject: ' + item.mapel + ', grade: ' + item.kelas + ').');
+  L.push('Format: ' + G.ukuran + ', print-ready, 300 DPI.');
+  L.push('Visual style: ' + G.gaya + '.');
+  L.push('Color palette: ' + warnaUntuk(item.mapel, idx) + '.');
+  if (G.maskot) L.push('Include ' + G.maskot + '.');
+  L.push('Layout: clean grid, clear hierarchy, generous spacing.');
+  L.push('Must include: ' + pilihElemen().join('; ') + '.');
+  if (item.poin) L.push('Teacher notes: ' + item.poin + '.');
+  if (G.identitas) L.push('Footer: "' + G.identitas + '".');
+  L.push('IMPORTANT: all text in correct Indonesian, no typos.');
+  return L.join('\n');
+}
+
 document.getElementById('genBtn').onclick = function() {
   const b = this;
   b.textContent = '⏳ Menyusun...';
@@ -2322,6 +2859,7 @@ document.getElementById('genBtn').onclick = function() {
 };
 
 document.getElementById('againBtn').onclick = () => { vi++; renderRingkasan(); };
+
 document.getElementById('resetBtn').onclick = function() {
   if (!confirm('Kosongkan semua daftar materi?')) return;
   listBox.innerHTML = '';
@@ -2336,14 +2874,14 @@ document.getElementById('resetBtn').onclick = function() {
 };
 
 document.getElementById('copyAllBtn').onclick = function() {
-  if (!semuaTeks.length) {
-    toast('Belum ada prompt.', 'info');
-    return;
-  }
+  if (!semuaTeks.length) { toast('Belum ada prompt.', 'info'); return; }
   salin(semuaTeks.join('\n\n\n'), this);
 };
 
-// --- 12g. Modul Ajar ---
+// ================================================================
+// 14. MODUL AJAR - UI KHUSUS
+// ================================================================
+
 const rDimBox = document.getElementById('rDim');
 DIMENSI.forEach(d => {
   const b = document.createElement('div');
@@ -2365,7 +2903,6 @@ LAMPIRAN.forEach(([k, label]) => {
 });
 
 const rList = document.getElementById('rList');
-
 function rTambah() {
   const el = document.createElement('div');
   el.className = 'materi';
@@ -2398,11 +2935,7 @@ function rTambah() {
   bb.oninput = upd;
   el.querySelector('.bi-tp').onclick = function() {
     const bab = bb.value.trim();
-    if (!bab) {
-      toast('Isi dulu Bab / Materi Pokok-nya ya.', 'info');
-      bb.focus();
-      return;
-    }
+    if (!bab) { toast('Isi dulu Bab / Materi Pokok-nya.', 'info'); return; }
     const t = IDE.tujuan(function(k) { return (k === 'materi' || k === 'bab') ? bab : ''; });
     el.querySelector('.m-tp').value = t.split('; ').map(function(x) {
       return x.charAt(0).toUpperCase() + x.slice(1).replace(/\.$/, '');
@@ -2421,7 +2954,7 @@ function rNomor() {
 document.getElementById('rAddBtn').onclick = () => rTambah().querySelector('.m-mapel').focus();
 rTambah();
 
-// --- 12h. Modul Ajar Render ---
+// Render modul
 let rSemua = [];
 
 function rRender() {
@@ -2458,7 +2991,7 @@ function rRender() {
   rSemua = [];
   
   if (!daftar.length) {
-    out.innerHTML = '<div class="card empty">Minimal isi <b>Mata Pelajaran</b> dan <b>Bab / Materi Pokok</b> pada satu kartu ya 🙂</div>';
+    out.innerHTML = '<div class="card empty">Minimal isi <b>Mata Pelajaran</b> dan <b>Bab / Materi Pokok</b>.</div>';
     document.getElementById('rBadge').textContent = '0 modul';
     return;
   }
@@ -2490,7 +3023,7 @@ function rRender() {
   }
   
   document.getElementById('rBadge').textContent = daftar.length + ' modul';
-  toast(daftar.length + ' modul siap — jalankan prompt dokumen dulu', 'ok', 2600);
+  toast(daftar.length + ' modul siap', 'ok', 2600);
   guliInstan(out);
 }
 
@@ -2501,10 +3034,7 @@ document.getElementById('rGenBtn').onclick = function() {
 };
 
 document.getElementById('rCopyAll').onclick = function() {
-  if (!rSemua.length) {
-    toast('Belum ada prompt. Tekan "Buat Prompt Modul" dulu.', 'info');
-    return;
-  }
+  if (!rSemua.length) { toast('Belum ada prompt.', 'info'); return; }
   salin(rSemua.join('\n\n\n'), this);
 };
 
@@ -2522,10 +3052,10 @@ document.getElementById('rResetBtn').onclick = function() {
 };
 
 // ================================================================
-// 13. UI HELPERS
+// 15. UI HELPERS
 // ================================================================
 
-// --- 13a. Scroll to top ---
+// Scroll to top
 (function() {
   const b = document.getElementById('keAtas');
   let tick = false;
@@ -2540,14 +3070,14 @@ document.getElementById('rResetBtn').onclick = function() {
   b.onclick = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
 })();
 
-// --- 13b. Sidebar toggle ---
+// Sidebar toggle
 document.getElementById('burger').onclick = function() {
   document.getElementById('side').classList.toggle('open');
   document.getElementById('scrim').classList.toggle('on');
 };
 document.getElementById('scrim').onclick = tutupSide;
 
-// --- 13c. Theme toggle ---
+// Theme toggle
 const rootEl = document.documentElement;
 function toggleTema() {
   const dark = rootEl.getAttribute('data-theme') === 'dark';
@@ -2576,19 +3106,18 @@ document.getElementById('apiKeyInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') applyApiKeyFromInput();
 });
 
-// Isi input dengan key tersimpan (jika ada), tampilkan sebagai titik-titik
+// Isi input dengan key tersimpan (jika ada)
 if (GEMINI_API_KEY) {
   document.getElementById('apiKeyInput').value = GEMINI_API_KEY;
 }
 
 // ================================================================
-// 14. API KEY INITIALIZATION
+// 16. API KEY INITIALIZATION
 // ================================================================
 
 async function initGeminiAPI() {
   const statusEl = document.getElementById('apiStatus');
   
-  // Cek API Key
   if (!GEMINI_API_KEY) {
     statusEl.className = 'api-status err';
     statusEl.innerHTML = '❌ <b>API Key belum diisi!</b><br><span style="font-size:10px;">Isi API Key Gemini di kolom bawah.</span>';
@@ -2599,7 +3128,6 @@ async function initGeminiAPI() {
   statusEl.innerHTML = '🔄 Menguji koneksi ke Gemini API...';
   
   try {
-    // Test API dengan ping sederhana
     const testResponse = await fetch(GEMINI_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -2611,7 +3139,7 @@ async function initGeminiAPI() {
     
     if (!testResponse.ok) {
       const error = await testResponse.json();
-      throw new Error(error.error?.message || 'API Key tidak valid atau kuota habis.');
+      throw new Error(error.error?.message || 'API Key tidak valid.');
     }
     
     API_READY = true;
@@ -2629,27 +3157,32 @@ async function initGeminiAPI() {
 }
 
 // ================================================================
-// 15. START APPLICATION
+// 17. START APPLICATION
 // ================================================================
 
-// Inisialisasi Gemini API
+// Register all tools
+TOOLS.forEach(T => pasangTool(T));
+
+// Inisialisasi API
 initGeminiAPI();
 
-// Tampilkan tools yang sudah terdaftar
-console.log('✅ SANGCREATOR Studio Guru AI — Versi AI Studio');
-console.log('📦 Tools terdaftar:', TOOLS.length);
+// Mapel datalist
+const MAPEL_LIST = ['IPA', 'IPS', 'Matematika', 'Bahasa Indonesia', 'Bahasa Inggris', 'PPKn',
+  'Pendidikan Agama Islam', 'Informatika', 'Seni Budaya', 'PJOK', 'Fisika', 'Kimia', 'Biologi',
+  'Sejarah', 'Ekonomi', 'Geografi', 'Sosiologi', 'Prakarya', 'Bahasa Daerah', 'Bimbingan Konseling'
+];
+MAPEL_LIST.forEach(m => {
+  const o = document.createElement('option');
+  o.value = m;
+  document.getElementById('mapelList').appendChild(o);
+});
+
+console.log('✅ SANGCREATOR Studio Guru AI — 13 Tools siap pakai');
+console.log('📦 Tools:', TOOLS.map(t => t.nama).join(', '));
 console.log('🔑 Status API:', API_READY ? 'Connected' : 'Not connected');
 
-// Tambahkan ke window untuk debugging
-window.__app = {
-  TOOLS: TOOLS,
-  API_READY: API_READY,
-  generateWithGemini: generateWithGemini,
-  GEMINI_API_KEY: GEMINI_API_KEY
-};
-
-console.log('💡 Gunakan window.__app untuk debugging');
+// Expose untuk debugging
+window.__app = { TOOLS, API_READY, generateWithGemini, GEMINI_API_KEY };
 </script>
-
 </body>
 </html>
