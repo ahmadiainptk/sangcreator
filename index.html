@@ -1133,17 +1133,18 @@ function strukturDok(j) {
 // ================================================================
 
 // --- 8a. Ringkasan Materi ---
-function promptRingkasan(item, sub, seed, idx) {
+function promptRingkasan(item, sub, seed, idx, o) {
+  o = o || {};
   const G = {
-    gaya: document.getElementById('gaya')?.value || 'ilustrasi kartun edukatif',
-    ukuran: document.getElementById('ukuran')?.value || 'A4 Portrait',
-    maskot: document.getElementById('maskot')?.value || '',
-    seri: document.getElementById('seri')?.value || 'on',
-    identitas: document.getElementById('identitas')?.value.trim() || ''
+    gaya: o.gaya || 'ilustrasi kartun edukatif',
+    ukuran: o.ukuran || 'A4 Portrait',
+    maskot: o.maskot || '',
+    seri: o.seri || 'on',
+    identitas: (o.identitas || '').trim()
   };
   
   function warnaUntuk(mapel, idx) {
-    const p = document.getElementById('warna')?.value || 'AUTO';
+    const p = o.warna || 'AUTO';
     if (p !== 'AUTO') return p;
     const key = mapel.toLowerCase().trim();
     if (WARNA_MAPEL[key]) return WARNA_MAPEL[key];
@@ -1151,7 +1152,7 @@ function promptRingkasan(item, sub, seed, idx) {
   }
   
   function padatUntuk(kelas) {
-    const p = document.getElementById('padat')?.value || 'AUTO';
+    const p = o.padat || 'AUTO';
     if (p !== 'AUTO') return p;
     const k = kelas.toUpperCase();
     const angka = (k.match(/\d+/) || [''])[0];
@@ -1162,10 +1163,7 @@ function promptRingkasan(item, sub, seed, idx) {
   }
   
   function pilihElemen() {
-    return [...document.querySelectorAll('#chips .chip.on')].map(c => {
-      const r = ELEMEN.find(e => e[0] === c.dataset.k);
-      return r ? r[2] : '';
-    }).filter(Boolean);
+    return (o.elemen || []).filter(Boolean);
   }
   
   const L = [];
@@ -1208,12 +1206,9 @@ function promptRingkasan(item, sub, seed, idx) {
 }
 
 // --- 8b. Modul Ajar ---
-function rPromptDok(id, it) {
-  const dims = [...document.querySelectorAll('#rDim .chip.on')].map(c => c.dataset.v);
-  const lamps = [...document.querySelectorAll('#rLamp .chip.on')].map(c => {
-    const r = LAMPIRAN.find(x => x[0] === c.dataset.k);
-    return r ? r[2] : '';
-  }).filter(Boolean);
+function rPromptDok(id, it, dims, lamps) {
+  dims = dims || [];
+  lamps = lamps || [];
   
   const L = [];
   L.push('Peran: Pengawas Sekolah dan Guru Ahli penyusun perangkat ajar.');
@@ -1832,12 +1827,14 @@ function buatField(f, store) {
   if (f.t === 'chips') {
     const box = document.createElement('div');
     box.className = 'chips';
-    (f.opts || []).forEach(([k, full]) => {
+    (f.opts || []).forEach(([k, full, desc]) => {
+      const label = full;            // teks yang tampil di chip
+      const value = desc || full;    // nilai yang disimpan ke store
       const c = document.createElement('div');
       c.className = 'chip' + ((f.on || []).includes(k) ? ' on' : '');
-      c.dataset.full = full;
-      c.textContent = full.length > 46 ? full.slice(0, 44).replace(/\s\S*$/, '') + '…' : full;
-      c.title = full;
+      c.dataset.full = value;
+      c.textContent = label.length > 46 ? label.slice(0, 44).replace(/\s\S*$/, '') + '…' : label;
+      c.title = value;
       c.onclick = () => c.classList.toggle('on');
       box.appendChild(c);
     });
@@ -1887,6 +1884,104 @@ function buatField(f, store) {
 }
 
 // ================================================================
+// 9b. BUILD FUNCTIONS — RINGKASAN & RPM (sistem dinamis)
+// ================================================================
+
+function buildRingkasan(v) {
+  const hasil = [];
+  const elemen = (v.elemen || []).filter(Boolean);
+  const o = {
+    gaya: v.gaya, ukuran: v.ukuran, maskot: v.maskot, seri: v.seri,
+    identitas: v.identitas, warna: v.warna, padat: v.padat, elemen: elemen
+  };
+  const subs = (v.sub || '').split('\n').map(s => s.trim()).filter(Boolean);
+  const item = {
+    mapel: v.mapel, kelas: v.kelas, bab: v.bab,
+    poin: (v.poin || '').trim()
+  };
+
+  if (!item.mapel || !subs.length) {
+    return [{ title: '⚠️ Data belum lengkap', text: 'Minimal isi Mata Pelajaran dan Submateri (satu baris = satu poster).' }];
+  }
+
+  let seed = 0;
+  subs.forEach(function(sub) {
+    const idText = promptRingkasan(item, sub, seed++, 0, o);
+    hasil.push({ title: item.mapel + ' · ' + sub, text: idText });
+    if (v.enEnglish) {
+      const enText = promptEN(item, sub, seed, o);
+      hasil.push({ title: 'EN · ' + item.mapel + ' · ' + sub, text: enText });
+    }
+  });
+
+  return hasil;
+}
+
+function promptEN(item, sub, idx, o) {
+  o = o || {};
+  const G = { gaya: o.gaya || 'ilustrasi kartun edukatif', ukuran: o.ukuran || 'A4 Portrait', maskot: o.maskot || '', identitas: (o.identitas || '').trim() };
+  function warnaUntuk(mapel, i) {
+    const p = o.warna || 'AUTO';
+    if (p !== 'AUTO') return p;
+    const key = mapel.toLowerCase().trim();
+    if (WARNA_MAPEL[key]) return WARNA_MAPEL[key];
+    return WARNA_CADANGAN[i % WARNA_CADANGAN.length];
+  }
+  const L = [];
+  L.push('Role: Instructional Graphic Designer and Learning Media Expert.');
+  L.push('');
+  L.push('Create an educational summary poster about "' + sub + '" (chapter: ' + item.bab + ', subject: ' + item.mapel + ', grade: ' + item.kelas + ').');
+  L.push('Format: ' + G.ukuran + ', print-ready, 300 DPI.');
+  L.push('Visual style: ' + G.gaya + '.');
+  L.push('Color palette: ' + warnaUntuk(item.mapel, idx) + '.');
+  if (G.maskot) L.push('Include ' + G.maskot + '.');
+  L.push('Layout: clean grid, clear hierarchy, generous spacing.');
+  L.push('Must include: ' + (o.elemen || []).filter(Boolean).join('; ') + '.');
+  if (item.poin) L.push('Teacher notes: ' + item.poin + '.');
+  if (G.identitas) L.push('Footer: "' + G.identitas + '".');
+  L.push('IMPORTANT: all text in correct Indonesian, no typos.');
+  return L.join('\n');
+}
+
+function buildRpm(v) {
+  const dims = (v.dimensi || []).filter(Boolean);
+  const lamps = (v.lampiran || []).filter(Boolean);
+  const id = {
+    sekolah: (v.sekolah || '(nama sekolah)').trim(),
+    tahun: (v.tahun || '2026/2027').trim(),
+    guru: (v.guru || '(nama guru)').trim(),
+    nip: (v.nip || '').trim(),
+    kepsek: (v.kepsek || '(nama kepala sekolah)').trim(),
+    nipkep: (v.nipkep || '').trim(),
+    semester: v.semester || 'Ganjil',
+    kota: (v.kota || '(kota)').trim(),
+    tanggal: (v.tanggal || 'Juli 2026').trim(),
+    jenis: v.jenis || 'RPM',
+    pedagogi: v.pedagogi || 'Pembelajaran Berbasis Masalah (Problem Based Learning)',
+    gayatulis: v.gayatulis || 'bahasa formal administratif sesuai kaidah dokumen kedinasan sekolah, kalimat efektif dan baku',
+    dalam: v.dalam || 'lengkap dan detail, setiap bagian diuraikan menyeluruh siap dipakai tanpa banyak revisi',
+    tema: v.tema || 'modern edukatif — bentuk geometris lembut, gradasi biru dan tosca, ikon pendidikan minimalis',
+    tagline: (v.tagline || '').trim()
+  };
+
+  if (!v.mapel || !v.bab) {
+    return [{ title: '⚠️ Data belum lengkap', text: 'Minimal isi Mata Pelajaran dan Bab / Materi Pokok.' }];
+  }
+
+  const it = {
+    mapel: v.mapel, kelas: v.kelas, bab: v.bab,
+    jp: v.jp || '6 JP', tm: (v.tm || '').trim(), dur: (v.dur || '').trim(),
+    tp: (v.tp || '').trim(), note: (v.note || '').trim()
+  };
+
+  const hasil = [];
+  hasil.push({ title: '① Prompt Dokumen · ' + it.mapel, text: rPromptDok(id, it, dims, lamps) });
+  hasil.push({ title: '② Prompt Cover · ' + it.mapel, text: rPromptCover(id, it) });
+  if (v.bg) hasil.push({ title: '③ Prompt Background Halaman', text: rPromptBg(id) });
+  return hasil;
+}
+
+// ================================================================
 // 10. TOOL REGISTRATION (13 Tools)
 // ================================================================
 
@@ -1898,15 +1993,68 @@ const TOOLS = [
     nama: 'Ringkasan Materi',
     desc: 'Poster ringkasan untuk siswa',
     judul: 'Ringkasan Materi Studio',
-    sub: 'Prompt poster ringkasan materi — banyak mapel sekaligus',
+    sub: 'Prompt poster ringkasan materi — satu mapel banyak submateri',
     fields: [
-      { t: 'sec', label: 'Daftar Materi' },
-      // Fields di-render manual di HTML
+      { t: 'sec', label: 'Identitas Materi' },
+      { t: 'row', kids: [
+        { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+        { t: 'text', k: 'kelas', label: 'Kelas / Fase', ph: 'IX / D' }
+      ]},
+      { t: 'text', k: 'bab', label: 'Bab / Topik', ph: 'LISTRIK DAN MAGNET' },
+      { t: 'textarea', k: 'sub', label: 'Submateri', ide: 'submateri', ph: 'satu baris satu poster' },
+      { t: 'text', k: 'poin', label: 'Poin wajib (opsional)', ph: 'contoh: rumus V = I × R' },
+      { t: 'sec', label: 'Gaya Desain' },
+      { t: 'select', k: 'gaya', label: 'Gaya Visual', opts: [
+        ['ilustrasi kartun edukatif yang ceria dengan karakter lucu, ikon berwarna, dan bidang-bidang kotak informasi yang rapi', 'Kartun Edukatif Ceria'],
+        ['aesthetic pastel lembut ala catatan cantik (aesthetic study notes), rapi, banyak ikon kecil dan washi tape', 'Aesthetic Pastel / Study Notes'],
+        ['infografis modern profesional, flat design, ikon garis tebal, grid rapi, kontras tinggi', 'Infografis Flat Modern'],
+        ['minimalis bersih dengan banyak ruang kosong, satu warna aksen, tipografi tegas', 'Minimalis Bersih'],
+        ['doodle handwriting seperti catatan tulis tangan berwarna, sticky note, panah manual, dan highlight stabilo', 'Doodle Tulis Tangan'],
+        ['mind map / peta konsep bercabang dengan node berwarna dan garis penghubung yang jelas', 'Mind Map / Peta Konsep'],
+        ['gaya komik strip edukatif dengan panel dan balon dialog karakter', 'Komik Edukatif'],
+        ['render 3D bergaya film animasi Pixar/Disney — karakter dan objek dibuat 3D dengan permukaan halus mengkilap, pencahayaan sinematik lembut, warna sangat vibrant dan jenuh, kedalaman ruang terasa nyata, ekspresi karakter hidup dan ramah', '✨ 3D Pixar Vibrant']
+      ]},
+      { t: 'row', kids: [
+        { t: 'select', k: 'warna', label: 'Palet Warna', opts: [
+          ['AUTO', '🎨 Otomatis per mapel'],
+          ['biru, tosca, dan kuning cerah di atas latar putih bersih', 'Biru–Tosca–Kuning'],
+          ['pastel lembut (peach, mint, lavender, cream) di atas latar krem', 'Pastel Lembut'],
+          ['hijau daun dan kuning hangat, nuansa alam', 'Hijau Alam'],
+          ['oranye, merah bata, dan cokelat hangat', 'Oranye Hangat'],
+          ['ungu, pink, dan biru muda, nuansa ceria', 'Ungu Ceria']
+        ]},
+        { t: 'select', k: 'ukuran', label: 'Ukuran & Orientasi', opts: [
+          ['A4 Portrait (21 × 29,7 cm)', 'A4 Portrait'],
+          ['A4 Landscape (29,7 × 21 cm)', 'A4 Landscape'],
+          ['A3 Portrait (29,7 × 42 cm) untuk poster dinding kelas', 'A3 Poster Dinding'],
+          ['rasio 16:9 untuk slide presentasi di proyektor', 'Slide 16:9'],
+          ['rasio 9:16 (potrait HP) untuk dibagikan di WhatsApp/Instagram', 'Story 9:16 (HP)']
+        ]}
+      ]},
+      { t: 'row', kids: [
+        { t: 'select', k: 'maskot', label: 'Maskot / Karakter', opts: [
+          ['', 'Tanpa maskot'],
+          ['satu karakter siswa kartun berseragam yang ramah sebagai maskot pemandu', 'Siswa berseragam'],
+          ['karakter guru kartun ramah yang menunjuk ke arah penjelasan', 'Guru menunjuk'],
+          ['maskot hewan lucu yang relevan dengan materi', 'Maskot hewan lucu']
+        ]},
+        { t: 'select', k: 'padat', label: 'Kepadatan Isi', opts: [
+          ['AUTO', '🎯 Otomatis dari kelas'],
+          ['ringkas — hanya poin-poin inti, banyak ruang kosong, cocok untuk anak SD', 'Ringkas (SD)'],
+          ['sedang — poin inti disertai penjelasan singkat 1–2 kalimat per bagian', 'Sedang (SMP)'],
+          ['padat — penjelasan lengkap, rumus, dan contoh, namun tetap tertata rapi', 'Padat (SMA/lengkap)']
+        ]}
+      ]},
+      { t: 'select', k: 'seri', label: 'Konsistensi Seri', opts: [
+        ['on', 'Seragam — satu seri poster (disarankan)'],
+        ['off', 'Bebas — tiap poster berdiri sendiri']
+      ]},
+      { t: 'sec', label: 'Elemen yang Ditampilkan' },
+      { t: 'chips', k: 'elemen', label: 'Elemen Poster', opts: ELEMEN.map(e => [e[0], e[1], e[2]]), on: DEFAULT_ON },
+      { t: 'text', k: 'identitas', label: 'Identitas Sekolah / Guru (opsional)', ph: 'SMPN 1 Sukamaju — Bu Rina' },
+      { t: 'switch', k: 'enEnglish', label: 'Versi English', on: false }
     ],
-    build: function(v) {
-      // Build dari fungsi global
-      return [];
-    }
+    build: buildRingkasan
   },
   {
     id: 'rpm',
@@ -1916,8 +2064,78 @@ const TOOLS = [
     desc: 'Dokumen perangkat ajar lengkap',
     judul: 'Modul Ajar / RPM Studio',
     sub: 'Prompt dokumen perangkat ajar lengkap + cover',
-    fields: [],
-    build: function(v) { return []; }
+    fields: [
+      { t: 'sec', label: 'Identitas Sekolah' },
+      { t: 'row', kids: [
+        { t: 'text', k: 'sekolah', label: 'Nama Sekolah', ph: 'SMPN 1 Sukamaju' },
+        { t: 'text', k: 'tahun', label: 'Tahun Pelajaran', ph: '2026/2027' }
+      ]},
+      { t: 'row', kids: [
+        { t: 'text', k: 'guru', label: 'Nama Guru Penyusun', ph: 'Rina Kartika, S.Pd.' },
+        { t: 'text', k: 'nip', label: 'NIP Guru (opsional)' }
+      ]},
+      { t: 'row', kids: [
+        { t: 'text', k: 'kepsek', label: 'Kepala Sekolah', ph: 'Drs. Ahmad Fauzi, M.Pd.' },
+        { t: 'text', k: 'nipkep', label: 'NIP Kepala Sekolah' }
+      ]},
+      { t: 'row3', kids: [
+        { t: 'select', k: 'semester', label: 'Semester', opts: [['Ganjil', 'Ganjil'], ['Genap', 'Genap']] },
+        { t: 'text', k: 'kota', label: 'Kota / Kabupaten', ph: 'Bekasi' },
+        { t: 'text', k: 'tanggal', label: 'Tanggal Pengesahan', ph: 'Juli 2026' }
+      ]},
+      { t: 'sec', label: 'Materi yang Dibuat' },
+      { t: 'row', kids: [
+        { t: 'mapel', k: 'mapel', label: 'Mata Pelajaran' },
+        { t: 'text', k: 'kelas', label: 'Kelas / Fase', ph: 'IX / D' }
+      ]},
+      { t: 'text', k: 'bab', label: 'Bab / Materi Pokok', ph: 'LISTRIK DAN MAGNET' },
+      { t: 'row3', kids: [
+        { t: 'text', k: 'jp', label: 'Alokasi Waktu', ph: '6 JP' },
+        { t: 'text', k: 'tm', label: 'Jumlah Pertemuan', ph: '3' },
+        { t: 'text', k: 'dur', label: 'Durasi / Pertemuan', ph: '2 × 40 menit' }
+      ]},
+      { t: 'textarea', k: 'tp', label: 'Tujuan Pembelajaran (opsional)', ide: 'tujuan', ph: 'satu baris satu tujuan' },
+      { t: 'text', k: 'note', label: 'Catatan khusus (opsional)', ph: 'contoh: kelas inklusi' },
+      { t: 'sec', label: 'Format & Pendekatan' },
+      { t: 'row', kids: [
+        { t: 'select', k: 'jenis', label: 'Jenis Dokumen', opts: [
+          ['RPM', 'RPM — Rencana Pembelajaran Mendalam'],
+          ['MODUL', 'Modul Ajar (Kurikulum Merdeka)'],
+          ['RPP', 'RPP Ringkas 1 Lembar']
+        ]},
+        { t: 'select', k: 'pedagogi', label: 'Praktik Pedagogis', opts: [
+          ['Pembelajaran Berbasis Masalah (Problem Based Learning)', 'Problem Based Learning'],
+          ['Pembelajaran Berbasis Proyek (Project Based Learning)', 'Project Based Learning'],
+          ['Pembelajaran Inkuiri Terbimbing', 'Inkuiri Terbimbing'],
+          ['Pembelajaran Penemuan (Discovery Learning)', 'Discovery Learning'],
+          ['Pembelajaran Kooperatif (Cooperative Learning)', 'Cooperative Learning']
+        ]}
+      ]},
+      { t: 'row', kids: [
+        { t: 'select', k: 'gayatulis', label: 'Bahasa & Gaya Penulisan', opts: [
+          ['bahasa formal administratif sesuai kaidah dokumen kedinasan sekolah, kalimat efektif dan baku', 'Formal Kedinasan'],
+          ['bahasa formal namun mengalir dan mudah dipahami, tidak kaku', 'Formal Ringan'],
+          ['ringkas dan padat, banyak memakai tabel dan poin bernomor', 'Ringkas Berpoin']
+        ]},
+        { t: 'select', k: 'dalam', label: 'Kedalaman Isi', opts: [
+          ['lengkap dan detail, setiap bagian diuraikan menyeluruh siap dipakai tanpa banyak revisi', 'Lengkap & Detail'],
+          ['standar, cukup memenuhi kebutuhan administrasi tanpa bertele-tele', 'Standar'],
+          ['sangat ringkas, hanya poin utama tiap bagian', 'Sangat Ringkas']
+        ]}
+      ]},
+      { t: 'chips', k: 'dimensi', label: 'Dimensi Profil Lulusan', opts: DIMENSI.map(d => [d, d]), on: DIM_ON },
+      { t: 'chips', k: 'lampiran', label: 'Lampiran yang Disertakan', opts: LAMPIRAN.map(l => [l[0], l[1], l[2]]), on: LAMP_ON },
+      { t: 'sec', label: 'Desain Cover & Halaman' },
+      { t: 'select', k: 'tema', label: 'Tema Visual Cover', opts: [
+        ['nuansa Nusantara — perpaduan pemandangan alam Indonesia, rumah adat, dan ornamen budaya dengan gradasi biru laut dan hijau', 'Nusantara (alam & budaya)'],
+        ['modern edukatif — bentuk geometris lembut, gradasi biru dan tosca, ikon pendidikan minimalis', 'Modern Edukatif'],
+        ['batik modern — ornamen batik disederhanakan sebagai aksen tepi dengan gradasi cokelat emas dan biru tua', 'Batik Modern'],
+        ['sains & teknologi — partikel, garis sirkuit halus, dan gradasi biru elektrik keunguan', 'Sains & Teknologi']
+      ]},
+      { t: 'text', k: 'tagline', label: 'Tagline Cover', ph: 'Mindful · Meaningful · Joyful' },
+      { t: 'switch', k: 'bg', label: 'Sertakan prompt background halaman isi', on: true }
+    ],
+    build: buildRpm
   },
   {
     id: 'soal',
@@ -2664,392 +2882,6 @@ function tutupSide() {
   document.getElementById('side').classList.remove('open');
   document.getElementById('scrim').classList.remove('on');
 }
-
-// ================================================================
-// 13. RINGKASAN MATERI - UI KHUSUS
-// ================================================================
-
-// Chips
-const chipBox = document.getElementById('chips');
-ELEMEN.forEach(([k, label]) => {
-  const b = document.createElement('div');
-  b.className = 'chip' + (DEFAULT_ON.includes(k) ? ' on' : '');
-  b.dataset.k = k;
-  b.textContent = label;
-  b.onclick = () => b.classList.toggle('on');
-  chipBox.appendChild(b);
-});
-
-// Materi List
-const listBox = document.getElementById('materiList');
-function tambahMateri(data) {
-  data = data || {};
-  const el = document.createElement('div');
-  el.className = 'materi';
-  el.innerHTML = '<div class="materi-head"><div class="materi-no"></div>' +
-    '<div class="materi-label">Materi baru</div><button class="del">✕</button></div>' +
-    '<div class="row"><div class="field"><label>Mata Pelajaran</label>' +
-    '<input class="f-mapel" list="mapelList" placeholder="contoh: IPA"></div>' +
-    '<div class="field"><label>Kelas / Fase</label><input class="f-kelas" placeholder="contoh: IX / D"></div></div>' +
-    '<div class="field"><label>Bab / Topik</label><input class="f-bab" placeholder="contoh: LISTRIK DAN MAGNET"></div>' +
-    '<div class="field"><div class="lbl-row"><label>Submateri</label>' +
-    '<button type="button" class="btn-ide bi-sub">💡 Ide dari AI</button></div>' +
-    '<textarea class="f-sub" placeholder="satu baris satu poster"></textarea></div>' +
-    '<div class="field"><label>Poin wajib <span style="font-weight:400;">(opsional)</span></label>' +
-    '<input class="f-poin" placeholder="contoh: rumus V = I × R"></div>';
-  
-  el.querySelector('.del').onclick = () => { el.remove(); nomorUlang(); };
-  const mp = el.querySelector('.f-mapel');
-  const sb = el.querySelector('.f-sub');
-  const lb = el.querySelector('.materi-label');
-  const upd = () => {
-    const m = mp.value.trim();
-    const s = sb.value.split('\n').map(x => x.trim()).filter(Boolean);
-    lb.textContent = m ? (m + (s.length ? ' · ' + s.length + ' poster' : '')) : 'Materi baru';
-  };
-  mp.oninput = upd;
-  sb.oninput = upd;
-  el.querySelector('.bi-sub').onclick = function() {
-    const bab = el.querySelector('.f-bab').value.trim();
-    if (!bab) { toast('Isi dulu Bab / Topik-nya.', 'info'); return; }
-    sb.value = IDE.submateri(function(k) { return k === 'bab' ? bab : ''; });
-    upd();
-    this.textContent = '💡 Ide lain';
-  };
-  mp.value = data.mapel || '';
-  el.querySelector('.f-kelas').value = data.kelas || '';
-  el.querySelector('.f-bab').value = data.bab || '';
-  sb.value = data.sub || '';
-  upd();
-  listBox.appendChild(el);
-  nomorUlang();
-  return el;
-}
-
-function nomorUlang() {
-  [...listBox.children].forEach((el, i) => el.querySelector('.materi-no').textContent = i + 1);
-}
-
-document.getElementById('addBtn').onclick = () => tambahMateri().querySelector('.f-mapel').focus();
-tambahMateri();
-
-// Bulk import
-document.getElementById('bulkBtn').onclick = function() {
-  const baris = document.getElementById('bulk').value.split('\n').map(s => s.trim()).filter(Boolean);
-  if (!baris.length) { toast('Kotak Tempel Cepat masih kosong.', 'info'); return; }
-  [...listBox.children].forEach(el => {
-    if (!el.querySelector('.f-mapel').value.trim() && !el.querySelector('.f-sub').value.trim()) el.remove();
-  });
-  baris.forEach(b => {
-    const p = b.split('|').map(s => s.trim());
-    tambahMateri({
-      mapel: p[0] || '',
-      kelas: p[1] || '',
-      bab: p[2] || '',
-      sub: (p[3] || '').split(',').map(s => s.trim()).filter(Boolean).join('\n')
-    });
-  });
-  document.getElementById('bulk').value = '';
-  nomorUlang();
-};
-
-// Render ringkasan
-function bacaDaftar() {
-  return [...listBox.children].map(el => ({
-    mapel: (el.querySelector('.f-mapel').value || '').trim(),
-    kelas: (el.querySelector('.f-kelas').value || '-').trim(),
-    bab: (el.querySelector('.f-bab').value || '-').trim(),
-    poin: (el.querySelector('.f-poin').value || '').trim(),
-    subs: el.querySelector('.f-sub').value.split('\n').map(s => s.trim()).filter(Boolean)
-  })).filter(x => x.mapel && x.subs.length);
-}
-
-let semuaTeks = [];
-let vi = 0;
-
-function renderRingkasan() {
-  const daftar = bacaDaftar();
-  const out = document.getElementById('output');
-  semuaTeks = [];
-  
-  if (!daftar.length) {
-    out.innerHTML = '<div class="card empty">Minimal isi <b>Mata Pelajaran</b> dan <b>Submateri</b> pada satu kartu.</div>';
-    document.getElementById('countBadge').textContent = '0 poster';
-    return;
-  }
-  
-  if (!document.getElementById('enBahasa').checked && !document.getElementById('enEnglish').checked) {
-    out.innerHTML = '<div class="card empty">Aktifkan minimal satu versi prompt.</div>';
-    return;
-  }
-  
-  out.innerHTML = '';
-  let total = 0;
-  let seed = vi;
-  
-  daftar.forEach((item, idx) => {
-    const gt = document.createElement('div');
-    gt.className = 'group-title';
-    gt.textContent = '▸ ' + item.mapel + ' — ' + item.bab + ' (' + item.kelas + ')';
-    out.appendChild(gt);
-    
-    item.subs.forEach(sub => {
-      total++;
-      if (document.getElementById('enBahasa').checked) {
-        const t = promptRingkasan(item, sub, seed++, idx);
-        semuaTeks.push('===== ' + item.mapel + ' · ' + sub + ' =====\n' + t);
-        out.appendChild(blok(item.mapel + ' · ' + sub, t));
-      }
-      if (document.getElementById('enEnglish').checked) {
-        const t = promptEN(item, sub, idx);
-        semuaTeks.push('===== EN · ' + item.mapel + ' · ' + sub + ' =====\n' + t);
-        out.appendChild(blok('EN · ' + item.mapel + ' · ' + sub, t));
-      }
-    });
-  });
-  
-  document.getElementById('countBadge').textContent = total + ' poster · ' + daftar.length + ' mapel';
-  toast(total + ' prompt poster siap disalin', 'ok');
-  guliInstan(out);
-}
-
-function promptEN(item, sub, idx) {
-  const G = {
-    gaya: document.getElementById('gaya')?.value || 'ilustrasi kartun edukatif',
-    ukuran: document.getElementById('ukuran')?.value || 'A4 Portrait',
-    maskot: document.getElementById('maskot')?.value || '',
-    identitas: document.getElementById('identitas')?.value.trim() || ''
-  };
-  
-  function warnaUntuk(mapel, idx) {
-    const p = document.getElementById('warna')?.value || 'AUTO';
-    if (p !== 'AUTO') return p;
-    const key = mapel.toLowerCase().trim();
-    if (WARNA_MAPEL[key]) return WARNA_MAPEL[key];
-    return WARNA_CADANGAN[idx % WARNA_CADANGAN.length];
-  }
-  
-  function pilihElemen() {
-    return [...document.querySelectorAll('#chips .chip.on')].map(c => {
-      const r = ELEMEN.find(e => e[0] === c.dataset.k);
-      return r ? r[2] : '';
-    }).filter(Boolean);
-  }
-  
-  const L = [];
-  L.push('Role: Instructional Graphic Designer and Learning Media Expert.');
-  L.push('');
-  L.push('Create an educational summary poster about "' + sub + '" (chapter: ' + item.bab + ', subject: ' + item.mapel + ', grade: ' + item.kelas + ').');
-  L.push('Format: ' + G.ukuran + ', print-ready, 300 DPI.');
-  L.push('Visual style: ' + G.gaya + '.');
-  L.push('Color palette: ' + warnaUntuk(item.mapel, idx) + '.');
-  if (G.maskot) L.push('Include ' + G.maskot + '.');
-  L.push('Layout: clean grid, clear hierarchy, generous spacing.');
-  L.push('Must include: ' + pilihElemen().join('; ') + '.');
-  if (item.poin) L.push('Teacher notes: ' + item.poin + '.');
-  if (G.identitas) L.push('Footer: "' + G.identitas + '".');
-  L.push('IMPORTANT: all text in correct Indonesian, no typos.');
-  return L.join('\n');
-}
-
-document.getElementById('genBtn').onclick = function() {
-  const b = this;
-  b.textContent = '⏳ Menyusun...';
-  nanti(() => { renderRingkasan(); b.textContent = '✨ Buat Semua Prompt'; });
-};
-
-document.getElementById('againBtn').onclick = () => { vi++; renderRingkasan(); };
-
-document.getElementById('resetBtn').onclick = function() {
-  if (!confirm('Kosongkan semua daftar materi?')) return;
-  listBox.innerHTML = '';
-  tambahMateri();
-  document.getElementById('identitas').value = '';
-  document.getElementById('bulk').value = '';
-  semuaTeks = [];
-  chipBox.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', DEFAULT_ON.includes(c.dataset.k)));
-  document.getElementById('output').innerHTML = '<div class="card empty">Form sudah dikosongkan.</div>';
-  document.getElementById('countBadge').textContent = '0 poster';
-  window.scrollTo(0, 0);
-};
-
-document.getElementById('copyAllBtn').onclick = function() {
-  if (!semuaTeks.length) { toast('Belum ada prompt.', 'info'); return; }
-  salin(semuaTeks.join('\n\n\n'), this);
-};
-
-// ================================================================
-// 14. MODUL AJAR - UI KHUSUS
-// ================================================================
-
-const rDimBox = document.getElementById('rDim');
-DIMENSI.forEach(d => {
-  const b = document.createElement('div');
-  b.className = 'chip' + (DIM_ON.includes(d) ? ' on' : '');
-  b.dataset.v = d;
-  b.textContent = d;
-  b.onclick = () => b.classList.toggle('on');
-  rDimBox.appendChild(b);
-});
-
-const rLampBox = document.getElementById('rLamp');
-LAMPIRAN.forEach(([k, label]) => {
-  const b = document.createElement('div');
-  b.className = 'chip' + (LAMP_ON.includes(k) ? ' on' : '');
-  b.dataset.k = k;
-  b.textContent = label;
-  b.onclick = () => b.classList.toggle('on');
-  rLampBox.appendChild(b);
-});
-
-const rList = document.getElementById('rList');
-function rTambah() {
-  const el = document.createElement('div');
-  el.className = 'materi';
-  el.innerHTML = '<div class="materi-head"><div class="materi-no"></div>' +
-    '<div class="materi-label">Modul baru</div><button class="del">✕</button></div>' +
-    '<div class="row"><div class="field"><label>Mata Pelajaran</label>' +
-    '<input class="m-mapel" list="mapelList" placeholder="contoh: IPA"></div>' +
-    '<div class="field"><label>Kelas / Fase</label><input class="m-kelas" placeholder="contoh: IX / D"></div></div>' +
-    '<div class="field"><label>Bab / Materi Pokok</label><input class="m-bab" placeholder="contoh: LISTRIK DAN MAGNET"></div>' +
-    '<div class="row3"><div class="field"><label>Alokasi Waktu</label><input class="m-jp" placeholder="6 JP"></div>' +
-    '<div class="field"><label>Jumlah Pertemuan</label><input class="m-tm" placeholder="3"></div>' +
-    '<div class="field"><label>Durasi / Pertemuan</label><input class="m-dur" placeholder="2 × 40 menit"></div></div>' +
-    '<div class="field"><div class="lbl-row">' +
-    '<label>Tujuan Pembelajaran <span style="font-weight:400;">(opsional)</span></label>' +
-    '<button type="button" class="btn-ide bi-tp">💡 Ide dari AI</button></div>' +
-    '<textarea class="m-tp" placeholder="satu baris satu tujuan"></textarea></div>' +
-    '<div class="field"><label>Catatan khusus <span style="font-weight:400;">(opsional)</span></label>' +
-    '<input class="m-note" placeholder="contoh: kelas inklusi"></div>';
-  
-  el.querySelector('.del').onclick = () => { el.remove(); rNomor(); };
-  const mp = el.querySelector('.m-mapel');
-  const bb = el.querySelector('.m-bab');
-  const lb = el.querySelector('.materi-label');
-  const upd = () => {
-    const m = mp.value.trim();
-    const b = bb.value.trim();
-    lb.textContent = m ? (m + (b ? ' — ' + b : '')) : 'Modul baru';
-  };
-  mp.oninput = upd;
-  bb.oninput = upd;
-  el.querySelector('.bi-tp').onclick = function() {
-    const bab = bb.value.trim();
-    if (!bab) { toast('Isi dulu Bab / Materi Pokok-nya.', 'info'); return; }
-    const t = IDE.tujuan(function(k) { return (k === 'materi' || k === 'bab') ? bab : ''; });
-    el.querySelector('.m-tp').value = t.split('; ').map(function(x) {
-      return x.charAt(0).toUpperCase() + x.slice(1).replace(/\.$/, '');
-    }).join('\n');
-    this.textContent = '💡 Ide lain';
-  };
-  rList.appendChild(el);
-  rNomor();
-  return el;
-}
-
-function rNomor() {
-  [...rList.children].forEach((el, i) => el.querySelector('.materi-no').textContent = i + 1);
-}
-
-document.getElementById('rAddBtn').onclick = () => rTambah().querySelector('.m-mapel').focus();
-rTambah();
-
-// Render modul
-let rSemua = [];
-
-function rRender() {
-  const id = {
-    sekolah: (document.getElementById('r_sekolah').value || '(nama sekolah)').trim(),
-    tahun: (document.getElementById('r_tahun').value || '2026/2027').trim(),
-    guru: (document.getElementById('r_guru').value || '(nama guru)').trim(),
-    nip: document.getElementById('r_nip').value.trim(),
-    kepsek: (document.getElementById('r_kepsek').value || '(nama kepala sekolah)').trim(),
-    nipkep: document.getElementById('r_nipkep').value.trim(),
-    semester: document.getElementById('r_semester').value,
-    kota: (document.getElementById('r_kota').value || '(kota)').trim(),
-    tanggal: (document.getElementById('r_tanggal').value || 'Juli 2026').trim(),
-    jenis: document.getElementById('r_jenis').value,
-    pedagogi: document.getElementById('r_pedagogi').value,
-    gayatulis: document.getElementById('r_gayatulis').value,
-    dalam: document.getElementById('r_dalam').value,
-    tema: document.getElementById('r_tema').value,
-    tagline: document.getElementById('r_tagline').value.trim()
-  };
-  
-  const daftar = [...rList.children].map(el => ({
-    mapel: (el.querySelector('.m-mapel').value || '').trim(),
-    kelas: (el.querySelector('.m-kelas').value || '-').trim(),
-    bab: (el.querySelector('.m-bab').value || '-').trim(),
-    jp: (el.querySelector('.m-jp').value || '6 JP').trim(),
-    tm: el.querySelector('.m-tm').value.trim(),
-    dur: el.querySelector('.m-dur').value.trim(),
-    tp: el.querySelector('.m-tp').value.trim(),
-    note: el.querySelector('.m-note').value.trim()
-  })).filter(x => x.mapel && x.bab && x.bab !== '-');
-  
-  const out = document.getElementById('rOutput');
-  rSemua = [];
-  
-  if (!daftar.length) {
-    out.innerHTML = '<div class="card empty">Minimal isi <b>Mata Pelajaran</b> dan <b>Bab / Materi Pokok</b>.</div>';
-    document.getElementById('rBadge').textContent = '0 modul';
-    return;
-  }
-  
-  out.innerHTML = '';
-  daftar.forEach(it => {
-    const gt = document.createElement('div');
-    gt.className = 'group-title';
-    gt.textContent = '▸ ' + it.mapel + ' — ' + it.bab + ' (' + it.kelas + ')';
-    out.appendChild(gt);
-    
-    const d = rPromptDok(id, it);
-    rSemua.push('===== DOKUMEN · ' + it.mapel + ' · ' + it.bab + ' =====\n' + d);
-    out.appendChild(blok('① Prompt Dokumen · ' + it.mapel, d));
-    
-    const c = rPromptCover(id, it);
-    rSemua.push('===== COVER · ' + it.mapel + ' · ' + it.bab + ' =====\n' + c);
-    out.appendChild(blok('② Prompt Cover · ' + it.mapel, c));
-  });
-  
-  if (document.getElementById('r_bg').checked) {
-    const b = rPromptBg(id);
-    rSemua.push('===== BACKGROUND HALAMAN =====\n' + b);
-    const gt = document.createElement('div');
-    gt.className = 'group-title';
-    gt.textContent = '▸ BACKGROUND HALAMAN ISI';
-    out.appendChild(gt);
-    out.appendChild(blok('③ Prompt Background Halaman', b));
-  }
-  
-  document.getElementById('rBadge').textContent = daftar.length + ' modul';
-  toast(daftar.length + ' modul siap', 'ok', 2600);
-  guliInstan(out);
-}
-
-document.getElementById('rGenBtn').onclick = function() {
-  const b = this;
-  b.textContent = '⏳ Menyusun...';
-  nanti(() => { rRender(); b.textContent = '📝 Buat Prompt Modul'; });
-};
-
-document.getElementById('rCopyAll').onclick = function() {
-  if (!rSemua.length) { toast('Belum ada prompt.', 'info'); return; }
-  salin(rSemua.join('\n\n\n'), this);
-};
-
-document.getElementById('rResetBtn').onclick = function() {
-  if (!confirm('Kosongkan form modul ajar?')) return;
-  rList.innerHTML = '';
-  rTambah();
-  rSemua = [];
-  ['r_sekolah', 'r_tahun', 'r_guru', 'r_nip', 'r_kepsek', 'r_nipkep', 'r_kota', 'r_tanggal', 'r_tagline'].forEach(i => document.getElementById(i).value = '');
-  rDimBox.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', DIM_ON.includes(c.dataset.v)));
-  rLampBox.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', LAMP_ON.includes(c.dataset.k)));
-  document.getElementById('rOutput').innerHTML = '<div class="card empty">Form sudah dikosongkan.</div>';
-  document.getElementById('rBadge').textContent = '0 modul';
-  window.scrollTo(0, 0);
-};
 
 // ================================================================
 // 15. UI HELPERS
