@@ -4,7 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SANGCREATOR · Studio Guru AI</title>
+  <meta name="description" content="SANGCREATOR Studio Guru AI — 13 tools untuk guru: buat prompt ringkasan materi, modul ajar/RPM, bank soal, LKPD, poster, slide, sertifikat, media interaktif, dan banyak lagi. Semua prompt di-generate AI, siap disalin ke Canva, Gamma, atau image generator.">
+  <meta name="theme-color" content="#5b4bd6">
+  <meta property="og:title" content="SANGCREATOR · Studio Guru AI">
+  <meta property="og:description" content="13 tools pembuat prompt AI untuk guru — gratis, tanpa install.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%235b4bd6'/%3E%3Ctext x='50' y='68' font-size='52' font-weight='bold' fill='white' text-anchor='middle' font-family='Arial'%3ESC%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://generativelanguage.googleapis.com">
   
   <style>
     /* ===== SAME STYLES AS PREVIOUS VERSION ===== */
@@ -2930,7 +2940,7 @@ function applyApiKeyFromInput() {
   }
   setApiKey(key);
   toast('✅ API Key tersimpan! Menghubungkan...', 'ok', 2000);
-  initGeminiAPI(); // uji ulang koneksi dengan key baru
+  initGeminiAPI(true); // uji ulang koneksi dengan key baru (paksa, bypass cache)
 }
 
 document.getElementById('apiKeySave').onclick = applyApiKeyFromInput;
@@ -2947,13 +2957,30 @@ if (GEMINI_API_KEY) {
 // 16. API KEY INITIALIZATION
 // ================================================================
 
-async function initGeminiAPI() {
+async function initGeminiAPI(force) {
   const statusEl = document.getElementById('apiStatus');
   
   if (!GEMINI_API_KEY) {
     statusEl.className = 'api-status err';
     statusEl.innerHTML = '❌ <b>API Key belum diisi!</b><br><span style="font-size:10px;">Isi API Key Gemini di kolom bawah.</span>';
     return;
+  }
+  
+  // Cache status koneksi (5 menit) supaya tidak ping Gemini setiap kali load.
+  const CACHE_KEY = 'sc_api_status';
+  const CACHE_TTL = 5 * 60 * 1000;
+  const fingerprint = GEMINI_MODEL + '|' + GEMINI_API_KEY.length + '|' + GEMINI_API_KEY.slice(0, 4);
+  if (!force) {
+    try {
+      const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
+      if (cached && cached.fp === fingerprint && (Date.now() - cached.ts) < CACHE_TTL) {
+        API_READY = true;
+        statusEl.className = 'api-status ok';
+        statusEl.innerHTML = '✅ <b>Gemini API siap digunakan</b><br><span class="key">Model: ' + GEMINI_MODEL + '</span>';
+        document.getElementById('apiModel').textContent = GEMINI_MODEL + ' ✅';
+        return;
+      }
+    } catch (e) {}
   }
   
   statusEl.className = 'api-status';
@@ -2975,6 +3002,7 @@ async function initGeminiAPI() {
     }
     
     API_READY = true;
+    try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ fp: fingerprint, ts: Date.now() })); } catch (e) {}
     statusEl.className = 'api-status ok';
     statusEl.innerHTML = '✅ <b>Gemini API siap digunakan</b><br><span class="key">Model: ' + GEMINI_MODEL + '</span>';
     document.getElementById('apiModel').textContent = GEMINI_MODEL + ' ✅';
@@ -3013,8 +3041,8 @@ console.log('✅ SANGCREATOR Studio Guru AI — 13 Tools siap pakai');
 console.log('📦 Tools:', TOOLS.map(t => t.nama).join(', '));
 console.log('🔑 Status API:', API_READY ? 'Connected' : 'Not connected');
 
-// Expose untuk debugging
-window.__app = { TOOLS, API_READY, generateWithGemini, GEMINI_API_KEY };
+// Expose untuk debugging (TANPA API key — jangan bocor ke global)
+window.__app = { TOOLS, API_READY, generateWithGemini };
 </script>
 </body>
 </html>
