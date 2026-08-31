@@ -68,25 +68,47 @@
     }
     
     /* ===== LAYOUT ===== */
-    .app { display: flex; min-height: 100vh; }
-    .side {
-      width: 260px;
-      flex: 0 0 260px;
-      background: var(--side);
-      color: var(--side-ink);
-      padding: 18px 14px;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      z-index: 70;
+    /* ===== LAYOUT: HEADER + MAIN ===== */
+    .hdr {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 20px;
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
     }
-    .side::-webkit-scrollbar { width: 5px; }
-    .side::-webkit-scrollbar-thumb { background: #2b3555; border-radius: 4px; }
-    .main { flex: 1; min-width: 0; padding: 20px 20px 80px; }
+    .hdr-brand { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+    .logo {
+      width: 40px; height: 40px; border-radius: 11px; flex: 0 0 auto;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; color: #fff;
+    }
+    .hdr-brand .t span { font-size: 10px; color: var(--muted); letter-spacing: 1.4px; font-weight: 700; display: block; }
+    .hdr-brand .t b { font-size: 15px; font-weight: 800; display: block; }
+    .hdr-right { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+    .hdr-theme {
+      border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+      width: 38px; height: 38px; border-radius: 11px; font-size: 17px; cursor: pointer;
+    }
+    .api-bar {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding: 12px 20px;
+      background: var(--accent-soft);
+      border-bottom: 1px dashed var(--accent);
+    }
+    .api-bar-label { font-size: 13px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+    .api-bar input {
+      flex: 1; min-width: 200px; width: auto; padding: 9px 12px;
+      border: 1px solid var(--line); border-radius: 9px; background: var(--card); color: var(--ink);
+      font-size: 13px; font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .api-bar-btn {
+      border: 0; border-radius: 9px; padding: 9px 18px; font-size: 13px; font-weight: 700;
+      cursor: pointer; background: linear-gradient(135deg, var(--accent), #7a5cf0); color: #fff; font-family: inherit;
+    }
+    .api-bar-link { font-size: 12px; color: var(--accent); text-decoration: none; white-space: nowrap; }
+    .api-bar-note { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .main { width: 100%; padding: 20px 20px 80px; }
     .inner { max-width: 960px; margin: 0 auto; }
     
     /* ===== SIDE BRAND ===== */
@@ -580,65 +602,24 @@
     #keAtas.on { opacity: 1; pointer-events: auto; transform: none; }
     
     /* ===== RESPONSIVE ===== */
-    /* Default desktop: sembunyikan elemen mobile */
-    .mtop, .burger, .scrim { display: none; }
-    
     @media(max-width: 880px) {
-      .side {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: min(280px, 84vw);
-        flex: none;
-        height: 100vh;
-        transform: translateX(-102%);
-        transition: transform .24s ease;
-        box-shadow: 6px 0 26px rgba(0,0,0,.4);
-      }
-      .side.open { transform: translateX(0); }
+      .hdr { padding: 10px 14px; }
+      .api-bar { padding: 10px 14px; }
+      .api-bar-note { display: none; }
       .main { padding: 14px 14px 60px; }
       #keAtas { bottom: 18px; right: 14px; }
-      .mtop {
-        display: flex;
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        background: var(--card);
-        border-bottom: 1px solid var(--line);
-        padding: 10px 14px;
-        align-items: center;
-        gap: 12px;
-      }
-      .mtop .t { flex: 1; min-width: 0; }
-      .mtop .t b { display: block; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .mtop .t span { font-size: 10px; color: var(--muted); letter-spacing: 1.2px; font-weight: 700; }
-      .burger {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid var(--line);
-        background: var(--bg);
-        color: var(--ink);
-        width: 38px;
-        height: 38px;
-        border-radius: 11px;
-        font-size: 18px;
-        cursor: pointer;
-        flex: 0 0 auto;
-      }
-      .scrim {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(6,10,22,.55);
-        z-index: 65;
-      }
-      .scrim.on { display: block; }
     }
     
     /* ===== MOBILE COMPACT (< 620px) ===== */
     @media(max-width: 620px) {
+      .hdr { padding: 8px 12px; gap: 10px; }
+      .logo { width: 34px; height: 34px; font-size: 15px; border-radius: 9px; }
+      .hdr-brand .t b { font-size: 13.5px; }
+      .hdr-brand .t span { font-size: 9px; }
+      .api-bar { padding: 8px 12px; gap: 7px; }
+      .api-bar-label { font-size: 12px; }
+      .api-bar-link { display: none; }
+      .api-bar input { min-width: 120px; padding: 8px 10px; }
       .card { padding: 14px; }
       .card h2 { margin-bottom: 10px; }
       input, select, textarea { padding: 9px 11px; font-size: 15px; }
@@ -649,6 +630,7 @@
       .btn { padding: 12px 16px; font-size: 14.5px; }
       .btn-ghost { padding: 9px 14px; }
       .inner { max-width: 100%; }
+      .outp-chip { padding: 7px 11px; font-size: 12px; }
     }
     
     /* ===== MATERI ===== */
@@ -731,24 +713,29 @@
     }
     
     /* ===== WIZARD MODE ===== */
-    .wiz-check {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 11px;
-      border-radius: 11px;
-      cursor: pointer;
-      color: var(--side-ink);
-      border: 1px solid transparent;
-      transition: .14s;
+    .outp-grid {
+      display: flex; flex-wrap: wrap; gap: 8px;
     }
-    .wiz-check:hover { background: rgba(255,255,255,.05); }
-    .wiz-check input { width: auto; margin: 0; accent-color: var(--accent); transform: scale(1.1); }
-    .wiz-check .wt { flex: 1; min-width: 0; }
-    .wiz-check .wt b { display: block; font-size: 12.5px; font-weight: 700; color: inherit; }
-    .wiz-check .wt span { display: block; font-size: 10px; color: #7f8cad; line-height: 1.3; }
-    .wiz-check.on { background: linear-gradient(135deg, rgba(139,124,255,.22), rgba(245,166,35,.1)); border-color: rgba(139,124,255,.4); color: #fff; }
-    .wiz-check.on .wt span { color: #b9c2dd; }
+    .outp-chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 13px;
+      border-radius: 99px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--muted);
+      font-size: 12.5px; font-weight: 600;
+      cursor: pointer; user-select: none;
+      transition: .15s;
+      line-height: 1.3;
+    }
+    .outp-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .outp-chip.on {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .outp-chip .oc-ic { font-size: 15px; }
     .wiz-count {
       font-size: 10px; font-weight: 800; color: var(--accent-2);
       background: rgba(245,166,35,.15); padding: 2px 8px; border-radius: 6px;
@@ -817,59 +804,36 @@
 </head>
 <body>
 
-<!-- ===== TOP BAR MOBILE ===== -->
-<div class="mtop">
-  <button class="burger" id="burger">☰</button>
-  <div class="t">
-    <span>SANGCREATOR</span>
-    <b id="mTitle">Studio Guru AI</b>
+<!-- ===== HEADER ===== -->
+<header class="hdr">
+  <div class="hdr-brand">
+    <div class="logo">SC</div>
+    <div class="t">
+      <span>SANGCREATOR</span>
+      <b>Studio Guru AI</b>
+    </div>
   </div>
-  <button class="burger" id="themeM">🌙</button>
-</div>
-<div class="scrim" id="scrim"></div>
-
-<!-- ===== APP ===== -->
-<div class="app">
-  
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="side" id="side">
-    <div class="side-brand">
-      <div class="logo">SC</div>
-      <div>
-        <div class="bn">SANGCREATOR</div>
-        <div class="bs">Studio Guru AI</div>
-      </div>
-    </div>
-    
+  <div class="hdr-right">
     <div class="api-status" id="apiStatus">⚙️ Menginisialisasi Gemini API...</div>
-    
-    <!-- API Key Input -->
-    <div class="api-key-box" id="apiKeyBox">
-      <div class="api-key-label">🔑 API Key Gemini</div>
-      <input type="password" id="apiKeyInput" placeholder="Tempel API Key di sini" autocomplete="off">
-      <button class="api-key-btn" id="apiKeySave">Simpan</button>
-      <div class="api-key-hint">Key disimpan di browser ini saja (localStorage). <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Dapatkan key →</a></div>
-    </div>
-    
-    <div id="navBox"></div>
-    
-    <div class="side-foot">
-      <button class="side-theme" id="themeSide">🌙 Mode Gelap</button>
-      <div style="font-size:10px;color:#5d6a90;line-height:1.6;">
-        💡 13 tools siap pakai<br>
-        · Powered by Gemini AI · <span id="apiModel">v3.0</span>
-      </div>
-    </div>
-  </aside>
-  
-  <!-- ===== MAIN ===== -->
-  <main class="main">
-    <div class="inner">
-      <!-- Semua view akan di-generate oleh JavaScript -->
-      <div id="genericViews"></div>
-    </div>
-  </main>
+    <button class="hdr-theme" id="themeBtn" title="Ganti tema">🌙</button>
+  </div>
+</header>
+
+<!-- ===== API KEY BAR (compact) ===== -->
+<div class="api-bar" id="apiKeyBox">
+  <span class="api-bar-label">🔑 API Key Gemini</span>
+  <input type="password" id="apiKeyInput" placeholder="Tempel API Key Gemini di sini" autocomplete="off">
+  <button class="api-bar-btn" id="apiKeySave">Simpan</button>
+  <a class="api-bar-link" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Dapatkan key →</a>
+  <span class="api-bar-note">disimpan di browser ini saja</span>
 </div>
+
+<!-- ===== MAIN ===== -->
+<main class="main">
+  <div class="inner">
+    <div id="genericViews"></div>
+  </div>
+</main>
 
 <!-- ===== TOAST ===== -->
 <div id="toastWrap"></div>
@@ -3058,45 +3022,6 @@ const toolStores = {};   // id -> store (field spesifik)
 const toolChecked = {};  // id -> true/false
 
 function renderWizard() {
-  // ===== Sidebar: daftar centang output =====
-  const navBox = document.getElementById('navBox');
-  navBox.innerHTML = '';
-  const groups = {};
-  TOOLS.forEach(function(T) { (groups[T.grup] = groups[T.grup] || []).push(T); });
-
-  function updateCount() {
-    const n = TOOLS.filter(function(T) { return toolChecked[T.id]; }).length;
-    const c = document.getElementById('wizCount');
-    if (c) c.textContent = n + ' dipilih';
-  }
-
-  URUTAN_GRUP.forEach(function(g) {
-    if (!groups[g]) return;
-    const lbl = document.createElement('div');
-    lbl.className = 'nav-label';
-    lbl.textContent = g;
-    navBox.appendChild(lbl);
-
-    groups[g].forEach(function(T) {
-      const lab = document.createElement('label');
-      lab.className = 'wiz-check';
-      const cb = document.createElement('input');
-      cb.type = 'checkbox';
-      const wt = document.createElement('span');
-      wt.className = 'wt';
-      wt.innerHTML = '<b>' + T.icon + ' ' + T.nama + '</b><span>' + T.desc + '</span>';
-      lab.appendChild(cb);
-      lab.appendChild(wt);
-      cb.onchange = function() {
-        toolChecked[T.id] = cb.checked;
-        lab.classList.toggle('on', cb.checked);
-        updateCount();
-        toggleToolCard(T, cb.checked);
-      };
-      navBox.appendChild(lab);
-    });
-  });
-
   // ===== Main: wizard =====
   const mainBox = document.getElementById('genericViews');
   mainBox.innerHTML = '';
@@ -3107,10 +3032,38 @@ function renderWizard() {
     '<p class="sub">Isi identitas umum sekali → pilih output → generate semua prompt sekaligus</p>';
   mainBox.appendChild(top);
 
-  // Card 1: Identitas Umum
+  function updateCount() {
+    const n = TOOLS.filter(function(T) { return toolChecked[T.id]; }).length;
+    const c = document.getElementById('wizCount');
+    if (c) c.textContent = n + ' dipilih';
+  }
+
+  // ===== Pilih Output (chips) =====
+  const outCard = document.createElement('div');
+  outCard.className = 'card';
+  outCard.innerHTML = '<h2>Pilih Output</h2>';
+  const grid = document.createElement('div');
+  grid.className = 'outp-grid';
+  TOOLS.forEach(function(T) {
+    const chip = document.createElement('div');
+    chip.className = 'outp-chip';
+    chip.innerHTML = '<span class="oc-ic">' + T.icon + '</span><span>' + T.nama + '</span>';
+    chip.title = T.desc;
+    chip.onclick = function() {
+      const on = chip.classList.toggle('on');
+      toolChecked[T.id] = on;
+      updateCount();
+      toggleToolCard(T, on);
+    };
+    grid.appendChild(chip);
+  });
+  outCard.appendChild(grid);
+  mainBox.appendChild(outCard);
+
+  // ===== Identitas Umum =====
   const umumCard = document.createElement('div');
   umumCard.className = 'card umum-card';
-  umumCard.innerHTML = '<h2>1 · Identitas Umum</h2>' +
+  umumCard.innerHTML = '<h2>Identitas Umum</h2>' +
     '<p class="hint" style="margin:0 0 6px;">Otomatis dipakai di semua output yang dipilih.</p>';
   mainBox.appendChild(umumCard);
 
@@ -3242,11 +3195,6 @@ function renderWizard() {
   updateCount();
 }
 
-function tutupSide() {
-  document.getElementById('side').classList.remove('open');
-  document.getElementById('scrim').classList.remove('on');
-}
-
 // ================================================================
 // 15. UI HELPERS
 // ================================================================
@@ -3266,23 +3214,15 @@ function tutupSide() {
   b.onclick = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
 })();
 
-// Sidebar toggle
-document.getElementById('burger').onclick = function() {
-  document.getElementById('side').classList.toggle('open');
-  document.getElementById('scrim').classList.toggle('on');
-};
-document.getElementById('scrim').onclick = tutupSide;
-
-// Theme toggle
+// Theme toggle (tombol di header)
 const rootEl = document.documentElement;
 function toggleTema() {
   const dark = rootEl.getAttribute('data-theme') === 'dark';
   rootEl.setAttribute('data-theme', dark ? 'light' : 'dark');
-  document.getElementById('themeM').textContent = dark ? '🌙' : '☀️';
-  document.getElementById('themeSide').textContent = dark ? '🌙 Mode Gelap' : '☀️ Mode Terang';
+  const tb = document.getElementById('themeBtn');
+  if (tb) tb.textContent = dark ? '🌙' : '☀️';
 }
-document.getElementById('themeM').onclick = toggleTema;
-document.getElementById('themeSide').onclick = toggleTema;
+document.getElementById('themeBtn').onclick = toggleTema;
 
 // === Handler input API Key ===
 function applyApiKeyFromInput() {
@@ -3330,8 +3270,7 @@ async function initGeminiAPI(force) {
       if (cached && cached.fp === fingerprint && (Date.now() - cached.ts) < CACHE_TTL) {
         API_READY = true;
         statusEl.className = 'api-status ok';
-        statusEl.innerHTML = '✅ <b>Gemini API siap digunakan</b><br><span class="key">Model: ' + GEMINI_MODEL + '</span>';
-        document.getElementById('apiModel').textContent = GEMINI_MODEL + ' ✅';
+        document.getElementById('apiStatus').innerHTML = '✅ <b>Gemini API siap digunakan</b><br><span class="key">Model: ' + GEMINI_MODEL + '</span>';
         return;
       }
     } catch (e) {}
@@ -3359,7 +3298,6 @@ async function initGeminiAPI(force) {
     try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ fp: fingerprint, ts: Date.now() })); } catch (e) {}
     statusEl.className = 'api-status ok';
     statusEl.innerHTML = '✅ <b>Gemini API siap digunakan</b><br><span class="key">Model: ' + GEMINI_MODEL + '</span>';
-    document.getElementById('apiModel').textContent = GEMINI_MODEL + ' ✅';
     toast('Gemini API berhasil terhubung!', 'ok', 3000);
     
   } catch (error) {
@@ -3376,7 +3314,6 @@ async function initGeminiAPI(force) {
 
 // Render wizard (identitas umum + pilih output + field spesifik)
 renderWizard();
-document.getElementById('mTitle').textContent = 'Studio Guru AI';
 
 // Inisialisasi API
 initGeminiAPI();
